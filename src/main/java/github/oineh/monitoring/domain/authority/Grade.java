@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Getter
 @Entity
@@ -23,6 +25,7 @@ public class Grade {
 
     @OneToOne(fetch = FetchType.LAZY)
     private User user;
+    @Enumerated(EnumType.STRING)
     private GradeLevel level;
 
     public Grade(User user, GradeLevel level) {
