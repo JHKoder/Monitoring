@@ -19,10 +19,10 @@ public class UserTest {
         String email = "kang@naver.com";
         String name = "강정훈";
         String nickName = "학생_1";
-        Information information = new Information(email,name,nickName);
+        Information information = new Information(email, name, nickName);
 
         //when
-        User user = new User(id,pw,information);
+        User user = new User(id, pw, information);
 
         //then
         assertThat(user).isNotNull();
@@ -37,14 +37,13 @@ public class UserTest {
         String email = "kang@naver.com";
         String name = "강정훈";
         String nickName = null;
-        Information information = new Information(email,name,nickName);
+        Information information = new Information(email, name, nickName);
 
         //when
-        User user = new User(id,pw,information);
+        User user = new User(id, pw, information);
 
         //then
         assertThat(user).isNotNull();
     }
-
 
 }
