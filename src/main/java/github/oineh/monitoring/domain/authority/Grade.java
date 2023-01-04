@@ -1,35 +1,23 @@
 package github.oineh.monitoring.domain.authority;
 
-import static lombok.AccessLevel.PROTECTED;
-
-import github.oineh.monitoring.domain.user.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import org.springframework.security.core.GrantedAuthority;
 
 @Getter
-@Entity
-@NoArgsConstructor(access = PROTECTED)
-public class Grade {
+public enum Grade implements GrantedAuthority {
+    ADMIN(1, "ROLE_ADMIN"),
+    USER(2, "ROLE_USER");
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final int number;
+    private final String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private User user;
-    @Enumerated(EnumType.STRING)
-    private GradeLevel level;
+    Grade(int number, String name) {
+        this.name = name;
+        this.number = number;
+    }
 
-    public Grade(User user, GradeLevel level) {
-        this.user = user;
-        this.level = level;
+    @Override
+    public String getAuthority() {
+        return this.name;
     }
 }
