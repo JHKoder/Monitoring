@@ -2,20 +2,23 @@ package github.oineh.monitoring.domain.user;
 
 import static lombok.AccessLevel.PROTECTED;
 
+import github.oineh.monitoring.domain.authority.Auth;
 import github.oineh.monitoring.domain.belong.Groups;
 import github.oineh.monitoring.domain.pc.Pc;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @Table(name = "users")
 @NoArgsConstructor(access = PROTECTED)
 public class User {
@@ -30,6 +33,8 @@ public class User {
     private Pc pc;
     @OneToOne(fetch = FetchType.LAZY)
     private Groups groups;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Auth auth;
 
     @Embedded
     private Information information;
@@ -47,18 +52,27 @@ public class User {
         this.information = information;
     }
 
+    public User(String loginId, String pw, Information information, Auth auth) {
+        this.loginId = loginId;
+        this.pw = pw;
+        this.information = information;
+        this.auth = auth;
+    }
+
+    @NoArgsConstructor
     @AllArgsConstructor
-    public static class Information{
+    public static class Information {
+
         private String email;
         private String name;
         private String nickName;
     }
 
-    public void updatePc(Pc pc){
-        this.pc=pc;
+    public void updatePc(Pc pc) {
+        this.pc = pc;
     }
 
-    public void updateGroup(Groups groups){
+    public void updateGroup(Groups groups) {
         this.groups = groups;
     }
 
