@@ -3,12 +3,12 @@ package github.oineh.monitoring.domain.pc;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,16 +37,16 @@ public class Connect {
         this.connectType = connectType;
     }
 
-    public static Connect icmp(Pc pc,String ip){
-        return new Connect(pc,ip,null,0,ConnectType.ICMP);
+    public static Connect icmp(Pc pc, String ip) {
+        return new Connect(pc, ip, null, 0, ConnectType.ICMP);
     }
 
-    public static Connect tcp(Pc pc,String ip,int port){
-        return new Connect(pc,ip,null,port,ConnectType.TCP_PORT);
+    public static Connect tcp(Pc pc, String ip, int port) {
+        return new Connect(pc, ip, null, port, ConnectType.TCP_PORT);
     }
 
-    public static Connect tcp(Pc pc,String url){
-        return new Connect(pc,null,url,0,ConnectType.TCP_URL);
+    public static Connect tcp(Pc pc, String url) {
+        return new Connect(pc, null, url, 0, ConnectType.TCP_URL);
     }
 
 }

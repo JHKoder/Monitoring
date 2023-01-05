@@ -1,44 +1,38 @@
-package github.oineh.monitoring.domain.belong;
+package github.oineh.monitoring.domain.authority;
+
 
 import static lombok.AccessLevel.PROTECTED;
 
 import github.oineh.monitoring.domain.user.User;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
+@Entity
 @NoArgsConstructor(access = PROTECTED)
-public class Division {
+public class Auth {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Department> department = new ArrayList<>();
-
     @OneToOne(fetch = FetchType.LAZY)
-    private User adminUser;
+    private User user;
+    @ElementCollection
+    private Set<Grade> grade = new HashSet<>();
 
-
-    private String name;
-
-    public Division(User adminUser, String name) {
-        this.adminUser = adminUser;
-        this.name = name;
+    public Auth(User user, Grade grade) {
+        this.user = user;
+        this.grade.add(grade);
     }
 
-    public void updateDepartment(Department department) {
-        this.department.add(department);
-    }
 }

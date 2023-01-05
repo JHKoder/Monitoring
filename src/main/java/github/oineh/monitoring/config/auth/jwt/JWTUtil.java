@@ -1,0 +1,41 @@
+package github.oineh.monitoring.config.auth.jwt;
+
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import github.oineh.monitoring.config.auth.VerifyResult;
+import java.time.Instant;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class JWTUtil {
+
+    public static final String BEARER = "Bearers";
+    private static final Algorithm ALGORITHM = Algorithm.HMAC256("x509");
+
+
+    public String generate(String userId, TokenType tokenType) {
+        return makeAuthToken(userId, tokenType);
+    }
+
+    public static String makeAuthToken(String userId, TokenType tokenType) {
+        return JWT.create()
+            .withSubject(userId)
+            .withClaim("exp", Instant.now().getEpochSecond() + tokenType.life())
+            .sign(ALGORITHM);
+    }
+
+    public static VerifyResult verify(String token) {
+        try {
+            DecodedJWT jwt = JWT.require(ALGORITHM).build().verify(token);
+            return VerifyResult.builder().result(true).userId(jwt.getSubject())
+                .build();
+        } catch (Exception e) {
+            DecodedJWT jwt = JWT.decode(token);
+            return VerifyResult.builder().result(false).userId(jwt.getSubject())
+                .build();
+        }
+    }
+
+}
