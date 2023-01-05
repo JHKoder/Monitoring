@@ -13,16 +13,16 @@ public class GradeTest {
 
     @Test
     @DisplayName("레벨 생성")
-    void create(){
+    void create() {
         //given
         User user = UserFixture.getUser();
-        GradeLevel level = GradeLevel.A;
+        Grade grade = Grade.USER;
 
         //when
-        Grade grade = new Grade(user,level);
+        Auth auth = new Auth(user, grade);
 
         //then
-        assertThat(grade).isNotNull();
+        assertThat(auth).isNotNull();
     }
 
 }
