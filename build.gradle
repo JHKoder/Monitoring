@@ -33,7 +33,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     //custom lib
-    implementation 'com.github.oiNeh:sno:0.1.11'
+    implementation 'com.github.oiNeh:sno:0.1.14'
 
     //lombok
     annotationProcessor 'org.projectlombok:lombok'
