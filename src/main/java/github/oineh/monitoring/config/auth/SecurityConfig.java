@@ -74,20 +74,19 @@ public class SecurityConfig {
             .csrf().disable()
             .formLogin(login -> login
                 .loginPage("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/user")
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
+                .deleteCookies(JWTUtil.BEARER)
                 .clearAuthentication(true)
             )
             .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil))
             .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
             .authorizeRequests(authroize -> authroize
-                .antMatchers("/user").hasAnyAuthority(Grade.USER.getAuthority())
-                .anyRequest().permitAll()
+                .antMatchers("/", "/singup", "/login").permitAll()
+                .anyRequest().hasAnyAuthority(Grade.USER.getAuthority())
             ).build();
+
     }
 
 }
