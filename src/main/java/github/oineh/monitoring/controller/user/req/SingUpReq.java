@@ -1,4 +1,4 @@
-package github.oineh.monitoring.domain.user.req;
+package github.oineh.monitoring.controller.user.req;
 
 
 import lombok.Data;
