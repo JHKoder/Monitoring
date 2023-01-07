@@ -3,6 +3,9 @@ package github.oineh.monitoring.domain.belong;
 
 import static lombok.AccessLevel.PROTECTED;
 
+import github.oineh.monitoring.domain.belong.group.Department;
+import github.oineh.monitoring.domain.belong.group.Division;
+import github.oineh.monitoring.domain.belong.group.Team;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
