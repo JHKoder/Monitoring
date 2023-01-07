@@ -3,6 +3,8 @@ package github.oineh.monitoring.domain.pc;
 
 import static lombok.AccessLevel.PROTECTED;
 
+import github.oineh.monitoring.domain.connect.Connect;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,18 +23,21 @@ public class Pc {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Connect connect;
-
     private String name;
-    private String mac;
     private Type pcType;
 
 
-    public Pc(String name, String mac, Type pcType) {
+    public Pc(String name, Type pcType) {
         this.name = name;
-        this.mac = mac;
         this.pcType = pcType;
+    }
+
+    public Pc(String name, Type pcType, Connect connect) {
+        this.name = name;
+        this.pcType = pcType;
+        this.connect = connect;
     }
 
     public void updateConnect(Connect connect) {
