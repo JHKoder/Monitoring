@@ -11,13 +11,18 @@
   <form action="/logout">
     <button>logout</button>
   </form>
+
+  <form action="/mypage">
+    <button>mypage</button>
+  </form>
+
 </div>
 <div sec:authorize="isAnonymous()">
   <form action="/login" method="get">
     <button>login</button>
   </form>
   <br>
-  <form action="/singup">
+  <form action="/singup" method="get">
     <button>singup</button>
   </form>
 </div>
