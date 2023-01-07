@@ -33,6 +33,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         throws IOException, ServletException {
 
         Cookie[] requestCookies = request.getCookies();
+        if (requestCookies == null) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         Cookie cookie = Arrays.stream(requestCookies)
             .filter(bear -> bear.getName().equals(BEARER))
             .findFirst()
