@@ -46,6 +46,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UserLogin userToken = UserLogin.ofPricipal(authResult.getPrincipal());
         response.addCookie(new Cookie(JWTUtil.BEARER,
             JWTUtil.BEARER + jwtUtil.generate(userToken.getUsername(), TokenType.ACCESS)));
+        response.sendRedirect("/");
     }
 
 }
