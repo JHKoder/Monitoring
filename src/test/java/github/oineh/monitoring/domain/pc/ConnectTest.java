@@ -2,6 +2,7 @@ package github.oineh.monitoring.domain.pc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import github.oineh.monitoring.domain.connect.Connect;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,10 +14,11 @@ public class ConnectTest {
     @DisplayName("PC Icmp 연결 타입 생성")
     public void icmpCreate() {
         //given
-        Pc pc = new Pc("name", "mac", Type.PC);
+        Pc pc = new Pc("name", Type.PC);
+        Connect connect = Connect.icmp("127.0.0.1");
 
         //when
-        Connect connect = Connect.icmp(pc, "127.0.0.1");
+        pc.updateConnect(connect);
 
         //then
         assertThat(connect).isNotNull();
@@ -26,10 +28,11 @@ public class ConnectTest {
     @DisplayName("PC tcp-port 연결 타입 생성")
     public void tcpPortCreate() {
         //given
-        Pc pc = new Pc("name", "mac", Type.PC);
+        Pc pc = new Pc("name", Type.PC);
+        Connect connect = Connect.tcp("127.0.0.1", 8089);
 
         //when
-        Connect connect = Connect.tcp(pc, "127.0.0.1",8089);
+        pc.updateConnect(connect);
 
         //then
         assertThat(connect).isNotNull();
@@ -39,10 +42,11 @@ public class ConnectTest {
     @DisplayName("PC tcp-create 연결 타입 생성")
     public void tcpUrlCreate() {
         //given
-        Pc pc = new Pc("name", "mac", Type.SERVER);
+        Pc pc = new Pc("name", Type.SERVER);
+        Connect connect = Connect.tcp("www.naver.com");
 
         //when
-        Connect connect = Connect.tcp(pc, "www.naver.com");
+        pc.updateConnect(connect);
 
         //then
         assertThat(connect).isNotNull();
