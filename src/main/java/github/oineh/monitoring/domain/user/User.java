@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PROTECTED;
 import github.oineh.monitoring.domain.authority.Auth;
 import github.oineh.monitoring.domain.belong.Groups;
 import github.oineh.monitoring.domain.pc.Pc;
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,7 @@ public class User {
     private String loginId;
     private String pw;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Pc pc;
     @OneToOne(fetch = FetchType.LAZY)
     private Groups groups;
