@@ -10,13 +10,12 @@ public class PcTest {
 
     @Test
     @DisplayName("PC 타입 생성")
-    public void create(){
+    public void create() {
         //given
-        String name="내컴퓨터";
-        String mac ="ad:12:12:vd:sa:as";
+        String name = "내컴퓨터";
 
         //when
-        Pc pc = new Pc(name,mac, Type.PC);
+        Pc pc = new Pc(name, Type.PC);
 
         //then
         assertThat(pc).isNotNull();
@@ -24,13 +23,12 @@ public class PcTest {
 
     @Test
     @DisplayName("서버 타입 생성 ")
-    public void create2(){
+    public void create2() {
         //given
-        String name="내 서버";
-        String mac ="BC:1A:F2:CD:D8:A7";
+        String name = "내 서버";
 
         //when
-        Pc pc = new Pc(name,mac, Type.SERVER);
+        Pc pc = new Pc(name, Type.SERVER);
 
         //then
         assertThat(pc).isNotNull();
