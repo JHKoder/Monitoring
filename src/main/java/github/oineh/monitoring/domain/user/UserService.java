@@ -3,11 +3,11 @@ package github.oineh.monitoring.domain.user;
 import github.oineh.monitoring.config.auth.UserLogin;
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
+import github.oineh.monitoring.controller.user.req.SingUpReq;
 import github.oineh.monitoring.domain.authority.Auth;
 import github.oineh.monitoring.domain.authority.AuthRepository;
 import github.oineh.monitoring.domain.authority.Grade;
 import github.oineh.monitoring.domain.user.User.Information;
-import github.oineh.monitoring.domain.user.req.SingUpReq;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +27,14 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void singup(SingUpReq req) {
-        Information information = new User.Information(req.getEmail(), req.getName(), req.getNickName());
 
+        if (userRepository.findByLoginId(req.getLoginId()).isPresent()) {
+            throw new ApiException(ErrorCode.USERS_ALREADY_PRESENT);
+        }
+
+        Information information = new User.Information(req.getEmail(), req.getName(), req.getNickName());
         User user = new User(req.getLoginId(), req.getPassword(), information);
+
         userRepository.save(user);
         authRepository.save(new Auth(user, Grade.USER));
     }
@@ -46,7 +51,7 @@ public class UserService implements UserDetailsService {
         User user = findByUserId(username);
         Auth auth = authRepository.findByUser(user)
             .orElseThrow();
-        log.info("loadUserByUsername - auth : " + auth.getGrade().contains(Grade.USER));
+        log.info("loadUserByUsername  : " + user.getId() + " Auth:" + auth.getGrade().iterator().next().getName());
         return UserLogin.of(user, auth);
     }
 
