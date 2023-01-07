@@ -1,4 +1,4 @@
-package github.oineh.monitoring.domain.pc;
+package github.oineh.monitoring.domain.connect;
 
 public enum ConnectType {
     ICMP,
