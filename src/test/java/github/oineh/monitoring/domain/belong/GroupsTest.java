@@ -3,6 +3,9 @@ package github.oineh.monitoring.domain.belong;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import fixture.UserFixture;
+import github.oineh.monitoring.domain.belong.group.Department;
+import github.oineh.monitoring.domain.belong.group.Division;
+import github.oineh.monitoring.domain.belong.group.Team;
 import github.oineh.monitoring.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
