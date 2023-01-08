@@ -3,9 +3,10 @@ package github.oineh.monitoring.domain.belong;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import fixture.UserFixture;
-import github.oineh.monitoring.domain.belong.group.Department;
-import github.oineh.monitoring.domain.belong.group.Division;
-import github.oineh.monitoring.domain.belong.group.Team;
+import github.oineh.monitoring.domain.group.category.Large;
+import github.oineh.monitoring.domain.group.category.Medium;
+import github.oineh.monitoring.domain.group.category.Team;
+import github.oineh.monitoring.domain.groups.Groups;
 import github.oineh.monitoring.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +18,8 @@ public class GroupsTest {
 
     User userToBelongAdminUser;
 
-    Division division;
-    Department department;
+    Large large;
+    Medium medium;
     Team team;
 
 
@@ -26,23 +27,24 @@ public class GroupsTest {
     void setup() {
         userToBelongAdminUser = UserFixture.getUserEmpty();
 
-        division = new Division(userToBelongAdminUser, "대원초등학교");
-        department = new Department(userToBelongAdminUser, "1학년");
-        division.updateDepartment(department);
+        large = new Large(userToBelongAdminUser, "대원초등학교");
+        medium = new Medium(userToBelongAdminUser, "1학년");
+        large.updateDepartment(medium);
         team = new Team(userToBelongAdminUser, "1반");
-        department.updateTeam(team);
+        medium.updateTeam(team);
     }
 
     @Test
     @DisplayName("단체 소속 생성")
     public void create() {
+        String name = "lol";
         //given - when
-        Groups groups = new Groups(division, department, team);
+        Groups groups = new Groups(name, large, medium, team);
 
         //then
-        assertThat(groups.getDivision()).isEqualTo(division);
-        assertThat(groups.getDivision().getDepartment()).contains(department);
-        assertThat(groups.getDivision().getDepartment().get(0).getTeams()).contains(team);
+        assertThat(groups.getLarge()).isEqualTo(large);
+        assertThat(groups.getLarge().getMedium()).contains(medium);
+        assertThat(groups.getLarge().getMedium().get(0).getTeams()).contains(team);
     }
 
     @Test
@@ -52,10 +54,10 @@ public class GroupsTest {
         String belongLargeName = "대원초등학교";
 
         //when
-        Division division = new Division(userToBelongAdminUser, belongLargeName);
+        Large large = new Large(userToBelongAdminUser, belongLargeName);
 
         //then
-        assertThat(division.getName()).isEqualTo(belongLargeName);
+        assertThat(large.getName()).isEqualTo(belongLargeName);
     }
 
     @Test
@@ -63,13 +65,13 @@ public class GroupsTest {
     public void mid_team_create() {
         //given
         String mediumName = "3학년";
-        Department department = new Department(userToBelongAdminUser, mediumName);
+        Medium medium = new Medium(userToBelongAdminUser, mediumName);
 
         //when
-        division.updateDepartment(department);
+        large.updateDepartment(medium);
 
         //then
-        assertThat(division.getDepartment()).contains(department);
+        assertThat(large.getMedium()).contains(medium);
     }
 
     @Test
@@ -80,9 +82,9 @@ public class GroupsTest {
         Team team = new Team(userToBelongAdminUser, belongSmallName);
 
         //when
-        department.updateTeam(team);
+        medium.updateTeam(team);
 
         //then
-        assertThat(department.getTeams()).contains(team);
+        assertThat(medium.getTeams()).contains(team);
     }
 }

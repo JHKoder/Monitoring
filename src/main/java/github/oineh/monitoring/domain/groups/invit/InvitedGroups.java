@@ -1,7 +1,10 @@
-package github.oineh.monitoring.domain.belong.group;
+package github.oineh.monitoring.domain.groups.invit;
+
 
 import static lombok.AccessLevel.PROTECTED;
 
+import github.oineh.monitoring.common.entity.BaseEntity;
+import github.oineh.monitoring.domain.groups.Groups;
 import github.oineh.monitoring.domain.user.User;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,19 +18,26 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Team {
+public class InvitedGroups extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToOne(fetch = FetchType.LAZY)
-    private User adminUser;
+    private User targetUser;
 
-    private String name;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User sendUser;
 
-    public Team(User adminUser, String name) {
-        this.adminUser = adminUser;
-        this.name = name;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Groups groups;
+
+
+    public InvitedGroups(User targetUser, User sendUser, Groups groups) {
+        this.targetUser = targetUser;
+        this.sendUser = sendUser;
+        this.groups = groups;
     }
 
 }

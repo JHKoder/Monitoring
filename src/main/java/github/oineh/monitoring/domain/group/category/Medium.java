@@ -1,4 +1,4 @@
-package github.oineh.monitoring.domain.belong.group;
+package github.oineh.monitoring.domain.group.category;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Department {
+public class Medium {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class Department {
 
     private String name;
 
-    public Department(User adminUser, String name) {
+    public Medium(User adminUser, String name) {
         this.adminUser = adminUser;
         this.name = name;
     }
