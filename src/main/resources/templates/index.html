@@ -9,14 +9,20 @@
 
 <div sec:authorize="isAuthenticated()">
   <form action="/logout">
-    <button>logout</button>
+    <button>로그아웃</button>
   </form>
 
   <form action="/mypage">
-    <button>mypage</button>
+    <button>마이페이지</button>
+  </form>
+
+  <form action="/groups">
+    <button>그룹 페이지</button>
   </form>
 
 </div>
+
+
 <div sec:authorize="isAnonymous()">
   <form action="/login" method="get">
     <button>login</button>
@@ -26,5 +32,12 @@
     <button>singup</button>
   </form>
 </div>
+<br>
+
+
 </body>
+
+<script>
+
+</script>
 </html>
