@@ -1,4 +1,4 @@
-package github.oineh.monitoring.domain.belong.group;
+package github.oineh.monitoring.domain.group.category;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -18,25 +18,27 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Department {
+public class Large {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Medium> medium = new ArrayList<>();
+
     @OneToOne(fetch = FetchType.LAZY)
     private User adminUser;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Team> teams = new ArrayList<>();
+
 
     private String name;
 
-    public Department(User adminUser, String name) {
+    public Large(User adminUser, String name) {
         this.adminUser = adminUser;
         this.name = name;
     }
 
-    public void updateTeam(Team team) {
-        this.teams.add(team);
+    public void updateDepartment(Medium medium) {
+        this.medium.add(medium);
     }
 }
