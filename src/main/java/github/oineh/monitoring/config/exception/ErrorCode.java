@@ -14,8 +14,11 @@ public enum ErrorCode {
     USERS_ALREADY_PRESENT(400, "이미 있는 사용자 입니다."),
     CLIENT_IP_NOT_FOUND(400, "IP 조회 불가"),
     CLIENT_IP6V_NO(400, "ip6v 는 지원하지 않습니다."),
-    INTERNAL_CLIENT_IP_NONE_CHECK_ERROR(400, "클라이언트 IP 정보가 확인 되지 않습니다.");
-
+    INTERNAL_CLIENT_IP_NONE_CHECK_ERROR(400, "클라이언트 IP 정보가 확인 되지 않습니다."),
+    NOT_FOUND_GROUPS(400, "그룹 정보가 없습니다."),
+    NOT_FOUND_TARGET_USER(400, "상대 유저 정보를 찾지 못했습니다."),
+    NOT_FOUND_SEND_USER(400, "발송 유저 정보가 없습니다."),
+    NO_GROUP_INVITES(400, "해당 그룹의 초대 기록이 없습니다.");
     private final int status;
     private final String message;
 
