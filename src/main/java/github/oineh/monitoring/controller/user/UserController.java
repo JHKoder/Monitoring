@@ -38,11 +38,7 @@ public class UserController {
         return "mypage";
     }
 
-    @GetMapping("/groups")
-    public String groups() {
-        return "grouops";
-    }
-    
+
     @GetMapping("/group")
     public String group() {
         return "group";
