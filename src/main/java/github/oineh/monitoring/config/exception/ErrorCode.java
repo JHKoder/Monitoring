@@ -18,7 +18,9 @@ public enum ErrorCode {
     NOT_FOUND_GROUPS(400, "그룹 정보가 없습니다."),
     NOT_FOUND_TARGET_USER(400, "상대 유저 정보를 찾지 못했습니다."),
     NOT_FOUND_SEND_USER(400, "발송 유저 정보가 없습니다."),
-    NO_GROUP_INVITES(400, "해당 그룹의 초대 기록이 없습니다.");
+    NO_GROUP_INVITES(400, "해당 그룹의 초대 기록이 없습니다."),
+    SELECT_GROUP_USER(400, "해당 그룹의 맴버에 회원님이 없습니다."),
+    NOT_GROUPS_DEPT(400, "해당 그룹네 부서정보가 없습니다.");
     private final int status;
     private final String message;
 
