@@ -14,6 +14,7 @@
   </form>
 </div>
 <!-- 초대 하기 -->
+
 <!-- 초대 리스트 보기 -->
 <!-- 초대 받기 -->
 <!-- 그룹 리스트 보기-->
@@ -36,7 +37,7 @@
     datas.forEach(function (data, idx) {
       let groupId = data.groupsId;
       out += "" +
-          "<tr onclick='location.href=`api/groups/" + groupId + "`'>" +
+          "<tr onclick='location.href=`group/" + groupId + "`'>" +
           "<td>" + data.name + "</td>" +
           "</tr>";
     });
