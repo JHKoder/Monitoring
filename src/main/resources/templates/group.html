@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
 
@@ -17,29 +18,8 @@
 </div>
 <hr>
 
-<!-- 그룹네 있는 부서 & 팀 생성 sampel-->
-sample
-<div>
-  <div style="border:groove; width:300px">
-    <label>부서 이름</label>
-    <div style="border:groove;">
-      <label>팀 이름</label><br>
-    </div>
-
-    <div style="border:groove;">
-      <label>팀 이름</label><br>
-    </div>
-
-    <div style="border:groove;">
-      <label>팀 이름</label><br>
-    </div>
-
-    <div>
-      <form>
-        <button style="margin-left:100px"><label>팀 생성</label></button>
-      </form>
-    </div>
-  </div>
+<!-- 그룹네 있는 부서 & 팀 생성 -->
+<div id="group_in_dept_in_team" class="group_in_dept_in_team" style="width:930px;">
 </div>
 
 </body>
@@ -62,12 +42,54 @@ sample
 
   function groupInDeptAndTeam(datas) {
     datas.group.forEach(function (data, idx) {
-      console.log(data, idx);
-    });
-    // document.getElementById("groupList").innerHTML = out;
+      console.log(data);
+      document.getElementById("group_in_dept_in_team")
+          .innerHTML += groupInDeptAndTeamOut(data, datas.groupsId);
+    })
   }
 
-  async function post(path, headers = {}) {
+  function groupInDeptAndTeamOut(data, groupsId) {
+    // 부서
+    var out = ""
+        + "  <div style='border:groove; margin-right:10px; width:300px; box-sizing: border-box; float: left;'>\n"
+        + "    <label style='font-size:22px'> 부서명 :" + data.name + "</label>\n";
+    // 팀 for
+    data.list.forEach(function (team) {
+      console.log(team);
+      let teamId = team.teamId;
+      let teamName = team.name;
+      let href = "/team/room/" + teamId;
+      out += "    <div style='border:groove;' onclick='location.href=`" + href + "`'>\n"
+          + "      <label> 팀명 : " + teamName + "</label><br>\n"
+          + "    </div>\n"
+    })
+
+    out += "    <br>\n"
+        + "    <div>\n"
+        + "        <input type='text' id='" + groupsId + "-" + data.deptId
+        + "-name' name='name' style='position:absolute' placeholder='팀 이름'>\n"
+        + "        <button onclick='teamCreate(" + data.deptId + "," + groupsId + ")'"
+        + "    style='margin-left:150px' type='submit' id='groupTeam-" + groupsId
+        + "'><label>팀 생성</label></button>\n"
+        + "    </div>\n"
+        + "  </div>";
+    return out;
+  }
+
+  function teamCreate(deptId, groupsId) {
+    const name = document.getElementById(groupsId + "-" + deptId + "-name").value;
+    console.log(deptId + " , " + groupsId + " , " + name)
+    post("api/group/add/team", {
+      groupsId: groupsId,
+      deptId: deptId,
+      name: name,
+    })
+    .then(location.reload())
+    .catch(message => console.log(message));
+  }
+
+  async function post(path, body, headers = {}) {
+
     const url = `${defaultUrl}/${path}`;
     const options = {
       method: "POST",
@@ -75,6 +97,7 @@ sample
         "Content-Type": "application/json",
         ...headers,
       },
+      body: JSON.stringify(body),
     };
     const res = await fetch(url, options);
     const data = await res.json();
