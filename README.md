@@ -34,8 +34,9 @@
     - 소속(그룹) 초대 받기                /api/groups/take
 
 /소속 페이지 (group) - 소속 - (본부/개발/벡엔드팀)  그룹1:소속n
-    - 소속&팀 리스트 보기                  /api/group  ( 그룹내 모든 소속 보기)
-    - 소속 등록                          /api/group/add
+    - 소속&팀 리스트 보기                  /api/group/room/{groupId}  ( 그룹내 모든 소속 보기)
+    - 소속 등록                          /api/group/add/dept  - (name,groupsId)
+    - 소속 등록                          /api/group/add/team  - (name,groupsId,deptId)
     - 소속 초대 하기                      /api/group/invite(post)
     - 소속 초대 리스트 보기                /api/group//invite(get)
     - 소속 초대 받기                      /api/group/{}/take
