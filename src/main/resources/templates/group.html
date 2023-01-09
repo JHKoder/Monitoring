@@ -6,5 +6,85 @@
 </head>
 <body>
 
+<!--소속 ( 대,중,th)-->
+<div>
+  부서 생성
+  <form action="/api/group/add/dept" method="post">
+    <input id="initDeptForm" type="hidden" name="groupsId">
+    <label>name </label><input name="name" type="text">
+    <input type="submit">
+  </form>
+</div>
+<hr>
+
+<!-- 그룹네 있는 부서 & 팀 생성 sampel-->
+sample
+<div>
+  <div style="border:groove; width:300px">
+    <label>부서 이름</label>
+    <div style="border:groove;">
+      <label>팀 이름</label><br>
+    </div>
+
+    <div style="border:groove;">
+      <label>팀 이름</label><br>
+    </div>
+
+    <div style="border:groove;">
+      <label>팀 이름</label><br>
+    </div>
+
+    <div>
+      <form>
+        <button style="margin-left:100px"><label>팀 생성</label></button>
+      </form>
+    </div>
+  </div>
+</div>
+
 </body>
+<script>
+  const defaultUrl = "http://localhost:8081";
+  const local = window.location.pathname;
+  const groupId = local.substring(7, local.length);
+
+  const init = function () {
+    document.getElementById("initDeptForm").value = groupId;
+    fetchGet(groupId);
+  }
+  const fetchGet = function (groupId) {
+    const url = `${defaultUrl}/api/group/room/${groupId}`;
+    fetch(url)
+    .then((response) => response.json())
+    .then((data) => groupInDeptAndTeam(data))
+    .catch(error => console.log(error))
+  }
+
+  function groupInDeptAndTeam(datas) {
+    datas.group.forEach(function (data, idx) {
+      console.log(data, idx);
+    });
+    // document.getElementById("groupList").innerHTML = out;
+  }
+
+  async function post(path, headers = {}) {
+    const url = `${defaultUrl}/${path}`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+    };
+    const res = await fetch(url, options);
+    const data = await res.json();
+    if (res.ok) {
+      return data;
+    } else {
+      throw Error(data);
+    }
+  }
+
+  init();
+</script>
 </html>

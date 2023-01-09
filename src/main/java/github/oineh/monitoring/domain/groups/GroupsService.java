@@ -54,7 +54,6 @@ public class GroupsService {
         User user = userRepository.findByLoginId(loginId)
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
 
-        System.out.println("그룹 생성 이름" + name);
         Groups groups = new Groups(user, name);
         user.updateGroups(groups);
         groupsRepository.save(groups);

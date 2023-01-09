@@ -3,8 +3,8 @@ package github.oineh.monitoring.domain.belong;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import fixture.UserFixture;
+import github.oineh.monitoring.domain.group.category.Dept;
 import github.oineh.monitoring.domain.group.category.Large;
-import github.oineh.monitoring.domain.group.category.Medium;
 import github.oineh.monitoring.domain.group.category.Team;
 import github.oineh.monitoring.domain.groups.Groups;
 import github.oineh.monitoring.domain.user.User;
@@ -19,7 +19,7 @@ public class GroupsTest {
     User userToBelongAdminUser;
 
     Large large;
-    Medium medium;
+    Dept dept;
     Team team;
 
 
@@ -28,10 +28,10 @@ public class GroupsTest {
         userToBelongAdminUser = UserFixture.getUserEmpty();
 
         large = new Large(userToBelongAdminUser, "대원초등학교");
-        medium = new Medium(userToBelongAdminUser, "1학년");
-        large.updateDepartment(medium);
+        dept = new Dept(userToBelongAdminUser, "1학년");
+        large.updateDepartment(dept);
         team = new Team(userToBelongAdminUser, "1반");
-        medium.updateTeam(team);
+        dept.updateTeam(team);
     }
 
     @Test
@@ -39,11 +39,11 @@ public class GroupsTest {
     public void create() {
         String name = "lol";
         //given - when
-        Groups groups = new Groups(name, large, medium, team);
+        Groups groups = new Groups(name, large, dept, team);
 
         //then
         assertThat(groups.getLarge()).isEqualTo(large);
-        assertThat(groups.getLarge().getMedium()).contains(medium);
+        assertThat(groups.getLarge().getMedium()).contains(dept);
         assertThat(groups.getLarge().getMedium().get(0).getTeams()).contains(team);
     }
 
@@ -65,13 +65,13 @@ public class GroupsTest {
     public void mid_team_create() {
         //given
         String mediumName = "3학년";
-        Medium medium = new Medium(userToBelongAdminUser, mediumName);
+        Dept dept = new Dept(userToBelongAdminUser, mediumName);
 
         //when
-        large.updateDepartment(medium);
+        large.updateDepartment(dept);
 
         //then
-        assertThat(large.getMedium()).contains(medium);
+        assertThat(large.getMedium()).contains(dept);
     }
 
     @Test
@@ -82,9 +82,9 @@ public class GroupsTest {
         Team team = new Team(userToBelongAdminUser, belongSmallName);
 
         //when
-        medium.updateTeam(team);
+        dept.updateTeam(team);
 
         //then
-        assertThat(medium.getTeams()).contains(team);
+        assertThat(dept.getTeams()).contains(team);
     }
 }

@@ -38,13 +38,6 @@ public class UserController {
         return "mypage";
     }
 
-
-    @GetMapping("/group")
-    public String group() {
-        return "group";
-    }
-
-
     @PostMapping("/singup")
     public String postSingUp(SingUpReq singUpReq) {
         userService.singup(singUpReq);

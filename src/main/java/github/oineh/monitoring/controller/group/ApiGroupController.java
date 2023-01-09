@@ -1,6 +1,7 @@
 package github.oineh.monitoring.controller.group;
 
-import github.oineh.monitoring.controller.group.req.GroupCreateReq;
+import github.oineh.monitoring.controller.group.req.GroupCreateTeamDeptReq;
+import github.oineh.monitoring.controller.group.req.GroupCreateTeamReq;
 import github.oineh.monitoring.controller.group.res.GroupListRes;
 import github.oineh.monitoring.domain.group.GroupService;
 import java.security.Principal;
@@ -20,31 +21,44 @@ public class ApiGroupController {
 
     private final GroupService groupService;
 
-    @GetMapping("/{groupId}")
-    public ResponseEntity<GroupListRes> groupList(@PathVariable Long groupId, Principal principal) {
+    @GetMapping("/room/{groupId}")
+    public ResponseEntity<GroupListRes> groupInRoom(@PathVariable("groupId") Long groupId, Principal principal) {
         GroupListRes res = groupService.findGroup(groupId, principal.getName());
 
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/add")
-    public void createGroup(GroupCreateReq req, Principal principal) {
 
+    @PostMapping("/add/dept")
+    public ResponseEntity<Void> createGroupDept(GroupCreateTeamDeptReq req, Principal principal) {
+        groupService.createGroup(req, principal.getName());
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/add/team")
+    public ResponseEntity<Void> createGroupTeam(GroupCreateTeamReq req, Principal principal) {
+        groupService.createGroup(req, principal.getName());
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/invite")
-    public void invite() {
+    public ResponseEntity<Void> invite() {
 
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/invite")
-    public void inviteList() {
+    public ResponseEntity<Void> inviteList() {
 
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/get")
-    public void inviteTake() {
+    public ResponseEntity<Void> inviteTake() {
 
+        return ResponseEntity.ok().build();
     }
 
 }
