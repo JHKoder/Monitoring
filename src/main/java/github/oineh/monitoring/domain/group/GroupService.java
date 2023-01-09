@@ -41,7 +41,7 @@ public class GroupService {
         List<Dept> depts = deptRepository.findAllById(deptIds);
         checkGroupInUser(user, groups);
 
-        return GroupListRes.of(depts);
+        return GroupListRes.of(groupId, depts);
     }
 
     @Transactional

@@ -13,18 +13,31 @@ import lombok.NoArgsConstructor;
 public class GroupListRes {
 
     private List<GroupInDept> group = new ArrayList<>();
+    private Long groupsId;
+
+    private GroupListRes(Long groupsId, List<GroupInDept> group) {
+        this.groupsId = groupsId;
+        this.group = group;
+    }
+
+    public static GroupListRes of(Long groupsId, List<Dept> groups) {
+        return new GroupListRes(groupsId, groups.stream()
+            .map(dept -> new GroupInDept(dept.getName(), dept.getId(),
+                GroupInDeptInTeam.of(dept.getTeams()))
+            ).collect(Collectors.toList()));
+    }
 
     @Getter
     @NoArgsConstructor
     private static class GroupInDept {
 
         private String name;
-        private Long id;
+        private Long deptId;
         private List<GroupInDeptInTeam> list;
 
-        public GroupInDept(String name, Long id, List<GroupInDeptInTeam> list) {
+        public GroupInDept(String name, Long deptId, List<GroupInDeptInTeam> list) {
             this.name = name;
-            this.id = id;
+            this.deptId = deptId;
             this.list = list;
         }
     }
@@ -34,11 +47,11 @@ public class GroupListRes {
     private static class GroupInDeptInTeam {
 
         private String name;
-        private Long id;
+        private Long teamId;
 
-        public GroupInDeptInTeam(String name, Long id) {
+        public GroupInDeptInTeam(String name, Long teamId) {
             this.name = name;
-            this.id = id;
+            this.teamId = teamId;
         }
 
         public static List<GroupInDeptInTeam> of(List<Team> teams) {
@@ -48,14 +61,4 @@ public class GroupListRes {
         }
     }
 
-    public static GroupListRes of(List<Dept> groups) {
-        return new GroupListRes(groups.stream()
-            .map(dept -> new GroupInDept(dept.getName(), dept.getId(),
-                GroupInDeptInTeam.of(dept.getTeams()))
-            ).collect(Collectors.toList()));
-    }
-
-    private GroupListRes(List<GroupInDept> group) {
-        this.group = group;
-    }
 }

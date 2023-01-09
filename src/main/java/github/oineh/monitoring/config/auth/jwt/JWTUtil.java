@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class JWTUtil {
 
     public static final String BEARER = "Bearers";
+    public static final String BEARER_REFRESH = "Monitoring";
     private static final Algorithm ALGORITHM = Algorithm.HMAC256("x509");
 
 
