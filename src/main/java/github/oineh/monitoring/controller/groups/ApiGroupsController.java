@@ -30,7 +30,7 @@ public class ApiGroupsController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> add(@RequestParam String name, Principal principal) {
+    public ResponseEntity<Void> add(@RequestParam("name") String name, Principal principal) {
         groupsService.add(principal.getName(), name);
 
         return ResponseEntity.ok().build();
