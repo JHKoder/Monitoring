@@ -4,12 +4,11 @@ package github.oineh.monitoring.domain.groups;
 import static lombok.AccessLevel.PROTECTED;
 
 import github.oineh.monitoring.common.entity.BaseEntity;
-import github.oineh.monitoring.domain.group.category.Large;
-import github.oineh.monitoring.domain.group.category.Medium;
-import github.oineh.monitoring.domain.group.category.Team;
+import github.oineh.monitoring.domain.group.category.Dept;
 import github.oineh.monitoring.domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,33 +32,24 @@ public class Groups extends BaseEntity {
     private String name;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private User createUser;
+    private User adminUser;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<User> memberUser = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Large large;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Dept> dept = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Medium medium;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    private Team team;
-
-    public Groups(User user, String name) {
-        this.createUser = user;
+    public Groups(User adminUser, String name) {
+        this.adminUser = adminUser;
         this.name = name;
-    }
-
-    public Groups(String name, Large large, Medium medium, Team team) {
-        this.name = name;
-        this.large = large;
-        this.medium = medium;
-        this.team = team;
     }
 
     public void updateMember(User user) {
         this.memberUser.add(user);
+    }
+
+    public void updateDept(Dept dept) {
+        this.dept.add(dept);
     }
 }

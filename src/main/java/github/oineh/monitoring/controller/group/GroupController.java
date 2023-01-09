@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GroupController {
 
     @GetMapping("/group/{groupId}")
-    public String group() {
+    public String groupId() {
         return "group";
     }
 }
