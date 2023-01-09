@@ -35,7 +35,7 @@ public class User {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Pc pc;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Groups> groups = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
