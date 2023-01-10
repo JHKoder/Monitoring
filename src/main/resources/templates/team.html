@@ -5,9 +5,169 @@
   <title>team</title>
 </head>
 <body>
+<!-- 전체 영역-->
+<div>
+  <!--  도메인 입력 -->
+  추가 주소입력
+  <div style="height: 65px;width: 933px; border:solid 1px; margin-bottom: 10px;">
+    <br>
+    <div>
 
+      <div style="width:310px; margin-top: 1px; float:left;">
+        <form action="/api/team/add/url" method="post">
+          <input id="initUrlFormUrlGroups" type="hidden" name="groupsId">
+          <input id="initUrlFormUrlTeam" type="hidden" name="teamId">
+          <label> 이름 </label><input name="name" type="text"><br>
+          <label> URL </label><input name="url" type="text">
+          <input type="submit" value="확인">
+        </form>
+      </div>
+
+      <div style="width:310px;  margin-top: 1px; float:left;">
+        <form action="/api/team/add/ip/port" method="post">
+          <input id="initUrlFormPortGroups" type="hidden" name="groupsId">
+          <input id="initUrlFormPortTeam" type="hidden" name="teamId">
+          <label> 이름 </label><input name="name" type="text"><br>
+          <label> IP:PORT </label><input name="ipPort" type="text">
+          <input type="submit" value="확인">
+        </form>
+      </div>
+
+      <div style="width:310px; margin-top: 1px; float:left;">
+        <form action="/api/team/add/ip" method="post">
+          <input id="initUrlFormIpGroups" type="hidden" name="groupsId">
+          <input id="initUrlFormIpTeam" type="hidden" name="teamId">
+          <label> 이름 </label><input name="name" type="text"><br>
+          <label> IP </label><input name="ip" type="text">
+          <input type="submit" value="확인">
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <div>
+    <label>팀원 초대</label><br>
+    <div style=" height:30px; width:280px; margin-top: 1px; float:left;  border:solid 1px;margin-bottom: 10px;">
+      <form action="/api/team/invite" method="post">
+        <input id="initGroupsTeamMemberInvite" type="hidden" name="groupsId">
+        <input id="initTeamMemberInvite" type="hidden" name="teamId">
+        <label>초대 이메일 </label><input name="name" type="email">
+        <input type="submit" value="초대">
+      </form>
+    </div>
+  </div>
+  <br>
+  <div>
+    <!-- 도메인 영역 -->
+    <label></label>
+    <div id="connectDomain" style="height:auto; width:848px; float:left; margin-bottom:15px;">
+    </div>
+    <div style="width: 848px;/">
+      <label style="float:left">팀원 연결 상태</label>
+      <div style="width:848px;height: 1px;background-color:black;float:left">
+      </div>
+    </div>
+    <!-- 팀원 영역 -->
+    <div id="connectMember" style="width:848px;">
+    </div>
+  </div>
+</div>
 </body>
 <script>
 
+  const defaultUrl = "http://localhost:8081";
+  const local = window.location.pathname;
+  const param = local.substring(11, local.length);
+  const params = param.split('/');
+  const groupId = params[0];
+  const teamId = params[1];
+
+  const init = function () {
+    initFrom();
+    findDomain();
+    findMember();
+  }
+
+  function initFrom() {
+    document.getElementById("initUrlFormUrlGroups").value = groupId;
+    document.getElementById("initUrlFormPortGroups").value = groupId;
+    document.getElementById("initUrlFormIpGroups").value = groupId;
+    document.getElementById("initGroupsTeamMemberInvite").value = groupId;
+
+    document.getElementById("initUrlFormUrlTeam").value = teamId;
+    document.getElementById("initUrlFormPortTeam").value = teamId;
+    document.getElementById("initUrlFormIpTeam").value = teamId;
+    document.getElementById("initTeamMemberInvite").value = teamId;
+
+  }
+
+  function findDomain() {
+    post("api/team/find/domain/" + teamId)
+    .then(data => {
+      document.getElementById("connectDomain")
+          .innerHTML = divConnectDomain(data)
+    })
+    .catch(error => console.log(error))
+  }
+
+  function findMember() {
+    post("api/team/find/member/" + teamId)
+    .then(data => {
+      document.getElementById("connectMember")
+          .innerHTML = divConnectMember(data);
+    })
+    .catch(error => console.log(error))
+  }
+
+  function divConnectDomain(datas) {
+    let out = "";
+    datas.forEach(function (data) {
+      let address = data.name;
+      let status = data.status;
+      out += ""
+          + " <div style='border:solid 1px; width:200px;height: 60px;float: left;margin-right:10px;'>\n"
+          + "   <label>주소 : [ " + address + " ]</label><br>\n"
+          + "   <label>연결 상태 : " + status + " </label>\n"
+          + " </div>";
+    })
+    return out;
+  }
+
+  function divConnectMember(datas) {
+    let out = "";
+    datas.forEach(function (data) {
+      let userName = data.name;
+      let status = data.status;
+      out += ""
+          + "<div style='border:solid 1px; width:200px;height: 23px;float: left;margin-right:10px;margin-top:3px;'>\n"
+          + "    <label style='float:left; margin-left:5px;'>" + userName + "</label>\n"
+          + "    <label style='float:right; margin-right:5px;'> 연결 상태: " + status + " </label>\n"
+          + "</div>";
+    })
+    return out;
+  }
+
+  async function post(path, body, headers = {}) {
+
+    const url = `${defaultUrl}/${path}`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify(body),
+    };
+    const res = await fetch(url, options);
+    const data = await res.json();
+    if (res.ok) {
+      return data;
+    } else {
+      throw Error(data);
+    }
+  }
+
+  init();
 </script>
 </html>
