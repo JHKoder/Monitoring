@@ -80,6 +80,7 @@ public class GroupService {
         Team team = new Team(user, req.getName());
 
         dept.updateTeam(team);
+        team.updateMember(user);
     }
 
     private void checkGroupInUser(User user, Groups groups) {
