@@ -4,6 +4,7 @@ package github.oineh.monitoring.domain.connect;
 import static lombok.AccessLevel.PROTECTED;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,29 +19,32 @@ public class Connect {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String name;
     private String ip;
     private String url;
     private int port;
+    @Enumerated
     private ConnectType connectType;
 
-    public Connect(String ip, String url, int port, ConnectType connectType) {
-
+    public Connect(String name, String ip, String url, int port, ConnectType connectType) {
+        this.name = name;
         this.ip = ip;
         this.url = url;
         this.port = port;
         this.connectType = connectType;
     }
 
-    public static Connect icmp(String ip) {
-        return new Connect(ip, null, 0, ConnectType.ICMP);
+    public static Connect icmp(String name, String ip) {
+        return new Connect(name, ip, null, 0, ConnectType.ICMP);
     }
 
-    public static Connect tcp(String ip, int port) {
-        return new Connect(ip, null, port, ConnectType.TCP_PORT);
+    public static Connect tcp(String name, String ip, int port) {
+        return new Connect(name, ip, null, port, ConnectType.TCP_PORT);
     }
 
-    public static Connect tcp(String url) {
-        return new Connect(null, url, 0, ConnectType.TCP_URL);
+    public static Connect tcp(String name, String url) {
+        return new Connect(name, null, url, 0, ConnectType.TCP_URL);
     }
 
 }
