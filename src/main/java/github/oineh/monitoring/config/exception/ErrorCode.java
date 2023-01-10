@@ -6,8 +6,6 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
     INTERNAL_SERVER_ERROR(500, "서버 오류"),
-
-
     NOT_FOUND_USER(400, "유저 정보를 찾을 수 없습니다."),
     NOT_FOUND_NICKNAME(400, "존재하지 않는 닉네임 입니다."),
     INVALID_VALUE(400, "유효하지 않은 값 입니다."),
@@ -20,7 +18,9 @@ public enum ErrorCode {
     NOT_FOUND_SEND_USER(400, "발송 유저 정보가 없습니다."),
     NO_GROUP_INVITES(400, "해당 그룹의 초대 기록이 없습니다."),
     SELECT_GROUP_USER(400, "해당 그룹의 맴버에 회원님이 없습니다."),
-    NOT_GROUPS_DEPT(400, "해당 그룹네 부서정보가 없습니다.");
+    NOT_GROUPS_DEPT(400, "해당 그룹네 부서정보가 없습니다."),
+    NOT_FOUND_TEAM(400, "해당 팀이 존재 하지 않습니다."),
+    NOT_TEAM_IN_USER(400, "현재 회원님이 속하지 않는 팀입니다.");
     private final int status;
     private final String message;
 
