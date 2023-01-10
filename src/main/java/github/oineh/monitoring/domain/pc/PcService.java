@@ -17,13 +17,12 @@ public class PcService {
 
     private final UserRepository userRepository;
 
-    // - 내 PC 등록
     @Transactional
     public void addUserPc(PcAddReq req, Host host, String loginId) {
         User user = userRepository.findByLoginId(loginId)
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
         user.updatePc(new Pc(req.getPcName(), req.getType()));
-        user.getPc().updateConnect(Connect.icmp(host.toString()));
+        user.getPc().updateConnect(Connect.icmp(user.getInformation().getNickName(), host.toString()));
     }
 
 }
