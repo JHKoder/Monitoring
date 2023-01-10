@@ -61,6 +61,7 @@ public class User {
         this.groups.add(groups);
     }
 
+    @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Information {
