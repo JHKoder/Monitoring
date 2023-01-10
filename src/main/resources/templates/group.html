@@ -17,6 +17,14 @@
   </form>
 </div>
 <hr>
+<div style="border:solid 1px;">
+  그룹 맴버 초대
+  <form action="/api/group/invite" method="post">
+    <input id="initInvite" type="hidden" name="groupsId">
+    <label style="margin-left:3px;"> email </label><input name="name" type="email">
+    <input type="submit" value="초대">
+  </form>
+</div>
 
 <!-- 그룹네 있는 부서 & 팀 생성 -->
 <div id="group_in_dept_in_team" class="group_in_dept_in_team" style="width:930px;">
@@ -30,6 +38,7 @@
 
   const init = function () {
     document.getElementById("initDeptForm").value = groupId;
+    document.getElementById("initInvite").value = groupId;
     fetchGet(groupId);
   }
   const fetchGet = function (groupId) {
@@ -58,7 +67,8 @@
       console.log(team);
       let teamId = team.teamId;
       let teamName = team.name;
-      let href = "/team/room/" + teamId;
+      let href = "/team/room/" + groupsId + "/" + teamId;
+
       out += "    <div style='border:groove;' onclick='location.href=`" + href + "`'>\n"
           + "      <label> 팀명 : " + teamName + "</label><br>\n"
           + "    </div>\n"
