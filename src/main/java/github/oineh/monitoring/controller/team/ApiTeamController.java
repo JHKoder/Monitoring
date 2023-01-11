@@ -4,15 +4,18 @@ package github.oineh.monitoring.controller.team;
 import github.oineh.monitoring.controller.team.req.TeamCreateIpReq;
 import github.oineh.monitoring.controller.team.req.TeamCreatePortReq;
 import github.oineh.monitoring.controller.team.req.TeamCreateUrlReq;
+import github.oineh.monitoring.controller.team.req.TeamInviteReq;
 import github.oineh.monitoring.controller.team.res.TeamInDominRes;
 import github.oineh.monitoring.controller.team.res.TeamInMemberRes;
 import github.oineh.monitoring.domain.connect.ConnectService;
+import github.oineh.monitoring.domain.group.GroupService;
 import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiTeamController {
 
     private final ConnectService connectService;
+    private final GroupService groupService;
 
 
     @PostMapping("/find/domain/{teamId}")
@@ -39,6 +43,14 @@ public class ApiTeamController {
 
         return ResponseEntity.ok(res);
     }
+
+    @PostMapping("/invite")
+    public ResponseEntity<Void> invite(@RequestBody TeamInviteReq req, Principal principal) {
+        groupService.targetUserInvite(req, principal.getName());
+
+        return ResponseEntity.ok().build();
+    }
+
 
     @PostMapping("/add/url")
     public ResponseEntity<Void> createUrl(TeamCreateUrlReq req, Principal principal) {

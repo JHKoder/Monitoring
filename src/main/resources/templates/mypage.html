@@ -3,18 +3,205 @@
 <head>
   <meta charset="UTF-8">
   <title> 마이 페이지</title>
+  <style>
+    thead td {
+      border: solid 1px;
+      width: 350px;
+    }
+
+    button {
+      font-size: 17px;
+    }
+  </style>
 </head>
 <body>
 
-<form action="/api/pc/create" method="post">
-  pc이름 : <input name="pcName" type="text"></br>
-  <select name="type" id="pet-select">
-    <option value="PC">pc</option>
-    <option value="SERVER">server</option>
-  </select><br>
-  <input type="submit">
-</form>
-
+<div>
+  <div>
+    <label>내 PC 정보 추가</label>
+    <div style="border:solid 1px; width:350px;height: 40px;">
+      <div style="margin-left:15px;margin-top:9px;">
+        <form action="/api/pc/create" method="post">
+          이름 : <input name="pcName" type="text">
+          <select name="type" id="pet-select">
+            <option value="PC">pc</option>
+            <option value="SERVER">server</option>
+          </select>
+          <input type="submit" value="냬 PC ">
+        </form>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div style="width:355px;">
+    그룹 초대 목록
+    <div style="border:solid 1px;width:350px; margin-bottom:15px ;">
+      <table style="margin-bottom: 15px;">
+        <thead>
+        <tr>
+          <td>그룹명</td>
+          <td>초대자</td>
+          <td>수락여부</td>
+        </tr>
+        </thead>
+        <tbody id="groupsInvitedDiv">
+        <tbody>
+      </table>
+    </div>
+  </div>
+  <div>
+    팀 초대 목록
+    <div style="border:solid 1px;width:350px; margin-bottom:15px ;">
+      <table style="margin-bottom: 15px;">
+        <thead>
+        <tr>
+          <td>팀명</td>
+          <td>초대자</td>
+          <td>수락여부</td>
+        </tr>
+        </thead>
+        <tbody id="groupsInTeamInvitedDiv">
+        <tbody>
+      </table>
+    </div>
+  </div>
+</div>
 </body>
+<script>
+  const defaultUrl = "http://localhost:8081";
+  const local = window.location.pathname;
 
+  const init = function () {
+    getGroupsInvitedList();
+    getGroupInTeamInvitedList();
+  }
+
+  function getGroupsInvitedList() {
+    fetch("api/user/groups/invite")
+    .then((request) => request.json())
+    .then(data => {
+      document.getElementById("groupsInvitedDiv")
+          .innerHTML = getGroupsInvitedListThen(data);
+    })
+    .catch(error => console.log(error))
+  }
+
+  function getGroupsInvitedListThen(datas) {
+    var out = "";
+    datas.forEach(function (data) {
+      let groupsName = data.groupsName;
+      let groupsId = data.groupsId;
+      let sendName = data.sendName;
+      let id = data.id;
+
+      out += " <tr> \n"
+          + "       <td>" + groupsName + "</td>\n"
+          + "       <td>" + sendName + "</td>\n"
+          + "      <td>\n"
+          + "      <div style='float:right;width:100%'>\n"
+          + "                <button onclick='return groupsInvite(true," + groupsId + "," + id + ")' "
+          + "type='submit' style='float:left; width:50%;'>초대 수락</button>\n"
+          + "                <button onclick='return groupsInvite(false," + groupsId + "," + id + ")' "
+          + "type='submit' style='float:left; width:50%;'>초대 거부</button>\n"
+          + "      </div>\n"
+          + "      </td>\n"
+          + " </tr>";
+    })
+    console.log("gkgk" + out);
+    return out;
+  }
+
+  function groupsInvite(isInvite, groupsId, inviteId) {
+    console.log(isInvite + " , " + groupsId)
+    let url = "api/user/groups/invite/";
+    if (isInvite) {
+      url += "accept";
+    } else {
+      url += "cencel";
+    }
+    console.log(url);
+
+    post(url, {
+      groupsId: groupsId,
+      inviteId: inviteId,
+    })
+    .then(location.reload())
+    .catch(message => console.log(message));
+
+  }
+
+  function groupsTeamInvite(isInvite, groupsId, teamId) {
+    let url = "api/user/team/invite/";
+    if (isInvite) {
+      url += "accept";
+    } else {
+      url += "cencel";
+    }
+    post(url, {
+      groupsId: groupsId,
+      teamId: teamId,
+    })
+    .then(location.reload())
+    .catch(message => console.log(message));
+  }
+
+  function getGroupInTeamInvitedList() {
+    fetch("api/user/team/invite")
+    .then((response) => response.json())
+    .then(data => {
+      document.getElementById("groupsInTeamInvitedDiv")
+          .innerHTML = getGroupsInTeamInvitedThen(data);
+    })
+    .catch(error => console.log(error))
+  }
+
+  function getGroupsInTeamInvitedThen(datas) {
+    console.log("==")
+    console.log(datas);
+    var out = "";
+    datas.forEach(function (data) {
+      let groupsId = data.groupsId;
+      let teamId = data.teamId;
+      let teamName = data.teamName;
+      let sendName = data.sendName;
+
+      out += "<tr>\n"
+          + "   <td>" + teamName + "</td>\n"
+          + "   <td>" + sendName + "</td>\n"
+          + "   <td>\n"
+          + "   <div style='float:right;width:100%'>\n"
+          + "       <button onclick='groupsTeamInvite(true," + groupsId + "," + teamId + ")' type='submit' "
+          + " style='float:left; width:50%;'>초대 수락</button>\n"
+          + "       <button onclick='groupsTeamInvite(false," + groupsId + "," + teamId + ")' type='submit' "
+          + " style='float:right; width:50%;'>초대 거부</button>\n"
+          + "   </div>\n"
+          + "   </td>\n"
+          + "</tr>";
+    })
+    return out;
+  }
+
+  async function post(path, body, headers = {}) {
+
+    const url = `${defaultUrl}/${path}`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify(body),
+    };
+    alert(JSON.stringify(body))
+    const res = await fetch(url, options);
+    const data = await res.json();
+    if (res.ok) {
+      return data;
+    } else {
+      throw Error(data);
+    }
+  }
+
+  init();
+</script>
 </html>

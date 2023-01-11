@@ -4,6 +4,7 @@ package github.oineh.monitoring.domain.group.invit;
 import static lombok.AccessLevel.PROTECTED;
 
 import github.oineh.monitoring.common.entity.BaseEntity;
+import github.oineh.monitoring.domain.group.category.Team;
 import github.oineh.monitoring.domain.user.User;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,4 +30,12 @@ public class InvitedGroup extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private User sendUser;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Team team;
+
+    public InvitedGroup(User targetUser, User sendUser, Team team) {
+        this.targetUser = targetUser;
+        this.sendUser = sendUser;
+        this.team = team;
+    }
 }

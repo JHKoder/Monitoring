@@ -2,12 +2,14 @@ package github.oineh.monitoring.domain.user;
 
 import static lombok.AccessLevel.PROTECTED;
 
+import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.domain.authority.Auth;
 import github.oineh.monitoring.domain.groups.Groups;
 import github.oineh.monitoring.domain.pc.Pc;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "users")
 @NoArgsConstructor(access = PROTECTED)
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +37,8 @@ public class User {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Pc pc;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Groups> groups = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -61,11 +64,13 @@ public class User {
         this.groups.add(groups);
     }
 
+
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Information {
 
+        @Column(unique = true)
         private String email;
         private String name;
         private String nickName;

@@ -2,7 +2,6 @@ package github.oineh.monitoring.config.auth.jwt;
 
 
 import static github.oineh.monitoring.config.auth.jwt.JWTUtil.BEARER;
-import static github.oineh.monitoring.config.auth.jwt.JWTUtil.BEARER_REFRESH;
 
 import github.oineh.monitoring.config.auth.UserLogin;
 import github.oineh.monitoring.config.auth.VerifyResult;
@@ -33,20 +32,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
         throws IOException, ServletException {
 
-        System.out.println("인증 필터");
         Cookie[] requestCookies = request.getCookies();
         if (requestCookies == null) {
             chain.doFilter(request, response);
             return;
         }
-
-        Cookie refreshCookie = Arrays.stream(requestCookies)
-            .filter(bear -> bear.getName().equals(BEARER_REFRESH))
-            .findFirst()
-            .orElse(null);
-//
-//        String refreshToken = refreshCookie.getValue().substring(BEARER_REFRESH.length());
-//        VerifyResult refresh = JWTUtil.verify(refreshToken);
 
         Cookie cookie = Arrays.stream(requestCookies)
             .filter(bear -> bear.getName().equals(BEARER))

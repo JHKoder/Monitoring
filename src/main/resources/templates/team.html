@@ -49,11 +49,9 @@
   <div>
     <label>팀원 초대</label><br>
     <div style=" height:30px; width:280px; margin-top: 1px; float:left;  border:solid 1px;margin-bottom: 10px;">
-      <form action="/api/team/invite" method="post">
-        <input id="initGroupsTeamMemberInvite" type="hidden" name="groupsId">
-        <input id="initTeamMemberInvite" type="hidden" name="teamId">
-        <label>초대 이메일 </label><input name="name" type="email">
-        <input type="submit" value="초대">
+      <form>
+        <label>초대 이메일 </label><input id="email" name="email" type="email">
+        <input type="button" value="초대" onclick="postInviteTeam()">
       </form>
     </div>
   </div>
@@ -93,13 +91,23 @@
     document.getElementById("initUrlFormUrlGroups").value = groupId;
     document.getElementById("initUrlFormPortGroups").value = groupId;
     document.getElementById("initUrlFormIpGroups").value = groupId;
-    document.getElementById("initGroupsTeamMemberInvite").value = groupId;
-
     document.getElementById("initUrlFormUrlTeam").value = teamId;
     document.getElementById("initUrlFormPortTeam").value = teamId;
     document.getElementById("initUrlFormIpTeam").value = teamId;
-    document.getElementById("initTeamMemberInvite").value = teamId;
 
+  }
+
+  function postInviteTeam() {
+    var email = document.getElementById("email").value;
+
+    post("api/team/invite", {
+      teamId: teamId,
+      groupsId: groupId,
+      email: email,
+    })
+    .then(console.log(email + " 팀 초대"))
+    .then(location.reload())
+    .catch(error => console.log(error))
   }
 
   function findDomain() {

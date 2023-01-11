@@ -20,7 +20,12 @@ public enum ErrorCode {
     SELECT_GROUP_USER(400, "해당 그룹의 맴버에 회원님이 없습니다."),
     NOT_GROUPS_DEPT(400, "해당 그룹네 부서정보가 없습니다."),
     NOT_FOUND_TEAM(400, "해당 팀이 존재 하지 않습니다."),
-    NOT_TEAM_IN_USER(400, "현재 회원님이 속하지 않는 팀입니다.");
+    NOT_TEAM_IN_USER(400, "현재 회원님이 속하지 않는 팀입니다."),
+    NO_TEAM_INVITES(400, "해당 팀에 초대 기록이 없습니다."),
+    YOUR_NOT_TEAM(400, "회원님의 팀이 아닙니다."),
+    YOUR_NOT_GROUP(400, "회원님의 그룹이 아닙니다."),
+    OVERLAP_INVITED_TEAM(400, "팀에서 이미 초대한 회원 입니다."),
+    OVERLAP_INVITED_GROUPS(400, "그룹에서 이미 초대한 회원 입니다.");
     private final int status;
     private final String message;
 

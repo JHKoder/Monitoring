@@ -1,15 +1,12 @@
 package github.oineh.monitoring.controller.groups;
 
-import github.oineh.monitoring.controller.groups.req.GroupsInviteReq;
-import github.oineh.monitoring.controller.groups.req.GroupsTakeReq;
+import github.oineh.monitoring.controller.group.req.GroupInviteReq;
 import github.oineh.monitoring.controller.groups.res.GroupsFindRes;
-import github.oineh.monitoring.controller.groups.res.GroupsInviteListRes;
 import github.oineh.monitoring.domain.groups.GroupsService;
 import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,24 +33,12 @@ public class ApiGroupsController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/invite")
-    public ResponseEntity<GroupsInviteListRes> viewInvitations(Principal principal) {
-        GroupsInviteListRes res = groupsService.getInviteList(principal.getName());
-
-        return ResponseEntity.ok(res);
-    }
-
     @PostMapping("/invite")
-    public ResponseEntity<Void> invite(GroupsInviteReq groupsInviteReq, Principal principal) {
-        groupsService.invite(principal.getName(), groupsInviteReq);
+    public ResponseEntity<Void> invite(GroupInviteReq req, Principal principal) {
+        groupsService.targetUserInvite(req, principal.getName());
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/take")
-    public ResponseEntity<Void> take(GroupsTakeReq groupsTakeReq, Principal principal) {
-        groupsService.targetUserInvited(principal.getName(), groupsTakeReq);
 
-        return ResponseEntity.ok().build();
-    }
 }
