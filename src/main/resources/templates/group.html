@@ -17,11 +17,11 @@
   </form>
 </div>
 <hr>
-<div style="border:solid 1px;">
+<div style="border:solid 1px; margin-bottom: 9px;">
   그룹 맴버 초대
-  <form action="/api/group/invite" method="post">
+  <form action="/api/groups/invite" method="post">
     <input id="initInvite" type="hidden" name="groupsId">
-    <label style="margin-left:3px;"> email </label><input name="name" type="email">
+    <label style="margin-left:3px;"> email </label><input name="email" type="email">
     <input type="submit" value="초대">
   </form>
 </div>
@@ -88,7 +88,6 @@
 
   function teamCreate(deptId, groupsId) {
     const name = document.getElementById(groupsId + "-" + deptId + "-name").value;
-    console.log(deptId + " , " + groupsId + " , " + name)
     post("api/group/add/team", {
       groupsId: groupsId,
       deptId: deptId,
