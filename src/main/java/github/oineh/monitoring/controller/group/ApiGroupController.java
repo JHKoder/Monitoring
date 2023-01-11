@@ -44,22 +44,5 @@ public class ApiGroupController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/invite")
-    public ResponseEntity<Void> invite() {
-
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/invite")
-    public ResponseEntity<Void> inviteList() {
-
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/get")
-    public ResponseEntity<Void> inviteTake() {
-
-        return ResponseEntity.ok().build();
-    }
 
 }
