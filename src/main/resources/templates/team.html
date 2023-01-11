@@ -12,47 +12,29 @@
   <div style="height: 65px;width: 933px; border:solid 1px; margin-bottom: 10px;">
     <br>
     <div>
-
       <div style="width:310px; margin-top: 1px; float:left;">
-        <form action="/api/team/add/url" method="post">
-          <input id="initUrlFormUrlGroups" type="hidden" name="groupsId">
-          <input id="initUrlFormUrlTeam" type="hidden" name="teamId">
-          <label> 이름 </label><input name="name" type="text"><br>
-          <label> URL </label><input name="url" type="text">
-          <input type="submit" value="확인">
-        </form>
+        <label> 이름 </label><input id="addressUrlName" name="name" type="text"><br>
+        <label> URL </label><input id="addressUrl" name="url" type="text">
+        <button type="button" onclick="addressUrl()">추가</button>
       </div>
-
       <div style="width:310px;  margin-top: 1px; float:left;">
-        <form action="/api/team/add/ip/port" method="post">
-          <input id="initUrlFormPortGroups" type="hidden" name="groupsId">
-          <input id="initUrlFormPortTeam" type="hidden" name="teamId">
-          <label> 이름 </label><input name="name" type="text"><br>
-          <label> IP:PORT </label><input name="ipPort" type="text">
-          <input type="submit" value="확인">
-        </form>
+        <label> 이름 </label><input id="addressPortName" name="name" type="text"><br>
+        <label> IP:PORT </label><input id="addressPort" name="ipPort" type="text">
+        <button type="button" onclick="addressPort()">추가</button>
       </div>
-
-      <div style="width:310px; margin-top: 1px; float:left;">
-        <form action="/api/team/add/ip" method="post">
-          <input id="initUrlFormIpGroups" type="hidden" name="groupsId">
-          <input id="initUrlFormIpTeam" type="hidden" name="teamId">
-          <label> 이름 </label><input name="name" type="text"><br>
-          <label> IP </label><input name="ip" type="text">
-          <input type="submit" value="확인">
-        </form>
+      <div style="width:310px; margin-top: 1px; float:left;">]
+        <label> 이름 </label><input id="addressIpName" name="name" type="text"><br>
+        <label> IP </label><input id="addressIp" name="ip" type="text">
+        <button type="button" onclick="addressIp()">추가</button>
       </div>
-
     </div>
   </div>
 
   <div>
     <label>팀원 초대</label><br>
     <div style=" height:30px; width:280px; margin-top: 1px; float:left;  border:solid 1px;margin-bottom: 10px;">
-      <form>
-        <label>초대 이메일 </label><input id="email" name="email" type="email">
-        <input type="button" value="초대" onclick="postInviteTeam()">
-      </form>
+      <label>초대 이메일 </label><input id="email" name="email" type="email">
+      <input type="button" value="초대" onclick="postInviteTeam()">
     </div>
   </div>
   <br>
@@ -82,19 +64,39 @@
   const teamId = params[1];
 
   const init = function () {
-    initFrom();
     findDomain();
     findMember();
   }
 
-  function initFrom() {
-    document.getElementById("initUrlFormUrlGroups").value = groupId;
-    document.getElementById("initUrlFormPortGroups").value = groupId;
-    document.getElementById("initUrlFormIpGroups").value = groupId;
-    document.getElementById("initUrlFormUrlTeam").value = teamId;
-    document.getElementById("initUrlFormPortTeam").value = teamId;
-    document.getElementById("initUrlFormIpTeam").value = teamId;
+  function addressUrl() {
+    var name = document.getElementById("addressUrlName").value;
+    var url = document.getElementById("addressUrl").value;
+    post("api/team/add/url", {
+      name: name,
+      url: url,
+    })
+    .catch(error => console.log(error))
 
+  }
+
+  function addressPort() {
+    var name = document.getElementById("addressPortName").value;
+    var port = document.getElementById("addressPort").value;
+    post("api/team/add/ip/port", {
+      name: name,
+      port: port,
+    })
+    .catch(error => console.log(error))
+  }
+
+  function addressIp() {
+    var name = document.getElementById("addressIpName").value;
+    var ip = document.getElementById("addressIp").value;
+    post("api/team/add/ip/", {
+      name: name,
+      ip: ip,
+    })
+    .catch(error => console.log(error))
   }
 
   function postInviteTeam() {

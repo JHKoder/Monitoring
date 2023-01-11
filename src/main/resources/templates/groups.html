@@ -6,12 +6,14 @@
 </head>
 <body>
 <!-- 그룹 등록 -->
-
+그룹 등록
 <div>
-  <form action="/api/groups/add" method="POST">
-    그룸명 : <input name="name" type="text"><br>
-    <button type="submit"> 생성</button>
-  </form>
+  <div>
+    <label>그룹 명 :
+      <input id="groupInputName" name="name" type="text">
+    </label>
+    <button type="button" onclick="groupsAdd()"> 생성</button>
+  </div>
 </div>
 <!-- 초대 하기 -->
 
@@ -31,6 +33,14 @@
   post("api/groups/list")
   .then(data => groupsList(data))
   .catch(error => console.log(error))
+
+  function groupsAdd() {
+    var name = document.getElementById("groupInputName").value;
+    post("api/groups/add", {
+      name: name,
+    })
+    .catch(error => console.log(error))
+  }
 
   function groupsList(datas) {
     let out = "";
