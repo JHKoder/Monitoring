@@ -1,6 +1,7 @@
 package github.oineh.monitoring.controller.groups;
 
 import github.oineh.monitoring.controller.group.req.GroupInviteReq;
+import github.oineh.monitoring.controller.groups.req.GroupsCreateReq;
 import github.oineh.monitoring.controller.groups.res.GroupsFindRes;
 import github.oineh.monitoring.domain.groups.GroupsService;
 import java.security.Principal;
@@ -8,8 +9,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,14 +28,15 @@ public class ApiGroupsController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> add(@RequestParam("name") String name, Principal principal) {
-        groupsService.add(principal.getName(), name);
+    public ResponseEntity<Void> add(@RequestBody GroupsCreateReq req, Principal principal) {
+
+        groupsService.add(principal.getName(), req.getName());
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/invite")
-    public ResponseEntity<Void> invite(GroupInviteReq req, Principal principal) {
+    public ResponseEntity<Void> invite(@RequestBody GroupInviteReq req, Principal principal) {
         groupsService.targetUserInvite(req, principal.getName());
 
         return ResponseEntity.ok().build();
