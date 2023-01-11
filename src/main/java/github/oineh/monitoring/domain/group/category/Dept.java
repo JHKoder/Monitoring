@@ -5,7 +5,6 @@ import static lombok.AccessLevel.PROTECTED;
 import github.oineh.monitoring.domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,9 +26,8 @@ public class Dept {
 
     @OneToOne(fetch = FetchType.LAZY)
     private User adminUser;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Team> teams = new ArrayList<>();
-
     private String name;
 
     public Dept(User adminUser, String name) {

@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.Getter;
@@ -29,7 +30,7 @@ public class Team {
     @OneToOne(fetch = FetchType.LAZY)
     private User createUser;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<User> member = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -37,6 +38,7 @@ public class Team {
     private String name;
 
     public Team(User createUser, String name) {
+        this.member.add(createUser);
         this.createUser = createUser;
         this.name = name;
     }
