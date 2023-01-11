@@ -8,5 +8,4 @@ import lombok.NoArgsConstructor;
 public class GroupsTakeReq {
 
     private String invite;
-
 }
