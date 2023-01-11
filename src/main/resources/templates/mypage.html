@@ -19,16 +19,15 @@
 <div>
   <div>
     <label>내 PC 정보 추가</label>
-    <div style="border:solid 1px; width:350px;height: 40px;">
+    <div style="border:solid 1px; width:370px;height: 40px;">
       <div style="margin-left:15px;margin-top:9px;">
-        <form action="/api/pc/create" method="post">
-          이름 : <input name="pcName" type="text">
-          <select name="type" id="pet-select">
-            <option value="PC">pc</option>
-            <option value="SERVER">server</option>
-          </select>
-          <input type="submit" value="냬 PC ">
-        </form>
+        <label> 이름 :</label> <input id="pcCreateInputName" name="pcName" type="text">
+        <label for="pet-select">분류</label>
+        <select id="pcCreateInputType" name="type" id="pet-select">
+          <option value="PC">pc</option>
+          <option value="SERVER">server</option>
+        </select>
+        <button type="button" onclick="pcCreate()">추가</button>
       </div>
     </div>
   </div>
@@ -70,6 +69,17 @@
 <script>
   const defaultUrl = "http://localhost:8081";
   const local = window.location.pathname;
+
+  function pcCreate() {
+
+    var pcName = document.getElementById("pcCreateInputName").value;
+    var type = document.getElementById("pcCreateInputType").value;
+    post("api/pc/create", {
+      pcName: pcName,
+      type: type,
+    })
+    .catch(error => console.log(error))
+  }
 
   const init = function () {
     getGroupsInvitedList();

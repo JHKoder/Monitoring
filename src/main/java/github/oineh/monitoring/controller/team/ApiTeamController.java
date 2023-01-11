@@ -53,21 +53,21 @@ public class ApiTeamController {
 
 
     @PostMapping("/add/url")
-    public ResponseEntity<Void> createUrl(TeamCreateUrlReq req, Principal principal) {
+    public ResponseEntity<Void> createUrl(@RequestBody TeamCreateUrlReq req, Principal principal) {
         connectService.createUrl(req, principal.getName());
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/add/ip/port")
-    public ResponseEntity<Void> createPort(TeamCreatePortReq req, Principal principal) {
+    public ResponseEntity<Void> createPort(@RequestBody TeamCreatePortReq req, Principal principal) {
         connectService.createIpPort(req, principal.getName());
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/add/ip")
-    public ResponseEntity<Void> createIp(TeamCreateIpReq req, Principal principal) {
+    public ResponseEntity<Void> createIp(@RequestBody TeamCreateIpReq req, Principal principal) {
         connectService.createIp(req, principal.getName());
 
         return ResponseEntity.ok().build();
