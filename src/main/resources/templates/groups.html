@@ -21,7 +21,7 @@
 </div>
 </body>
 <script>
-  var defaultUrl = window.location.href;
+  var defaultUrl = window.location.origin;
 
   post("api/groups/list")
   .then(data => groupsList(data))
@@ -29,7 +29,7 @@
 
   function groupsAdd() {
     var name = document.getElementById("groupInputName").value;
-    post("api/groups/add", {
+    postVoid("api/groups/add", {
       name: name,
     })
     .then(() => location.reload())
@@ -49,7 +49,7 @@
   }
 
   async function post(path, headers = {}) {
-    const url = `${defaultUrl}/${path}`;
+    const url = `${defaultUrl}${path}`;
     const options = {
       method: "POST",
       headers: {
@@ -67,7 +67,7 @@
   }
 
   async function post(path, body, headers = {}) {
-    const url = `${defaultUrl}${path}`;
+    const url = `${defaultUrl}/${path}`;
     const options = {
       method: "POST",
       headers: {
@@ -80,6 +80,25 @@
     const data = await res.json();
     if (res.ok) {
       return data;
+    } else {
+      throw Error(data);
+    }
+  }
+
+  async function postVoid(path, body, headers = {}) {
+
+    const url = `${defaultUrl}/${path}`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify(body),
+    };
+    const res = await fetch(url, options);
+    if (res.ok) {
+      return res.ok;
     } else {
       throw Error(data);
     }

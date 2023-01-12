@@ -68,7 +68,7 @@
 </body>
 <script>
 
-  const defaultUrl = window.location.href;
+  const defaultUrl = window.location.origin
   const local = window.location.pathname;
   const param = local.substring(11, local.length);
   const params = param.split('/');
@@ -177,7 +177,7 @@
 
     console.log("hello");
     console.log(aClass + "." + bClass + "." + cClass + "." + dClass);
-    post("api/team/add/ip/port", {
+    postVoid("api/team/add/ip/port", {
       teamId: teamId,
       name: name,
       a: aClass,
@@ -215,7 +215,7 @@
   function postInviteTeam() {
     var email = document.getElementById("email").value;
 
-    post("api/team/invite", {
+    postVoid("api/team/invite", {
       teamId: teamId,
       groupsId: groupId,
       email: email,
@@ -228,7 +228,7 @@
 
   async function post(path, body, headers = {}) {
 
-    const url = `${defaultUrl}${path}`;
+    const url = `${defaultUrl}/${path}`;
     const options = {
       method: "POST",
       headers: {
@@ -248,7 +248,7 @@
 
   async function postVoid(path, body, headers = {}) {
 
-    const url = `${defaultUrl}${path}`;
+    const url = `${defaultUrl}/${path}`;
     const options = {
       method: "POST",
       headers: {

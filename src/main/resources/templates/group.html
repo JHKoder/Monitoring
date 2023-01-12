@@ -28,13 +28,13 @@
 </div>
 </body>
 <script>
-  const defaultUrl = window.location.href;
+  const defaultUrl = window.location.origin;
   const local = window.location.pathname;
   const groupId = local.substring(7, local.length);
 
   function groupsInviteClick() {
     var email = document.getElementById("groupsInputEmail").value;
-    post("api/groups/invite", {
+    postVoid("api/groups/invite", {
       groupsId: groupId,
       email: email,
     })
@@ -45,7 +45,7 @@
   function deptCreate() {
     var name = document.getElementById("deptName").value;
 
-    post("api/group/add/dept", {
+    postVoid("api/group/add/dept", {
       groupsId: groupId,
       name: name,
     })
@@ -104,7 +104,7 @@
 
   function teamCreate(deptId, groupsId) {
     const name = document.getElementById(groupsId + "-" + deptId + "-name").value;
-    post("api/group/add/team", {
+    postVoid("api/group/add/team", {
       groupsId: groupsId,
       deptId: deptId,
       name: name,
@@ -115,7 +115,7 @@
 
   async function post(path, body, headers = {}) {
 
-    const url = `${defaultUrl}${path}`;
+    const url = `${defaultUrl}/${path}`;
     const options = {
       method: "POST",
       headers: {
@@ -128,6 +128,25 @@
     const data = await res.json();
     if (res.ok) {
       return data;
+    } else {
+      throw Error(data);
+    }
+  }
+
+  async function postVoid(path, body, headers = {}) {
+
+    const url = `${defaultUrl}/${path}`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify(body),
+    };
+    const res = await fetch(url, options);
+    if (res.ok) {
+      return res.ok;
     } else {
       throw Error(data);
     }
