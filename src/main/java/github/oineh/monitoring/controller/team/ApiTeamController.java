@@ -10,7 +10,7 @@ import github.oineh.monitoring.controller.team.res.TeamInDomainRes;
 import github.oineh.monitoring.controller.team.res.TeamInMemberPingRes;
 import github.oineh.monitoring.controller.team.res.TeamInMemberRes;
 import github.oineh.monitoring.domain.connect.ConnectService;
-import github.oineh.monitoring.domain.group.GroupService;
+import github.oineh.monitoring.domain.groups.group.GroupService;
 import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

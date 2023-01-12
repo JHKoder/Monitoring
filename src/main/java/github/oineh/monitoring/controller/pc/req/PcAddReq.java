@@ -11,5 +11,4 @@ public class PcAddReq {
 
     private String pcName;
     private Type type;
-
 }

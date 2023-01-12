@@ -60,11 +60,6 @@ public class User extends BaseEntity {
         this.auth = auth;
     }
 
-    public void updateGroups(Groups groups) {
-        this.groups.add(groups);
-    }
-
-
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor

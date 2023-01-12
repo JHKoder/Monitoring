@@ -35,7 +35,7 @@ public class PcClientIpUtils {
             }
             return Host.from(request.getRemoteAddr());
         } catch (Exception e) {
-            throw new ApiException(ErrorCode.CLIENT_IP6V_NO);
+            throw new ApiException(ErrorCode.INTERNAL_CLIENT_IP6V_NO);
         }
     }
 }

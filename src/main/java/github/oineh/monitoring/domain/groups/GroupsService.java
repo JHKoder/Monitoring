@@ -44,7 +44,6 @@ public class GroupsService {
         groupsRepository.save(groups);
     }
 
-    //그룹 초대하기
     @Transactional
     public void targetUserInvite(GroupInviteReq req, String userId) {
         User sendUser = userRepository.findByLoginId(userId)
@@ -78,7 +77,6 @@ public class GroupsService {
             .collect(Collectors.toList());
     }
 
-    //초대 받기
     @Transactional
     public void acceptInvite(UserGroupsInviteReq req, String userId) {
         User user = userRepository.findByLoginId(userId)

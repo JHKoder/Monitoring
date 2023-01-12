@@ -1,6 +1,6 @@
 package github.oineh.monitoring.controller.user.res;
 
-import github.oineh.monitoring.domain.group.invit.InvitedGroup;
+import github.oineh.monitoring.domain.groups.group.invit.InvitedGroup;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

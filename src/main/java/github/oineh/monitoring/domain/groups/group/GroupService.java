@@ -1,4 +1,4 @@
-package github.oineh.monitoring.domain.group;
+package github.oineh.monitoring.domain.groups.group;
 
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
@@ -8,14 +8,14 @@ import github.oineh.monitoring.controller.group.res.GroupListRes;
 import github.oineh.monitoring.controller.team.req.TeamInviteReq;
 import github.oineh.monitoring.controller.user.req.UserGroupsTeamInviteReq;
 import github.oineh.monitoring.controller.user.res.InviteTeamUserRes;
-import github.oineh.monitoring.domain.group.category.Dept;
-import github.oineh.monitoring.domain.group.category.DeptRepository;
-import github.oineh.monitoring.domain.group.category.Team;
-import github.oineh.monitoring.domain.group.category.TeamRepository;
-import github.oineh.monitoring.domain.group.invit.InvitedGroup;
-import github.oineh.monitoring.domain.group.invit.InvitedGroupRepository;
 import github.oineh.monitoring.domain.groups.Groups;
 import github.oineh.monitoring.domain.groups.GroupsRepository;
+import github.oineh.monitoring.domain.groups.group.category.Dept;
+import github.oineh.monitoring.domain.groups.group.category.DeptRepository;
+import github.oineh.monitoring.domain.groups.group.category.Team;
+import github.oineh.monitoring.domain.groups.group.category.TeamRepository;
+import github.oineh.monitoring.domain.groups.group.invit.InvitedGroup;
+import github.oineh.monitoring.domain.groups.group.invit.InvitedGroupRepository;
 import github.oineh.monitoring.domain.user.User;
 import github.oineh.monitoring.domain.user.UserRepository;
 import java.util.Collections;
@@ -39,7 +39,7 @@ public class GroupService {
     // 그룹네 모든 소속 & 팀 리턴
     @Transactional
     public GroupListRes findGroup(Long groupId, String userId) {
-        User user = userRepository.findByLoginId(userId).orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+        userRepository.findByLoginId(userId).orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
 
         Groups groups = groupsRepository.findById(groupId).orElse(null);
 
@@ -50,6 +50,7 @@ public class GroupService {
 
     public List<Dept> findDeptByGroupId(Groups groups) {
         List<Long> deptIds = groups.getDept().stream().map(Dept::getId).collect(Collectors.toList());
+
         return deptRepository.findAllById(deptIds);
     }
 
