@@ -33,6 +33,7 @@ public class ApiTeamController {
         Principal principal) {
         List<TeamInDominRes> res = connectService.findTeamInConnectList(teamId, principal.getName());
 
+        System.out.println(res.size());
         return ResponseEntity.ok(res);
     }
 
@@ -41,6 +42,7 @@ public class ApiTeamController {
         Principal principal) {
         List<TeamInMemberRes> res = connectService.findTeamInConnectMemberList(teamId, principal.getName());
 
+        System.out.println(res.size());
         return ResponseEntity.ok(res);
     }
 
@@ -54,6 +56,7 @@ public class ApiTeamController {
 
     @PostMapping("/add/url")
     public ResponseEntity<Void> createUrl(@RequestBody TeamCreateUrlReq req, Principal principal) {
+        System.out.println(",,, " + req.getUrl());
         connectService.createUrl(req, principal.getName());
 
         return ResponseEntity.ok().build();
@@ -61,6 +64,7 @@ public class ApiTeamController {
 
     @PostMapping("/add/ip/port")
     public ResponseEntity<Void> createPort(@RequestBody TeamCreatePortReq req, Principal principal) {
+        System.out.println("controller ip :" + req.getIp() + ",port:" + req.getPort());
         connectService.createIpPort(req, principal.getName());
 
         return ResponseEntity.ok().build();
@@ -68,6 +72,7 @@ public class ApiTeamController {
 
     @PostMapping("/add/ip")
     public ResponseEntity<Void> createIp(@RequestBody TeamCreateIpReq req, Principal principal) {
+        System.out.println(req.getIp() + " ==== ");
         connectService.createIp(req, principal.getName());
 
         return ResponseEntity.ok().build();
