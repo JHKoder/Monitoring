@@ -5,7 +5,9 @@ import github.oineh.monitoring.controller.team.req.TeamCreateIpReq;
 import github.oineh.monitoring.controller.team.req.TeamCreatePortReq;
 import github.oineh.monitoring.controller.team.req.TeamCreateUrlReq;
 import github.oineh.monitoring.controller.team.req.TeamInviteReq;
-import github.oineh.monitoring.controller.team.res.TeamInDominRes;
+import github.oineh.monitoring.controller.team.res.TeamInDomainPingRes;
+import github.oineh.monitoring.controller.team.res.TeamInDomainRes;
+import github.oineh.monitoring.controller.team.res.TeamInMemberPingRes;
 import github.oineh.monitoring.controller.team.res.TeamInMemberRes;
 import github.oineh.monitoring.domain.connect.ConnectService;
 import github.oineh.monitoring.domain.group.GroupService;
@@ -29,20 +31,33 @@ public class ApiTeamController {
 
 
     @PostMapping("/find/domain/{teamId}")
-    public ResponseEntity<List<TeamInDominRes>> findTeamDomain(@PathVariable("teamId") Long teamId,
-        Principal principal) {
-        List<TeamInDominRes> res = connectService.findTeamInConnectList(teamId, principal.getName());
+    public ResponseEntity<List<TeamInDomainRes>> domainList(@PathVariable("teamId") Long teamId) {
+        List<TeamInDomainRes> res = connectService.findTeamInDomain(teamId);
 
-        System.out.println(res.size());
         return ResponseEntity.ok(res);
     }
 
     @PostMapping("/find/member/{teamId}")
-    public ResponseEntity<List<TeamInMemberRes>> findTeam(@PathVariable("teamId") Long teamId,
-        Principal principal) {
-        List<TeamInMemberRes> res = connectService.findTeamInConnectMemberList(teamId, principal.getName());
+    public ResponseEntity<List<TeamInMemberRes>> memberList(@PathVariable("teamId") Long teamId) {
+        List<TeamInMemberRes> res = connectService.findTeamInMember(teamId);
 
-        System.out.println(res.size());
+        return ResponseEntity.ok(res);
+    }
+
+
+    @PostMapping("/ping/domain/{teamId}")
+    public ResponseEntity<List<TeamInDomainPingRes>> findTeamDomain(@PathVariable("teamId") Long teamId,
+        Principal principal) {
+        List<TeamInDomainPingRes> res = connectService.findTeamInConnectDomainList(teamId, principal.getName());
+
+        return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/ping/member/{teamId}")
+    public ResponseEntity<List<TeamInMemberPingRes>> findTeam(@PathVariable("teamId") Long teamId,
+        Principal principal) {
+        List<TeamInMemberPingRes> res = connectService.findTeamInConnectMemberList(teamId, principal.getName());
+
         return ResponseEntity.ok(res);
     }
 
@@ -56,7 +71,6 @@ public class ApiTeamController {
 
     @PostMapping("/add/url")
     public ResponseEntity<Void> createUrl(@RequestBody TeamCreateUrlReq req, Principal principal) {
-        System.out.println(",,, " + req.getUrl());
         connectService.createUrl(req, principal.getName());
 
         return ResponseEntity.ok().build();
@@ -64,7 +78,6 @@ public class ApiTeamController {
 
     @PostMapping("/add/ip/port")
     public ResponseEntity<Void> createPort(@RequestBody TeamCreatePortReq req, Principal principal) {
-        System.out.println("controller ip :" + req.getIp() + ",port:" + req.getPort());
         connectService.createIpPort(req, principal.getName());
 
         return ResponseEntity.ok().build();
@@ -72,7 +85,6 @@ public class ApiTeamController {
 
     @PostMapping("/add/ip")
     public ResponseEntity<Void> createIp(@RequestBody TeamCreateIpReq req, Principal principal) {
-        System.out.println(req.getIp() + " ==== ");
         connectService.createIp(req, principal.getName());
 
         return ResponseEntity.ok().build();

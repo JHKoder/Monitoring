@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class TeamInDominRes {
+public class TeamInDomainPingRes {
 
     private String name;
     private String status;
+    private Long connectId;
 
-    public TeamInDominRes(String name, NetStatus status) {
+    public TeamInDomainPingRes(Long connectId, String name, NetStatus status) {
+        this.connectId = connectId;
         this.name = name;
         this.status = statusToStr(status);
     }
