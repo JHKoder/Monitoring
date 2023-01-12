@@ -1,7 +1,8 @@
-package github.oineh.monitoring.domain.group.category;
+package github.oineh.monitoring.domain.groups.group.category;
 
 import static lombok.AccessLevel.PROTECTED;
 
+import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Dept {
+public class Dept extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

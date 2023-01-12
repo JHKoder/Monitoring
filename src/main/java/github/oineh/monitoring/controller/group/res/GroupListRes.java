@@ -1,7 +1,7 @@
 package github.oineh.monitoring.controller.group.res;
 
-import github.oineh.monitoring.domain.group.category.Dept;
-import github.oineh.monitoring.domain.group.category.Team;
+import github.oineh.monitoring.domain.groups.group.category.Dept;
+import github.oineh.monitoring.domain.groups.group.category.Team;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -3,7 +3,7 @@ package github.oineh.monitoring.controller.group;
 import github.oineh.monitoring.controller.group.req.GroupCreateTeamDeptReq;
 import github.oineh.monitoring.controller.group.req.GroupCreateTeamReq;
 import github.oineh.monitoring.controller.group.res.GroupListRes;
-import github.oineh.monitoring.domain.group.GroupService;
+import github.oineh.monitoring.domain.groups.group.GroupService;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +32,6 @@ public class ApiGroupController {
 
     @PostMapping("/add/dept")
     public ResponseEntity<Void> createGroupDept(@RequestBody GroupCreateTeamDeptReq req, Principal principal) {
-
-        System.out.println(req.getGroupsId() + "," + req.getName());
         groupService.createGroup(req, principal.getName());
 
         return ResponseEntity.ok().build();

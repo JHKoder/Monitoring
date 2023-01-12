@@ -3,8 +3,6 @@ package github.oineh.monitoring.domain.connect;
 import github.oineh.monitoring.common.service.MonitoringService;
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
-import github.oineh.monitoring.controller.pc.req.ByPcReq;
-import github.oineh.monitoring.controller.pc.res.ConnectStatusRes;
 import github.oineh.monitoring.controller.team.req.TeamCreateIpReq;
 import github.oineh.monitoring.controller.team.req.TeamCreatePortReq;
 import github.oineh.monitoring.controller.team.req.TeamCreateUrlReq;
@@ -12,11 +10,9 @@ import github.oineh.monitoring.controller.team.res.TeamInDomainPingRes;
 import github.oineh.monitoring.controller.team.res.TeamInDomainRes;
 import github.oineh.monitoring.controller.team.res.TeamInMemberPingRes;
 import github.oineh.monitoring.controller.team.res.TeamInMemberRes;
-import github.oineh.monitoring.domain.group.category.Team;
-import github.oineh.monitoring.domain.group.category.TeamRepository;
+import github.oineh.monitoring.domain.groups.group.category.Team;
+import github.oineh.monitoring.domain.groups.group.category.TeamRepository;
 import io.github.sno.network.Host;
-import io.github.sno.network.NetProtocolDto;
-import io.github.sno.network.NetProtocolType;
 import io.github.sno.network.NetStatus;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,13 +27,6 @@ public class ConnectService {
     private final TeamRepository teamRepository;
     private final MonitoringService monitoringService;
 
-    public ConnectStatusRes findConnectStatus(ByPcReq byPcReq, Host host) {
-        NetProtocolDto netProtocolDto = new NetProtocolDto(host, byPcReq.getUrl(), byPcReq.getPort());
-
-        NetProtocolType netProtocolType = monitoringService.connectNetProtocol(netProtocolDto);
-
-        return new ConnectStatusRes(netProtocolType);
-    }
 
     @Transactional
     public List<TeamInDomainPingRes> findTeamInConnectDomainList(Long teamId, String userId) {

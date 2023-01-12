@@ -3,6 +3,7 @@ package github.oineh.monitoring.domain.pc;
 
 import static lombok.AccessLevel.PROTECTED;
 
+import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.domain.connect.Connect;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Pc {
+public class Pc extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

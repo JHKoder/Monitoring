@@ -3,6 +3,7 @@ package github.oineh.monitoring.domain.authority;
 
 import static lombok.AccessLevel.PROTECTED;
 
+import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.domain.user.User;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = PROTECTED)
-public class Auth {
+public class Auth extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

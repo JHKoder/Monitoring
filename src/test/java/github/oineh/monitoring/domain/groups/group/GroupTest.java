@@ -4,9 +4,9 @@ package github.oineh.monitoring.domain.groups.group;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import fixture.UserFixture;
-import github.oineh.monitoring.domain.group.category.Dept;
-import github.oineh.monitoring.domain.group.category.Team;
 import github.oineh.monitoring.domain.groups.Groups;
+import github.oineh.monitoring.domain.groups.group.category.Dept;
+import github.oineh.monitoring.domain.groups.group.category.Team;
 import github.oineh.monitoring.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
