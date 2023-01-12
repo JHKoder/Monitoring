@@ -9,23 +9,35 @@
 <div>
   <!--  도메인 입력 -->
   추가 주소입력
-  <div style="height: 65px;width: 933px; border:solid 1px; margin-bottom: 10px;">
+  <div style="height: 65px;width: 1033px; border:solid 1px; margin-bottom: 10px;">
     <br>
     <div>
-      <div style="width:310px; margin-top: 1px; float:left;">
+      <div style="width:300px; margin-top: 1px; float:left;  border:solid 1px;">
         <label> 이름 </label><input id="addressUrlName" name="name" type="text"><br>
         <label> URL </label><input id="addressUrl" name="url" type="text">
         <button type="button" onclick="addressUrl()">추가</button>
       </div>
-      <div style="width:310px;  margin-top: 1px; float:left;">
-        <label> 이름 </label><input id="addressPortName" name="name" type="text"><br>
-        <label> IP:PORT </label><input id="addressPort" name="ipPort" type="text">
+      <div style="width:400px;  margin-top: 1px; float:left; border:solid 1px;">
+        <label> 이름 </label><input id="addressPortName" name="name" type="text" style="width:113px;"><br>
+        <label> IP </label>
+        <input id="addressPortIpA" name="addressPortIpA" type="number" max="255" min="0" style="width:40px;">.
+        <input id="addressPortIpB" name="addressPortIpB" type="number" max="255" min="0" style="width:40px;">.
+        <input id="addressPortIpC" name="addressPortIpC" type="number" max="255" min="0" style="width:40px;">.
+        <input id="addressPortIpD" name="addressPortIpD" type="number" max="255" min="0" style="width:40px;">
+        <label>port</label>
+        <input id="addressPortPort" name="port" type="text" style="width:70px;">
         <button type="button" onclick="addressPort()">추가</button>
       </div>
-      <div style="width:310px; margin-top: 1px; float:left;">]
-        <label> 이름 </label><input id="addressIpName" name="name" type="text"><br>
-        <label> IP </label><input id="addressIp" name="ip" type="text">
-        <button type="button" onclick="addressIp()">추가</button>
+      <div style="width:300px; margin-top: 1px; float:left; border:solid 1px; ">
+        <div>
+          <label> 이름 </label><input id="addressIpName" name="name" type="text" style="width: 100px;"><br>
+          <label> IP </label>
+          <input id="addressIpA" name="addressIpA" type="number" max="255" min="0" style="width:40px;">.
+          <input id="addressIpB" name="addressIpB" type="number" max="255" min="0" style="width:40px;">.
+          <input id="addressIpC" name="addressIpC" type="number" max="255" min="0" style="width:40px;">.
+          <input id="addressIpD" name="addressIpD" type="number" max="255" min="0" style="width:40px;">
+          <button type="button" onclick="addressIp()">추가</button>
+        </div>
       </div>
     </div>
   </div>
@@ -71,9 +83,14 @@
   function addressUrl() {
     var name = document.getElementById("addressUrlName").value;
     var url = document.getElementById("addressUrl").value;
-    post("api/team/add/url", {
+    postVoid("api/team/add/url", {
+      teamId: teamId,
       name: name,
       url: url,
+    })
+    .then(() => {
+      console.log("HI");
+      location.reload();
     })
     .catch(error => console.log(error))
 
@@ -81,20 +98,45 @@
 
   function addressPort() {
     var name = document.getElementById("addressPortName").value;
-    var port = document.getElementById("addressPort").value;
+    var port = document.getElementById("addressPortPort").value;
+    var aClass = document.getElementById("addressPortIpA").value;
+    var bClass = document.getElementById("addressPortIpB").value;
+    var cClass = document.getElementById("addressPortIpC").value;
+    var dClass = document.getElementById("addressPortIpD").value;
+
+    console.log("hello");
+    console.log(aClass + "." + bClass + "." + cClass + "." + dClass);
     post("api/team/add/ip/port", {
+      teamId: teamId,
       name: name,
+      a: aClass,
+      b: bClass,
+      c: cClass,
+      d: dClass,
       port: port,
+    })
+    .then(() => {
+      location.reload()
     })
     .catch(error => console.log(error))
   }
 
   function addressIp() {
     var name = document.getElementById("addressIpName").value;
-    var ip = document.getElementById("addressIp").value;
-    post("api/team/add/ip/", {
+    var AClass = document.getElementById("addressIpA").value;
+    var BClass = document.getElementById("addressIpB").value;
+    var CClass = document.getElementById("addressIpC").value;
+    var DClass = document.getElementById("addressIpD").value;
+    postVoid("api/team/add/ip/", {
+      teamId: teamId,
       name: name,
-      ip: ip,
+      a: AClass,
+      b: BClass,
+      c: CClass,
+      d: DClass,
+    })
+    .then(() => {
+      location.reload()
     })
     .catch(error => console.log(error))
   }
@@ -107,8 +149,9 @@
       groupsId: groupId,
       email: email,
     })
-    .then(console.log(email + " 팀 초대"))
-    .then(location.reload())
+    .then(() => {
+      location.reload()
+    })
     .catch(error => console.log(error))
   }
 
@@ -118,12 +161,14 @@
       document.getElementById("connectDomain")
           .innerHTML = divConnectDomain(data)
     })
+    .then(data => console.log(data))
     .catch(error => console.log(error))
   }
 
   function findMember() {
     post("api/team/find/member/" + teamId)
-    .then(data => {
+    .then((data) => {
+      console.log(data);
       document.getElementById("connectMember")
           .innerHTML = divConnectMember(data);
     })
@@ -173,6 +218,25 @@
     const data = await res.json();
     if (res.ok) {
       return data;
+    } else {
+      throw Error(data);
+    }
+  }
+
+  async function postVoid(path, body, headers = {}) {
+
+    const url = `${defaultUrl}/${path}`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify(body),
+    };
+    const res = await fetch(url, options);
+    if (res.ok) {
+      return res.ok;
     } else {
       throw Error(data);
     }

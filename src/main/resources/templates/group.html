@@ -35,9 +35,10 @@
   function groupsInviteClick() {
     var email = document.getElementById("groupsInputEmail").value;
     post("api/groups/invite", {
-      groupId: groupId,
+      groupsId: groupId,
       email: email,
     })
+    .then(location.reload())
     .catch(error => console.log(error))
   }
 
@@ -45,15 +46,14 @@
     var name = document.getElementById("deptName").value;
 
     post("api/group/add/dept", {
-      groupId: groupId,
+      groupsId: groupId,
       name: name,
     })
+    .then(location.reload())
     .catch(error => console.log(error))
   }
 
   const init = function () {
-    document.getElementById("initDeptForm").value = groupId;
-    document.getElementById("initInvite").value = groupId;
     fetchGet(groupId);
   }
 
