@@ -28,11 +28,6 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/user")
-    public String user() {
-        return "user";
-    }
-
     @GetMapping("/mypage")
     public String mypage() {
         return "mypage";

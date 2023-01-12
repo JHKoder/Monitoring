@@ -1,6 +1,6 @@
 package github.oineh.monitoring.controller.team.res;
 
-import io.github.sno.network.NetStatus;
+import github.oineh.monitoring.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 public class TeamInMemberRes {
 
     private String name;
-    private NetStatus status;
+    private Long id;
 
-    public TeamInMemberRes(String nickName, NetStatus status) {
-        this.name = nickName;
-        this.status = status;
+    public TeamInMemberRes(User user) {
+        this.name = user.getInformation().getName();
+        this.id = user.getId();
     }
 }

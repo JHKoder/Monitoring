@@ -21,7 +21,7 @@
 </div>
 </body>
 <script>
-  var defaultUrl = "http://localhost:8081";
+  var defaultUrl = window.location.href;
 
   post("api/groups/list")
   .then(data => groupsList(data))
@@ -32,7 +32,7 @@
     post("api/groups/add", {
       name: name,
     })
-    .then(location.reload())
+    .then(() => location.reload())
     .catch(error => console.log(error))
   }
 
@@ -67,7 +67,7 @@
   }
 
   async function post(path, body, headers = {}) {
-    const url = `${defaultUrl}/${path}`;
+    const url = `${defaultUrl}${path}`;
     const options = {
       method: "POST",
       headers: {
