@@ -32,6 +32,8 @@ public class ApiGroupController {
 
     @PostMapping("/add/dept")
     public ResponseEntity<Void> createGroupDept(@RequestBody GroupCreateTeamDeptReq req, Principal principal) {
+
+        System.out.println(req.getGroupsId() + "," + req.getName());
         groupService.createGroup(req, principal.getName());
 
         return ResponseEntity.ok().build();

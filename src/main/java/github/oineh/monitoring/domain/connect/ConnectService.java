@@ -16,6 +16,7 @@ import io.github.sno.network.Host;
 import io.github.sno.network.NetProtocolDto;
 import io.github.sno.network.NetProtocolType;
 import io.github.sno.network.NetStatus;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -41,7 +42,11 @@ public class ConnectService {
     public List<TeamInDominRes> findTeamInConnectList(Long teamId, String userId) {
         Team team = teamRepository.findById(teamId)
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
+        String ip = "127.0.0.1";
+        int[] arr = Arrays.stream(ip.split("\\.")).mapToInt(Integer::parseInt).toArray();
+
         return team.getConnects().stream()
+            .filter(connect -> connect.getConnectType() != null)
             .map(connect -> new TeamInDominRes(connect.getName(), connectStatus(connect)))
             .collect(Collectors.toList());
     }
@@ -52,6 +57,7 @@ public class ConnectService {
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
 
         return team.getMember().stream()
+            .filter(member -> member.getPc() != null)
             .map(member -> new TeamInMemberRes(member.getInformation().getNickName(),
                 connectStatus(member.getPc().getConnect())))
             .collect(Collectors.toList());
@@ -62,7 +68,8 @@ public class ConnectService {
             return monitoringService.IcmpStatus(Host.from(connect.getIp()));
         }
         if (connect.getConnectType() == ConnectType.TCP_PORT) {
-            return monitoringService.TcpStatus(Host.from(connect.getUrl()), connect.getPort());
+            System.out.println("ip : " + connect.getIp());
+            return monitoringService.TcpStatus(Host.from(connect.getIp()), connect.getPort());
         }
         if (connect.getConnectType() == ConnectType.TCP_URL) {
             return monitoringService.TcpStatus(connect.getUrl());
@@ -88,7 +95,7 @@ public class ConnectService {
         Team team = teamRepository.findById(req.getTeamId())
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
 
-        Connect connect = Connect.tcp(req.getName(), req.getUrl(), req.getPort());
+        Connect connect = Connect.tcp(req.getName(), req.getIp(), req.getPort());
 
         team.updateConnect(connect);
     }
