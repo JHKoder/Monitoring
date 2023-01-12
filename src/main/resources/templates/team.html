@@ -68,7 +68,7 @@
 </body>
 <script>
 
-  const defaultUrl = "http://localhost:8081";
+  const defaultUrl = window.location.href;
   const local = window.location.pathname;
   const param = local.substring(11, local.length);
   const params = param.split('/');
@@ -78,6 +78,78 @@
   const init = function () {
     findDomain();
     findMember();
+    pingDomain();
+    pingMember();
+  }
+
+  function findDomain() {
+    post("api/team/find/domain/" + teamId)
+    .then((datas) => {
+      var out = "";
+      datas.forEach(function (data) {
+        let name = data.name;
+        let id = data.id;
+        out += ""
+            + " <div style='border:solid 1px; width:200px;height: 60px;float: left;margin-right:10px;'>\n"
+            + "   <label id ='domain_address_" + id + "'>주소 : [ " + name + " ]</label><br>\n"
+            + "   <label id ='domain_status_" + id + "'>연결 상태 : 대기중 </label>\n"
+            + " </div>";
+      })
+      document.getElementById("connectDomain")
+          .innerHTML = out;
+    })
+    .catch(error => console.log(error))
+  }
+
+  function findMember() {
+    post("api/team/find/member/" + teamId)
+    .then((datas) => {
+      var out = "";
+      datas.forEach(function (data) {
+        let name = data.name;
+        let id = data.id;
+        out += ""
+            + "<div style='border:solid 1px; width:200px;height: 23px;float: left;margin-right:10px;margin-top:3px;'>\n"
+            + "    <label id='member_name_" + id + "' style='float:left; margin-left:5px;'>" + name + "</label>\n"
+            + "    <label id='member_status_" + id + "' style='float:right; margin-right:5px;'> 연결 상태: 대기중 </label>\n"
+            + "</div>";
+      })
+      document.getElementById("connectMember")
+          .innerHTML = out;
+    })
+    .catch(error => console.log(error))
+  }
+
+  function pingDomain() {
+    post("api/team/ping/domain/" + teamId)
+    .then(data => divConnectDomain(data))
+    .catch(error => console.log(error))
+  }
+
+  function pingMember() {
+    post("api/team/ping/member/" + teamId)
+    .then((data) => divConnectMember(data))
+    .catch(error => console.log(error))
+  }
+
+  function divConnectDomain(datas) {
+    datas.forEach(function (data) {
+      let address = data.name;
+      let status = data.status;
+      let connectId = data.connectId;
+      document.getElementById("domain_address_" + connectId).innerHTML = "주소 : [" + address + "]";
+      document.getElementById("domain_status_" + connectId).innerHTML = "주소 : [" + status + "]";
+    })
+  }
+
+  function divConnectMember(datas) {
+    datas.forEach(function (data) {
+      let userName = data.name;
+      let status = data.status;
+      let id = data.id;
+      document.getElementById("mamber_name_" + id).innerHTML = userName;
+      document.getElementById("mamber_status_" + id).innerHTML = "연결 상태: " + status + "";
+    })
   }
 
   function addressUrl() {
@@ -89,7 +161,6 @@
       url: url,
     })
     .then(() => {
-      console.log("HI");
       location.reload();
     })
     .catch(error => console.log(error))
@@ -155,57 +226,9 @@
     .catch(error => console.log(error))
   }
 
-  function findDomain() {
-    post("api/team/find/domain/" + teamId)
-    .then(data => {
-      document.getElementById("connectDomain")
-          .innerHTML = divConnectDomain(data)
-    })
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
-  }
-
-  function findMember() {
-    post("api/team/find/member/" + teamId)
-    .then((data) => {
-      console.log(data);
-      document.getElementById("connectMember")
-          .innerHTML = divConnectMember(data);
-    })
-    .catch(error => console.log(error))
-  }
-
-  function divConnectDomain(datas) {
-    let out = "";
-    datas.forEach(function (data) {
-      let address = data.name;
-      let status = data.status;
-      out += ""
-          + " <div style='border:solid 1px; width:200px;height: 60px;float: left;margin-right:10px;'>\n"
-          + "   <label>주소 : [ " + address + " ]</label><br>\n"
-          + "   <label>연결 상태 : " + status + " </label>\n"
-          + " </div>";
-    })
-    return out;
-  }
-
-  function divConnectMember(datas) {
-    let out = "";
-    datas.forEach(function (data) {
-      let userName = data.name;
-      let status = data.status;
-      out += ""
-          + "<div style='border:solid 1px; width:200px;height: 23px;float: left;margin-right:10px;margin-top:3px;'>\n"
-          + "    <label style='float:left; margin-left:5px;'>" + userName + "</label>\n"
-          + "    <label style='float:right; margin-right:5px;'> 연결 상태: " + status + " </label>\n"
-          + "</div>";
-    })
-    return out;
-  }
-
   async function post(path, body, headers = {}) {
 
-    const url = `${defaultUrl}/${path}`;
+    const url = `${defaultUrl}${path}`;
     const options = {
       method: "POST",
       headers: {
@@ -225,7 +248,7 @@
 
   async function postVoid(path, body, headers = {}) {
 
-    const url = `${defaultUrl}/${path}`;
+    const url = `${defaultUrl}${path}`;
     const options = {
       method: "POST",
       headers: {

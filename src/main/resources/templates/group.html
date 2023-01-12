@@ -28,7 +28,7 @@
 </div>
 </body>
 <script>
-  const defaultUrl = "http://localhost:8081";
+  const defaultUrl = window.location.href;
   const local = window.location.pathname;
   const groupId = local.substring(7, local.length);
 
@@ -38,7 +38,7 @@
       groupsId: groupId,
       email: email,
     })
-    .then(location.reload())
+    .then(() => location.reload())
     .catch(error => console.log(error))
   }
 
@@ -49,7 +49,7 @@
       groupsId: groupId,
       name: name,
     })
-    .then(location.reload())
+    .then(() => location.reload())
     .catch(error => console.log(error))
   }
 
@@ -109,13 +109,13 @@
       deptId: deptId,
       name: name,
     })
-    .then(location.reload())
+    .then(() => location.reload())
     .catch(message => console.log(message));
   }
 
   async function post(path, body, headers = {}) {
 
-    const url = `${defaultUrl}/${path}`;
+    const url = `${defaultUrl}${path}`;
     const options = {
       method: "POST",
       headers: {

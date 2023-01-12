@@ -67,7 +67,7 @@
 </div>
 </body>
 <script>
-  const defaultUrl = "http://localhost:8081";
+  const defaultUrl = window.location.href;
   const local = window.location.pathname;
 
   function pcCreate() {
@@ -117,27 +117,22 @@
           + "      </td>\n"
           + " </tr>";
     })
-    console.log("gkgk" + out);
     return out;
   }
 
   function groupsInvite(isInvite, groupsId, inviteId) {
-    console.log(isInvite + " , " + groupsId)
     let url = "api/user/groups/invite/";
     if (isInvite) {
       url += "accept";
     } else {
       url += "cencel";
     }
-    console.log(url);
-
     post(url, {
       groupsId: groupsId,
       inviteId: inviteId,
     })
-    .then(location.reload())
+    .then(() => location.reload())
     .catch(message => console.log(message));
-
   }
 
   function groupsTeamInvite(isInvite, groupsId, teamId) {
@@ -151,7 +146,7 @@
       groupsId: groupsId,
       teamId: teamId,
     })
-    .then(location.reload())
+    .then(() => location.reload())
     .catch(message => console.log(message));
   }
 
@@ -166,8 +161,6 @@
   }
 
   function getGroupsInTeamInvitedThen(datas) {
-    console.log("==")
-    console.log(datas);
     var out = "";
     datas.forEach(function (data) {
       let groupsId = data.groupsId;
@@ -193,7 +186,7 @@
 
   async function post(path, body, headers = {}) {
 
-    const url = `${defaultUrl}/${path}`;
+    const url = `${defaultUrl}${path}`;
     const options = {
       method: "POST",
       headers: {

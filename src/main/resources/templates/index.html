@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html
-    xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<html xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
-  <title>Hello Security!</title>
+  <title>Kang JH Monitoring</title>
+  <meta charset="utf-8">
 </head>
 <body>
-<h1>Hello Security</h1>
+<h1>모니터링 사이트</h1>
 
 <div sec:authorize="isAuthenticated()">
   <form action="/logout">
@@ -16,14 +16,10 @@
     <button>마이페이지</button>
   </form>
 
-
   <form action="/groups">
     <button>그룹 페이지</button>
   </form>
-
 </div>
-
-
 <div sec:authorize="isAnonymous()">
   <form action="/login" method="get">
     <button>login</button>
@@ -35,10 +31,5 @@
 </div>
 <br>
 
-
 </body>
-
-<script>
-
-</script>
 </html>
