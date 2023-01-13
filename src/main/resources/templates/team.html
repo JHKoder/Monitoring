@@ -74,21 +74,68 @@
   const params = param.split('/');
   const groupId = params[0];
   const teamId = params[1];
+  let domainList = [];
+  let memberList = [];
+  let isDomainList = false;
+  let isMemberList = false;
 
   const init = function () {
     findDomain();
     findMember();
+    var time = 1000 * 10;
+    setInterval("autoScript()", time);
+  }
+
+  function autoScript() {
     pingDomain();
     pingMember();
+  }
+
+  function funDomainPing(connectId) {
+    return new Promise((resolve, reject) => {
+      post("api/team/ping/domain/" + teamId + "/" + connectId)
+      .then((data) => {
+        let address = data.name;
+        let status = data.status;
+        let connectId = data.connectId;
+        document.getElementById("domain_address_" + connectId).innerHTML = "주소 : [" + address + "]";
+        document.getElementById("domain_status_" + connectId).innerHTML = "주소 : [" + status + "]";
+      })
+    })
+  };
+
+  function memberTargetFunction(connectId) {
+    return new Promise((resolve, reject) => {
+      post("api/team/ping/member/" + teamId + "/" + connectId)
+      .then((data) => {
+        let username = data.name;
+        let status = data.status;
+        let id = data.id;
+        document.getElementById("member_name_" + id).innerHTML = " " + username + " ";
+        document.getElementById("member_status_" + id).innerHTML = "연결 상태: " + status + "";
+      })
+    })
+  }
+
+  async function pingDomain() {
+    console.log("핑 보낼떄 domain" + domainList);
+    domainList.forEach(async (walnut) => await funDomainPing(walnut));
+  }
+
+  async function pingMember() {
+    console.log("핑 보낼때 member" + memberList);
+    memberList.forEach(async (walnut) => await memberTargetFunction(walnut));
   }
 
   function findDomain() {
     post("api/team/find/domain/" + teamId)
     .then((datas) => {
-      var out = "";
+      let out = "";
+      const list = [];
       datas.forEach(function (data) {
         let name = data.name;
         let id = data.id;
+        list.push(id);
         out += ""
             + " <div style='border:solid 1px; width:200px;height: 60px;float: left;margin-right:10px;'>\n"
             + "   <label id ='domain_address_" + id + "'>주소 : [ " + name + " ]</label><br>\n"
@@ -97,58 +144,46 @@
       })
       document.getElementById("connectDomain")
           .innerHTML = out;
+      console.log("값 넣음 domain" + list);
+      domainList = list;
+      isDomainList = true;
+      if (isDomainList === true && isMemberList === true) {
+        autoScript();
+      }
     })
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error);
+      return [];
+    })
   }
 
   function findMember() {
     post("api/team/find/member/" + teamId)
     .then((datas) => {
       var out = "";
+      const list = [];
       datas.forEach(function (data) {
         let name = data.name;
         let id = data.id;
+        list.push(id);
         out += ""
             + "<div style='border:solid 1px; width:200px;height: 23px;float: left;margin-right:10px;margin-top:3px;'>\n"
             + "    <label id='member_name_" + id + "' style='float:left; margin-left:5px;'>" + name + "</label>\n"
-            + "    <label id='member_status_" + id + "' style='float:right; margin-right:5px;'> 연결 상태: 대기중 </label>\n"
+            + "    <label id='member_status_" + id
+            + "' style='float:right; margin-right:5px;'> 연결 상태: 대기중 </label>\n"
             + "</div>";
       })
       document.getElementById("connectMember")
           .innerHTML = out;
+      console.log("값 넣음 member" + list);
+      memberList = list;
+      isMemberList = true;
+      if (isDomainList === true && isMemberList === true) {
+        autoScript();
+      }
     })
-    .catch(error => console.log(error))
-  }
-
-  function pingDomain() {
-    post("api/team/ping/domain/" + teamId)
-    .then(data => divConnectDomain(data))
-    .catch(error => console.log(error))
-  }
-
-  function pingMember() {
-    post("api/team/ping/member/" + teamId)
-    .then((data) => divConnectMember(data))
-    .catch(error => console.log(error))
-  }
-
-  function divConnectDomain(datas) {
-    datas.forEach(function (data) {
-      let address = data.name;
-      let status = data.status;
-      let connectId = data.connectId;
-      document.getElementById("domain_address_" + connectId).innerHTML = "주소 : [" + address + "]";
-      document.getElementById("domain_status_" + connectId).innerHTML = "주소 : [" + status + "]";
-    })
-  }
-
-  function divConnectMember(datas) {
-    datas.forEach(function (data) {
-      let userName = data.name;
-      let status = data.status;
-      let id = data.id;
-      document.getElementById("mamber_name_" + id).innerHTML = userName;
-      document.getElementById("mamber_status_" + id).innerHTML = "연결 상태: " + status + "";
+    .catch(error => {
+      console.log(error);
     })
   }
 
@@ -175,8 +210,6 @@
     var cClass = document.getElementById("addressPortIpC").value;
     var dClass = document.getElementById("addressPortIpD").value;
 
-    console.log("hello");
-    console.log(aClass + "." + bClass + "." + cClass + "." + dClass);
     postVoid("api/team/add/ip/port", {
       teamId: teamId,
       name: name,

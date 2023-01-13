@@ -29,27 +29,28 @@ public class ConnectService {
 
 
     @Transactional
-    public List<TeamInDomainPingRes> findTeamInConnectDomainList(Long teamId, String userId) {
+    public TeamInDomainPingRes findTeamInConnectDomainList(Long teamId, Long connectId) {
         Team team = teamRepository.findById(teamId)
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
 
         return team.getConnects().stream()
-            .filter(connect -> connect.getConnectType() != null)
-            .map(connect -> new TeamInDomainPingRes(connect.getId(), connect.getName(), connectStatus(connect)))
-            .collect(Collectors.toList());
+            .filter(ls -> ls.getId().equals(connectId))
+            .findFirst()
+            .map(connect -> new TeamInDomainPingRes(connectId, connect.getName(), connectStatus(connect)))
+            .orElse(new TeamInDomainPingRes());
     }
 
     @Transactional
-    public List<TeamInMemberPingRes> findTeamInConnectMemberList(Long teamId, String userId) {
+    public TeamInMemberPingRes findTeamInConnectMemberList(Long teamId, Long connectId) {
         Team team = teamRepository.findById(teamId)
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
 
         return team.getMember().stream()
             .filter(member -> member.getPc() != null)
-            .map(member -> new TeamInMemberPingRes(member.getPc().getConnect().getId(),
-                member.getInformation().getNickName(),
-                connectStatus(member.getPc().getConnect())))
-            .collect(Collectors.toList());
+            .filter(member -> member.getPc().getConnect().getId().equals(connectId))
+            .findFirst()
+            .map(member -> new TeamInMemberPingRes(member, connectStatus(member.getPc().getConnect())))
+            .orElse(new TeamInMemberPingRes());
     }
 
     private NetStatus connectStatus(Connect connect) {

@@ -13,6 +13,6 @@ public class TeamInMemberRes {
 
     public TeamInMemberRes(User user) {
         this.name = user.getInformation().getName();
-        this.id = user.getId();
+        this.id = user.getPc().getConnect().getId();
     }
 }

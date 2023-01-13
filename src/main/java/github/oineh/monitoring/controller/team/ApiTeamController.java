@@ -45,18 +45,18 @@ public class ApiTeamController {
     }
 
 
-    @PostMapping("/ping/domain/{teamId}")
-    public ResponseEntity<List<TeamInDomainPingRes>> findTeamDomain(@PathVariable("teamId") Long teamId,
-        Principal principal) {
-        List<TeamInDomainPingRes> res = connectService.findTeamInConnectDomainList(teamId, principal.getName());
+    @PostMapping("/ping/domain/{teamId}/{connectId}")
+    public ResponseEntity<TeamInDomainPingRes> findTeamDomain(@PathVariable("teamId") Long teamId,
+        @PathVariable Long connectId) {
+        TeamInDomainPingRes res = connectService.findTeamInConnectDomainList(teamId, connectId);
 
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/ping/member/{teamId}")
-    public ResponseEntity<List<TeamInMemberPingRes>> findTeam(@PathVariable("teamId") Long teamId,
-        Principal principal) {
-        List<TeamInMemberPingRes> res = connectService.findTeamInConnectMemberList(teamId, principal.getName());
+    @PostMapping("/ping/member/{teamId}/{connectId}")
+    public ResponseEntity<TeamInMemberPingRes> findTeam(@PathVariable("teamId") Long teamId,
+        @PathVariable Long connectId) {
+        TeamInMemberPingRes res = connectService.findTeamInConnectMemberList(teamId, connectId);
 
         return ResponseEntity.ok(res);
     }
