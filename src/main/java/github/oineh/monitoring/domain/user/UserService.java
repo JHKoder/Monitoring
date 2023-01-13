@@ -34,7 +34,10 @@ public class UserService implements UserDetailsService {
 
         Information information = new User.Information(req.getEmail(), req.getName(), req.getNickName());
         User user = new User(req.getLoginId(), req.getPassword(), information);
-
+        
+        if (userRepository.findByInformationEmail(req.getEmail()).isPresent()) {
+            throw new ApiException(ErrorCode.EMAIL_ALREADY_PRESENT);
+        }
         userRepository.save(user);
         authRepository.save(new Auth(user, Grade.USER));
     }

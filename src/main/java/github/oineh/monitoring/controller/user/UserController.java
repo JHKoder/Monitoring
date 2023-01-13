@@ -1,11 +1,9 @@
 package github.oineh.monitoring.controller.user;
 
-import github.oineh.monitoring.controller.user.req.SingUpReq;
 import github.oineh.monitoring.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller("/")
 @RequiredArgsConstructor
@@ -31,12 +29,6 @@ public class UserController {
     @GetMapping("/mypage")
     public String mypage() {
         return "mypage";
-    }
-
-    @PostMapping("/singup")
-    public String postSingUp(SingUpReq singUpReq) {
-        userService.singup(singUpReq);
-        return "index";
     }
 
 }

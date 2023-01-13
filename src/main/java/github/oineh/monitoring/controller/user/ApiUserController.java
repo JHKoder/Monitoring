@@ -1,11 +1,13 @@
 package github.oineh.monitoring.controller.user;
 
+import github.oineh.monitoring.controller.user.req.SingUpReq;
 import github.oineh.monitoring.controller.user.req.UserGroupsInviteReq;
 import github.oineh.monitoring.controller.user.req.UserGroupsTeamInviteReq;
 import github.oineh.monitoring.controller.user.res.InviteGroupsUserRes;
 import github.oineh.monitoring.controller.user.res.InviteTeamUserRes;
 import github.oineh.monitoring.domain.groups.GroupsService;
 import github.oineh.monitoring.domain.groups.group.GroupService;
+import github.oineh.monitoring.domain.user.UserService;
 import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ public class ApiUserController {
 
     private final GroupsService groupsService;
     private final GroupService groupService;
+
+    private final UserService userService;
 
     @GetMapping("/groups/invite")
     public ResponseEntity<List<InviteGroupsUserRes>> findGroupsInvite(Principal principal) {
@@ -62,6 +66,13 @@ public class ApiUserController {
     @PostMapping("/team/invite/cancel")
     public ResponseEntity<Void> noTeamInvite(@RequestBody UserGroupsTeamInviteReq req, Principal principal) {
         groupService.cancelInvite(req, principal.getName());
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/singup")
+    public ResponseEntity<Void> postSingUp(@RequestBody SingUpReq singUpReq) {
+        userService.singup(singUpReq);
 
         return ResponseEntity.ok().build();
     }
