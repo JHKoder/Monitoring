@@ -83,7 +83,7 @@ public class SecurityConfig {
             .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil))
             .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
             .authorizeRequests(authroize -> authroize
-                .antMatchers("/", "/singup", "/login").permitAll()
+                .antMatchers("/", "/singup", "/api/user/singup", "/login").permitAll()
                 .anyRequest().hasAnyAuthority(Grade.USER.getAuthority())
             ).build();
 

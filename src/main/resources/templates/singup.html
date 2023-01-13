@@ -1,17 +1,66 @@
-<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
 <body>
-<form action="/singup" method="post">
-  아이디 : <input name="loginId" type="text"></br>
-  비번  : <input name="password" type="password"></br>
-  이메일 : <input name="email" type="email"></br>
-  이름  : <input name="name" type="text"></br>
-  닉네임 : <input name="nickName" type="text"></br>
-  <input type="submit" value="회원가입">
-</form>
+<div style="border:solid 1px; width:350px;">
+  <div style="margin-left:50px;">
+    아이디 : <input name="loginId" id="loginId" type="text"></br>
+    비번 : <input name="password" id="password" type="password"></br>
+    이메일 : <input name="email" id="email" type="email"></br>
+    이름 : <input name="name" id="name" type="text"></br>
+    닉네임 : <input name="nickName" id="nickName" type="text"></br>
+    <button type="button" onclick="singup()">회원가입</button>
+  </div>
+</div>
 </body>
+<script>
+
+  const defaultUrl = window.location.origin;
+
+  function singup() {
+    var loginId = document.getElementById("loginId").value;
+    var password = document.getElementById("password").value;
+    var email = document.getElementById("email").value;
+    var name = document.getElementById("name").value;
+    var nickName = document.getElementById("nickName").value;
+    console.log(loginId, password, email, name, nickName);
+
+    post("api/user/singup", {
+      loginId: loginId,
+      password: password,
+      email: email,
+      name: name,
+      nickName: nickName,
+    })
+    .then(() => {
+      location.href = defaultUrl;
+    })
+    .catch(error => {
+      alert("회원 가입 실패 :"+error.message);
+    })
+
+  }
+
+  async function post(path, body, headers = {}) {
+
+    const url = `${defaultUrl}/${path}`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify(body),
+    };
+    const res = await fetch(url, options);
+    const data = await res.json();
+    if (res.ok) {
+      return data;
+    } else {
+      throw Error(data);
+    }
+  }
+</script>
 </html>
