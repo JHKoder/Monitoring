@@ -77,6 +77,7 @@
       pcName: pcName,
       type: type,
     })
+    .then(() => alert("내 pc를 (재)등록 했습니다."))
     .catch(error => console.log(error))
   }
 
@@ -198,6 +199,25 @@
     const data = await res.json();
     if (res.ok) {
       return data;
+    } else {
+      throw Error(data);
+    }
+  }
+
+  async function postVoid(path, body, headers = {}) {
+
+    const url = `${defaultUrl}/${path}`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify(body),
+    };
+    const res = await fetch(url, options);
+    if (res.ok) {
+      return res.ok;
     } else {
       throw Error(data);
     }
