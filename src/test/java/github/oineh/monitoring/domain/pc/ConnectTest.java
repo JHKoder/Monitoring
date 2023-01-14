@@ -15,7 +15,7 @@ public class ConnectTest {
     public void icmpCreate() {
         //given
         Pc pc = new Pc("name", Type.PC);
-        Connect connect = Connect.icmp("127.0.0.1");
+        Connect connect = Connect.icmp("내컴", "127.0.0.1");
 
         //when
         pc.updateConnect(connect);
@@ -29,7 +29,7 @@ public class ConnectTest {
     public void tcpPortCreate() {
         //given
         Pc pc = new Pc("name", Type.PC);
-        Connect connect = Connect.tcp("127.0.0.1", 8089);
+        Connect connect = Connect.tcp("내컴", "127.0.0.1", 8089);
 
         //when
         pc.updateConnect(connect);
@@ -43,7 +43,7 @@ public class ConnectTest {
     public void tcpUrlCreate() {
         //given
         Pc pc = new Pc("name", Type.SERVER);
-        Connect connect = Connect.tcp("www.naver.com");
+        Connect connect = Connect.tcp("네이버", "www.naver.com");
 
         //when
         pc.updateConnect(connect);
