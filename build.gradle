@@ -5,8 +5,8 @@ plugins {
 }
 
 group = 'github.oineh'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+version = '0.1.0-RELEASE'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -34,7 +34,7 @@ dependencies {
 
     //custom lib
 
-    implementation 'com.github.oiNeh:sno:0.1.14'
+    implementation 'com.github.oiNeh:sno:0.1.15'
     //lombok
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
