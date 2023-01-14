@@ -1,4 +1,4 @@
-package github.oineh.monitoring.domain.pc;
+package github.oineh.monitoring.domain.user.pc;
 
 public enum Type {
     PC("컴퓨터"),

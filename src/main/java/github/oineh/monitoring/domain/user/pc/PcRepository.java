@@ -1,4 +1,4 @@
-package github.oineh.monitoring.domain.pc;
+package github.oineh.monitoring.domain.user.pc;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

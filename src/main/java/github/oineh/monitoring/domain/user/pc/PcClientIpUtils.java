@@ -1,4 +1,4 @@
-package github.oineh.monitoring.domain.pc;
+package github.oineh.monitoring.domain.user.pc;
 
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;

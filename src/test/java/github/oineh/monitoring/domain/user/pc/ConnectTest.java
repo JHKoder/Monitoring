@@ -1,8 +1,10 @@
-package github.oineh.monitoring.domain.pc;
+package github.oineh.monitoring.domain.user.pc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import github.oineh.monitoring.domain.connect.Connect;
+import github.oineh.monitoring.domain.user.pc.Pc;
+import github.oineh.monitoring.domain.user.pc.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

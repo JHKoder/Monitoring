@@ -1,4 +1,4 @@
-package github.oineh.monitoring.controller.group.res;
+package github.oineh.monitoring.controller.groups.group.res;
 
 import github.oineh.monitoring.domain.groups.group.category.Dept;
 import github.oineh.monitoring.domain.groups.group.category.Team;

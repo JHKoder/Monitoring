@@ -1,6 +1,6 @@
 package github.oineh.monitoring.controller.groups;
 
-import github.oineh.monitoring.controller.group.req.GroupInviteReq;
+import github.oineh.monitoring.controller.groups.group.req.GroupInviteReq;
 import github.oineh.monitoring.controller.groups.req.GroupsCreateReq;
 import github.oineh.monitoring.controller.groups.res.GroupsFindRes;
 import github.oineh.monitoring.domain.groups.GroupsService;

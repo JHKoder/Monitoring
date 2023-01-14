@@ -1,6 +1,6 @@
-package github.oineh.monitoring.controller.pc.req;
+package github.oineh.monitoring.controller.user.pc.req;
 
-import github.oineh.monitoring.domain.pc.Type;
+import github.oineh.monitoring.domain.user.pc.Type;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

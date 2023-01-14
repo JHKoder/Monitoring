@@ -2,9 +2,9 @@ package github.oineh.monitoring.domain.groups.group;
 
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
-import github.oineh.monitoring.controller.group.req.GroupCreateTeamDeptReq;
-import github.oineh.monitoring.controller.group.req.GroupCreateTeamReq;
-import github.oineh.monitoring.controller.group.res.GroupListRes;
+import github.oineh.monitoring.controller.groups.group.req.GroupCreateTeamDeptReq;
+import github.oineh.monitoring.controller.groups.group.req.GroupCreateTeamReq;
+import github.oineh.monitoring.controller.groups.group.res.GroupListRes;
 import github.oineh.monitoring.controller.team.req.TeamInviteReq;
 import github.oineh.monitoring.controller.user.req.UserGroupsTeamInviteReq;
 import github.oineh.monitoring.controller.user.res.InviteTeamUserRes;

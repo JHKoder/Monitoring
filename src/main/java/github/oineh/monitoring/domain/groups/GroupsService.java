@@ -2,7 +2,7 @@ package github.oineh.monitoring.domain.groups;
 
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
-import github.oineh.monitoring.controller.group.req.GroupInviteReq;
+import github.oineh.monitoring.controller.groups.group.req.GroupInviteReq;
 import github.oineh.monitoring.controller.groups.res.GroupsFindRes;
 import github.oineh.monitoring.controller.user.req.UserGroupsInviteReq;
 import github.oineh.monitoring.controller.user.res.InviteGroupsUserRes;

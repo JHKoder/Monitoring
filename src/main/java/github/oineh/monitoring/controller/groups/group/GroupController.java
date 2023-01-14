@@ -1,4 +1,4 @@
-package github.oineh.monitoring.controller.group;
+package github.oineh.monitoring.controller.groups.group;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

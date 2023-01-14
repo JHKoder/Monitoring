@@ -5,7 +5,7 @@ import static lombok.AccessLevel.PROTECTED;
 import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.domain.authority.Auth;
 import github.oineh.monitoring.domain.groups.Groups;
-import github.oineh.monitoring.domain.pc.Pc;
+import github.oineh.monitoring.domain.user.pc.Pc;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
