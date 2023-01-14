@@ -27,7 +27,7 @@
     var nickName = document.getElementById("nickName").value;
     console.log(loginId, password, email, name, nickName);
 
-    post("api/user/singup", {
+    singupPost("api/user/singup", {
       loginId: loginId,
       password: password,
       email: email,
@@ -43,7 +43,7 @@
 
   }
 
-  async function post(path, body, headers = {}) {
+  async function singupPost(path, body, headers = {}) {
 
     const url = `${defaultUrl}/${path}`;
     const options = {
@@ -55,10 +55,10 @@
       body: JSON.stringify(body),
     };
     const res = await fetch(url, options);
-    const data = await res.json();
     if (res.ok) {
-      return data;
+      return res;
     } else {
+      const data = await res.json();
       throw Error(data);
     }
   }
