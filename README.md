@@ -1,6 +1,14 @@
-소속 모니터링 프로젝트
-개발인원:1명
-기술: spring boot,java17,h2,jpa,security,jwt
+### 그룹 모니터링 프로젝트
+
+개발인원:1명 <br>
+---
+
+[![URL](https://img.shields.io/badge/URL-oineh.monitoring.today-green)](oineh-monitoring.today)<br>
+![SpringBoot](https://img.shields.io/badge/SpringBoot-2.7-blue)</br>
+![JAVA](https://img.shields.io/badge/java-11-green)
+![H2](https://img.shields.io/badge/h2-blue)
+![JPA](https://img.shields.io/badge/JPA-red)
+---
 
 시나리오
 
@@ -11,6 +19,10 @@
 * 로그인 -> 그룹 이동 -> 부서내 팀 생성
 * 부서 페이지 -> 그룹 초대
 * 팀원 페이지 -> 도메인 입력 , 팀원 초대
+
+---
+
+## API 구조
 
 ```
 
