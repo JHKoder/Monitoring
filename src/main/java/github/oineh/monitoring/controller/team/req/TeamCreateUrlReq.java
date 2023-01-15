@@ -15,4 +15,11 @@ public class TeamCreateUrlReq {
     public void updateUrlHttp() {
         this.url = "http://" + url;
     }
+
+    public TeamCreateUrlReq filterUrl() {
+        if (url.contains("://")) {
+            updateUrlHttp();
+        }
+        return this;
+    }
 }

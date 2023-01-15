@@ -70,22 +70,22 @@ public class ApiTeamController {
 
 
     @PostMapping("/add/url")
-    public ResponseEntity<Void> createUrl(@RequestBody TeamCreateUrlReq req, Principal principal) {
-        connectService.createUrl(req, principal.getName());
+    public ResponseEntity<Void> createUrl(@RequestBody TeamCreateUrlReq req) {
+        connectService.createUrl(req);
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/add/ip/port")
-    public ResponseEntity<Void> createPort(@RequestBody TeamCreatePortReq req, Principal principal) {
-        connectService.createIpPort(req, principal.getName());
+    public ResponseEntity<Void> createPort(@RequestBody TeamCreatePortReq req) {
+        connectService.createIpPort(req);
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/add/ip")
-    public ResponseEntity<Void> createIp(@RequestBody TeamCreateIpReq req, Principal principal) {
-        connectService.createIp(req, principal.getName());
+    public ResponseEntity<Void> createIp(@RequestBody TeamCreateIpReq req) {
+        connectService.createIp(req);
 
         return ResponseEntity.ok().build();
 
