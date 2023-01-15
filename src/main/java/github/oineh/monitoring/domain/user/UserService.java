@@ -27,31 +27,37 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void singup(SingUpReq req) {
-
-        if (userRepository.findByLoginId(req.getLoginId()).isPresent()) {
-            throw new ApiException(ErrorCode.USERS_ALREADY_PRESENT);
-        }
+        checkUser(req.getLoginId());
+        checkEmail(req.getEmail());
 
         Information information = new User.Information(req.getEmail(), req.getName(), req.getNickName());
         User user = new User(req.getLoginId(), req.getPassword(), information);
-        
-        if (userRepository.findByInformationEmail(req.getEmail()).isPresent()) {
-            throw new ApiException(ErrorCode.EMAIL_ALREADY_PRESENT);
-        }
+
         userRepository.save(user);
         authRepository.save(new Auth(user, Grade.USER));
     }
 
+    private void checkEmail(String email) {
+        if (userRepository.findByInformationEmail(email).isPresent()) {
+            throw new ApiException(ErrorCode.EMAIL_ALREADY_PRESENT);
+        }
+    }
 
-    public User findByUserId(String userId) {
+    private void checkUser(String loginId) {
+        if (userRepository.findByLoginId(loginId).isPresent()) {
+            throw new ApiException(ErrorCode.USERS_ALREADY_PRESENT);
+        }
+    }
+
+    private User findByUserId(String userId, ErrorCode errorCode) {
         return userRepository.findByLoginId(userId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_NICKNAME));
+            .orElseThrow(() -> new ApiException(errorCode));
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUserId(username);
+        User user = findByUserId(username, ErrorCode.NOT_FOUND_USER);
         Auth auth = authRepository.findByUser(user)
             .orElseThrow();
         log.info("loadUserByUsername  : " + user.getId() + " Auth:" + auth.getGrade().iterator().next().getName());
