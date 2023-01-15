@@ -85,7 +85,8 @@
       let teamName = team.name;
       let href = "/team/room/" + groupsId + "/" + teamId;
 
-      out += "    <div style='border:groove;' onclick='location.href=`" + href + "`'>\n"
+      out += "    <div style=' background-color: rgb(167 181 243); box-shadow: 1px 3px 2px;border:groove;' " +
+          "onclick='location.href=`" + href + "`'>\n"
           + "      <label> 팀명 : " + teamName + "</label><br>\n"
           + "    </div>\n"
     })
