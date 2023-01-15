@@ -36,59 +36,86 @@ public class GroupService {
     private final GroupsRepository groupsRepository;
     private final InvitedGroupRepository invitedGroupRepository;
 
-    // 그룹네 모든 소속 & 팀 리턴
     @Transactional
-    public GroupListRes findGroup(Long groupId, String userId) {
-        userRepository.findByLoginId(userId).orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+    public GroupListRes findGroupIn(Long groupId, String userId) {
+        checkUser(userId);
 
-        Groups groups = groupsRepository.findById(groupId).orElse(null);
+        Groups groups = groupsRepository.findById(groupId)
+            .orElse(null);
 
-        List<Dept> list = findDeptByGroupId(groups);
-
-        return GroupListRes.of(groupId, list);
+        return GroupListRes.of(groupId, findDeptByGroupId(groups));
     }
 
-    public List<Dept> findDeptByGroupId(Groups groups) {
-        List<Long> deptIds = groups.getDept().stream().map(Dept::getId).collect(Collectors.toList());
+    private List<Dept> findDeptByGroupId(Groups groups) {
+        List<Long> deptIds = groups.getDept().stream()
+            .map(Dept::getId)
+            .collect(Collectors.toList());
 
         return deptRepository.findAllById(deptIds);
     }
 
 
-    // 부서 생성
     @Transactional
     public void createGroup(GroupCreateTeamDeptReq req, String userId) {
         Groups groups = groupsRepository.findById(req.getGroupsId())
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
 
-        User user = getUserByLoginId(userId);
+        Dept dept = deptRepository.save(new Dept(findUser(userId), req.getName()));
 
-        Dept dept = deptRepository.save(new Dept(user, req.getName()));
         groups.updateDept(dept);
     }
 
 
-    //부서내 팀 생성
     @Transactional
     public void createGroup(GroupCreateTeamReq req, String userId) {
-        Groups groups = groupsRepository.findById(req.getGroupsId())
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
-
-        User user = getUserByLoginId(userId);
-
-        Dept dept = groups.getDept().stream().filter(dep -> dep.getId().equals(req.getDeptId())).findFirst()
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_GROUPS_DEPT));
-
-        Team team = teamRepository.save(new Team(user, req.getName()));
-        dept.updateTeam(team);
+        findGroups(req.getGroupsId()).getDept().stream()
+            .filter(dep -> dep.getId().equals(req.getDeptId()))
+            .findFirst()
+            .orElseThrow(() -> new ApiException(ErrorCode.NOT_GROUPS_DEPT))
+            .updateTeam(teamRepository.save(new Team(findUser(userId), req.getName())));
     }
 
     @Transactional
     public List<InviteTeamUserRes> findInvite(String userId) {
-        User user = getUserByLoginId(userId);
-        List<InvitedGroup> invited = getInvitationsByTargetUser(user);
-        return mapInvitationsToResponse(invited);
+        return mapInvitationsToResponse(getInvitationsByTargetUser(findUser(userId)));
     }
+
+    @Transactional
+    public void acceptInvite(UserGroupsTeamInviteReq req, String userId) {
+        User user = findUser(userId, ErrorCode.NOT_FOUND_SEND_USER);
+        Team team = findTeam(req.getTeamId());
+
+        team.updateMember(user);
+        invitedGroupRepository.delete(findInvitedGroup(user, team));
+    }
+
+    @Transactional
+    public void cancelInvite(UserGroupsTeamInviteReq req, String userId) {
+        User user = userRepository.findByLoginId(userId).orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+        Team team = findTeam(req.getTeamId());
+
+        invitedGroupRepository.delete(findInvitedGroup(user, team));
+    }
+
+
+    @Transactional
+    public void targetUserInvite(TeamInviteReq req, String userId) {
+        Team team = findTeam(req.getTeamId());
+        User targetUser = getUserByEmail(req.getEmail(), ErrorCode.NOT_FOUND_TARGET_USER);
+        User sendUser = findUser(userId, ErrorCode.NOT_FOUND_SEND_USER);
+
+        checkSendUserIsTeamMember(sendUser, team);
+        checkFindTargetUserAndTeam(targetUser, team);
+
+        invitedGroupRepository.save(new InvitedGroup(targetUser, sendUser, team));
+    }
+
+    private void checkFindTargetUserAndTeam(User targetUser, Team team) {
+        if (invitedGroupRepository.findByTargetUserAndTeam(targetUser, team).isPresent()) {
+            throw new ApiException(ErrorCode.OVERLAP_INVITED_TEAM);
+        }
+    }
+
 
     private List<InvitedGroup> getInvitationsByTargetUser(User user) {
         return invitedGroupRepository.findByTargetUser(user).orElse(Collections.emptyList());
@@ -98,60 +125,34 @@ public class GroupService {
         return invited.stream().map(InviteTeamUserRes::new).collect(Collectors.toList());
     }
 
-    @Transactional
-    public void acceptInvite(UserGroupsTeamInviteReq req, String userId) {
-        User user = getUserByLoginId(userId, ErrorCode.NOT_FOUND_SEND_USER);
 
-        Team team = teamRepository.findById(req.getTeamId())
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
-
-        InvitedGroup invitedGroup = invitedGroupRepository.findByTargetUserAndTeam(user, team)
-            .orElseThrow(() -> new ApiException(ErrorCode.NO_TEAM_INVITES));
-
-        team.updateMember(user);
-        invitedGroupRepository.delete(invitedGroup);
+    private void checkUser(String loginId) {
+        userRepository.findByLoginId(loginId)
+            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
     }
 
-    @Transactional
-    public void cancelInvite(UserGroupsTeamInviteReq req, String userId) {
-        User user = userRepository.findByLoginId(userId).orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
-
-        Team team = teamRepository.findById(req.getTeamId())
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
-
-        InvitedGroup invitedGroup = invitedGroupRepository.findByTargetUserAndTeam(user, team)
-            .orElseThrow(() -> new ApiException(ErrorCode.NO_TEAM_INVITES));
-
-        invitedGroupRepository.delete(invitedGroup);
+    private User findUser(String loginId) {
+        return userRepository.findByLoginId(loginId)
+            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
     }
 
-    @Transactional
-    public void targetUserInvite(TeamInviteReq req, String userId) {
-        Team team = getTeamById(req.getTeamId());
-        User targetUser = getUserByEmail(req.getEmail(), ErrorCode.NOT_FOUND_TARGET_USER);
-        User sendUser = getUserByLoginId(userId, ErrorCode.NOT_FOUND_SEND_USER);
-
-        checkSendUserIsTeamMember(sendUser, team);
-
-        if (invitedGroupRepository.findByTargetUserAndTeam(targetUser, team).isPresent()) {
-            throw new ApiException(ErrorCode.OVERLAP_INVITED_TEAM);
-        }
-
-        InvitedGroup invited = new InvitedGroup(targetUser, sendUser, team);
-        invitedGroupRepository.save(invited);
+    private User findUser(String loginId, ErrorCode code) {
+        return userRepository.findByLoginId(loginId)
+            .orElseThrow(() -> new ApiException(code));
     }
 
-
-    private User getUserByLoginId(String loginId, ErrorCode code) {
-        return userRepository.findByLoginId(loginId).orElseThrow(() -> new ApiException(code));
+    private Groups findGroups(Long groupId) {
+        return groupsRepository.findById(groupId)
+            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
     }
 
-    private User getUserByLoginId(String loginId) {
-        return userRepository.findByLoginId(loginId).orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
-    }
-
-    private Team getTeamById(Long id) {
+    private Team findTeam(Long id) {
         return teamRepository.findById(id).orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
+    }
+
+    private InvitedGroup findInvitedGroup(User user, Team team) {
+        return invitedGroupRepository.findByTargetUserAndTeam(user, team)
+            .orElseThrow(() -> new ApiException(ErrorCode.NO_TEAM_INVITES));
     }
 
     private User getUserByEmail(String email, ErrorCode errorCode) {
@@ -159,10 +160,7 @@ public class GroupService {
     }
 
     private void checkSendUserIsTeamMember(User sendUser, Team team) {
-        boolean isSendUser = team.getCreateUser().getId().equals(sendUser.getId()) || team.getMember().stream()
-            .anyMatch(user -> user.getId().equals(sendUser.getId()));
-
-        if (!isSendUser) {
+        if (!team.getMember().contains(sendUser)) {
             throw new ApiException(ErrorCode.YOUR_NOT_TEAM);
         }
     }

@@ -48,4 +48,17 @@ public class Connect extends BaseEntity {
         return new Connect(name, null, url, 0, ConnectType.TCP_URL);
     }
 
+    public boolean isIcmp() {
+        return connectType == ConnectType.ICMP;
+    }
+
+    public boolean isTcpPort() {
+        return connectType == ConnectType.TCP_PORT;
+    }
+
+    public boolean isTcpUrl() {
+        return connectType == ConnectType.TCP_URL;
+    }
+
+
 }

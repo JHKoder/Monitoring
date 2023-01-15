@@ -24,7 +24,7 @@ public class ApiGroupController {
 
     @GetMapping("/room/{groupId}")
     public ResponseEntity<GroupListRes> groupInRoom(@PathVariable("groupId") Long groupId, Principal principal) {
-        GroupListRes res = groupService.findGroup(groupId, principal.getName());
+        GroupListRes res = groupService.findGroupIn(groupId, principal.getName());
 
         return ResponseEntity.ok(res);
     }
