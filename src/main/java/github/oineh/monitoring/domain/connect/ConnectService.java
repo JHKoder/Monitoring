@@ -30,10 +30,7 @@ public class ConnectService {
 
     @Transactional
     public TeamInDomainPingRes findTeamInConnectDomainList(Long teamId, Long connectId) {
-        Team team = teamRepository.findById(teamId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
-
-        return team.getConnects().stream()
+        return findTeam(teamId).getConnects().stream()
             .filter(ls -> ls.getId().equals(connectId))
             .findFirst()
             .map(connect -> new TeamInDomainPingRes(connectId, connect.getName(), connectStatus(connect)))
@@ -42,10 +39,7 @@ public class ConnectService {
 
     @Transactional
     public TeamInMemberPingRes findTeamInConnectMemberList(Long teamId, Long connectId) {
-        Team team = teamRepository.findById(teamId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
-
-        return team.getMember().stream()
+        return findTeam(teamId).getMember().stream()
             .filter(member -> member.getPc() != null)
             .filter(member -> member.getPc().getConnect().getId().equals(connectId))
             .findFirst()
@@ -53,59 +47,30 @@ public class ConnectService {
             .orElse(new TeamInMemberPingRes());
     }
 
-    private NetStatus connectStatus(Connect connect) {
-        if (connect.getConnectType() == ConnectType.ICMP) {
-            return monitoringService.IcmpStatus(Host.from(connect.getIp()));
-        }
-        if (connect.getConnectType() == ConnectType.TCP_PORT) {
-            return monitoringService.TcpStatus(Host.from(connect.getIp()), connect.getPort());
-        }
-        if (connect.getConnectType() == ConnectType.TCP_URL) {
-            return monitoringService.TcpStatus(connect.getUrl());
-        }
-        return null;
+
+    @Transactional
+    public void createUrl(TeamCreateUrlReq req) {
+        findTeam(req.getTeamId())
+            .updateConnect(Connect.tcp(req.getName(), req.filterUrl().getUrl()));
     }
 
     @Transactional
-    public void createUrl(TeamCreateUrlReq req, String userId) {
-        Team team = teamRepository.findById(req.getTeamId())
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
-
-        if (!req.getUrl().contains("://")) {
-            req.updateUrlHttp();
-        }
-        Connect connect = Connect.tcp(req.getName(), req.getUrl());
-
-        team.updateConnect(connect);
+    public void createIpPort(TeamCreatePortReq req) {
+        findTeam(req.getTeamId())
+            .updateConnect(Connect.tcp(req.getName(), req.getIp(), req.getPort()));
     }
 
     @Transactional
-    public void createIpPort(TeamCreatePortReq req, String userId) {
-        Team team = teamRepository.findById(req.getTeamId())
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
-
-        Connect connect = Connect.tcp(req.getName(), req.getIp(), req.getPort());
-
-        team.updateConnect(connect);
-    }
-
-    @Transactional
-    public void createIp(TeamCreateIpReq req, String userId) {
-        Team team = teamRepository.findById(req.getTeamId())
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
-
-        Connect connect = Connect.icmp(req.getName(), req.getIp());
-
-        team.updateConnect(connect);
+    public void createIp(TeamCreateIpReq req) {
+        findTeam(req.getTeamId())
+            .updateConnect(Connect.icmp(req.getName(), req.getIp()));
     }
 
 
     @Transactional
     public List<TeamInDomainRes> findTeamInDomain(Long teamId) {
-        Team team = teamRepository.findById(teamId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
-
-        return team.getConnects().stream()
+        return findTeam(teamId).getConnects()
+            .stream()
             .filter(connect -> connect.getConnectType() != null)
             .map(TeamInDomainRes::new)
             .collect(Collectors.toList());
@@ -113,12 +78,29 @@ public class ConnectService {
 
     @Transactional
     public List<TeamInMemberRes> findTeamInMember(Long teamId) {
-        Team team = teamRepository.findById(teamId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
-
-        return team.getMember().stream()
+        return findTeam(teamId).getMember().stream()
             .filter(member -> member.getPc() != null)
             .map(TeamInMemberRes::new)
             .collect(Collectors.toList());
     }
+
+    public Team findTeam(Long teamId) {
+        return teamRepository.findById(teamId)
+            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
+    }
+    
+
+    private NetStatus connectStatus(Connect connect) {
+        if (connect.isIcmp()) {
+            return monitoringService.IcmpStatus(Host.from(connect.getIp()));
+        }
+        if (connect.isTcpPort()) {
+            return monitoringService.TcpStatus(Host.from(connect.getIp()), connect.getPort());
+        }
+        if (connect.isTcpUrl()) {
+            return monitoringService.TcpStatus(connect.getUrl());
+        }
+        return NetStatus.NOT_CONNECT;
+    }
+
 }
