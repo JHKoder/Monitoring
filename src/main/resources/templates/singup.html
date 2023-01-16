@@ -2,6 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <script src="/common.js"></script>
 </head>
 <body>
 <div style="border:solid 1px; width:350px;">
@@ -17,8 +18,6 @@
 </body>
 <script>
 
-  const defaultUrl = window.location.origin;
-
   function singup() {
     var loginId = document.getElementById("loginId").value;
     var password = document.getElementById("password").value;
@@ -27,7 +26,7 @@
     var nickName = document.getElementById("nickName").value;
     console.log(loginId, password, email, name, nickName);
 
-    singupPost("api/user/singup", {
+    post("api/user/singup", {
       loginId: loginId,
       password: password,
       email: email,
@@ -41,26 +40,6 @@
       alert("회원 가입 실패 :"+error.message);
     })
 
-  }
-
-  async function singupPost(path, body, headers = {}) {
-
-    const url = `${defaultUrl}/${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    };
-    const res = await fetch(url, options);
-    if (res.ok) {
-      return res;
-    } else {
-      const data = await res.json();
-      throw Error(data);
-    }
   }
 </script>
 </html>

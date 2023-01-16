@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>team</title>
+  <script src="/common.js"></script>
 </head>
 <body>
 <!-- 전체 영역-->
@@ -67,8 +68,6 @@
 </div>
 </body>
 <script>
-
-  const defaultUrl = window.location.origin
   const local = window.location.pathname;
   const param = local.substring(11, local.length);
   const params = param.split('/');
@@ -82,7 +81,7 @@
   const init = function () {
     findDomain();
     findMember();
-    var time = 1000 * 10;
+    const time = 1000 * 10;
     setInterval("autoScript()", time);
   }
 
@@ -100,9 +99,9 @@
         let connectId = data.connectId;
         document.getElementById("domain_address_" + connectId).innerHTML = "주소 : [" + address + "]";
         document.getElementById("domain_status_" + connectId).innerHTML = "주소 : [" + status + "]";
-      })
+      });
     })
-  };
+  }
 
   function memberTargetFunction(connectId) {
     return new Promise((resolve, reject) => {
@@ -113,18 +112,27 @@
         let id = data.id;
         document.getElementById("member_name_" + id).innerHTML = " " + username + " ";
         document.getElementById("member_status_" + id).innerHTML = "연결 상태: " + status + "";
-      })
+      });
     })
   }
 
-  async function pingDomain() {
+  function pingDomain() {
     console.log("핑 보낼떄 domain" + domainList);
-    domainList.forEach(async (walnut) => await funDomainPing(walnut));
+    Promise.all(
+        domainList.map(async (index) => {
+          await funDomainPing(index);
+        }),
+    )
   }
 
-  async function pingMember() {
+  function pingMember() {
     console.log("핑 보낼때 member" + memberList);
-    memberList.forEach(async (walnut) => await memberTargetFunction(walnut));
+
+    Promise.all(
+        memberList.map(async (index) => {
+          await memberTargetFunction(index);
+        }),
+    )
   }
 
   function findDomain() {
@@ -190,7 +198,7 @@
   function addressUrl() {
     var name = document.getElementById("addressUrlName").value;
     var url = document.getElementById("addressUrl").value;
-    postVoid("api/team/add/url", {
+    post("api/team/add/url", {
       teamId: teamId,
       name: name,
       url: url,
@@ -198,7 +206,9 @@
     .then(() => {
       location.reload();
     })
-    .catch(error => console.log(error))
+    .catch((error) => {
+      alert(error);
+    })
 
   }
 
@@ -210,7 +220,7 @@
     var cClass = document.getElementById("addressPortIpC").value;
     var dClass = document.getElementById("addressPortIpD").value;
 
-    postVoid("api/team/add/ip/port", {
+    post("api/team/add/ip/port", {
       teamId: teamId,
       name: name,
       a: aClass,
@@ -222,7 +232,9 @@
     .then(() => {
       location.reload()
     })
-    .catch(error => console.log(error))
+    .catch((error) => {
+      alert(error);
+    })
   }
 
   function addressIp() {
@@ -231,7 +243,7 @@
     var BClass = document.getElementById("addressIpB").value;
     var CClass = document.getElementById("addressIpC").value;
     var DClass = document.getElementById("addressIpD").value;
-    postVoid("api/team/add/ip/", {
+    post("api/team/add/ip/", {
       teamId: teamId,
       name: name,
       a: AClass,
@@ -242,13 +254,15 @@
     .then(() => {
       location.reload()
     })
-    .catch(error => console.log(error))
+    .catch((error) => {
+      alert(error);
+    })
   }
 
   function postInviteTeam() {
     var email = document.getElementById("email").value;
 
-    postVoid("api/team/invite", {
+    post("api/team/invite", {
       teamId: teamId,
       groupsId: groupId,
       email: email,
@@ -256,46 +270,9 @@
     .then(() => {
       location.reload()
     })
-    .catch(error => console.log(error))
-  }
-
-  async function post(path, body, headers = {}) {
-
-    const url = `${defaultUrl}/${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    };
-    const res = await fetch(url, options);
-    const data = await res.json();
-    if (res.ok) {
-      return data;
-    } else {
-      throw Error(data);
-    }
-  }
-
-  async function postVoid(path, body, headers = {}) {
-
-    const url = `${defaultUrl}/${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    };
-    const res = await fetch(url, options);
-    if (res.ok) {
-      return res.ok;
-    } else {
-      throw Error(data);
-    }
+    .catch((error) => {
+      alert(error);
+    })
   }
 
   init();

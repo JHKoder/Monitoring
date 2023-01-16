@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>그룹</title>
+  <script src="/common.js"></script>
 </head>
 <body>
 <!-- 그룹 등록 -->
@@ -21,7 +22,6 @@
 </div>
 </body>
 <script>
-  var defaultUrl = window.location.origin;
 
   post("api/groups/list")
   .then(data => groupsList(data))
@@ -29,7 +29,7 @@
 
   function groupsAdd() {
     var name = document.getElementById("groupInputName").value;
-    postVoid("api/groups/add", {
+    post("api/groups/add", {
       name: name,
     })
     .then(() => location.reload())
@@ -46,62 +46,6 @@
           "</tr >";
     });
     document.getElementById("groupList").innerHTML = out;
-  }
-
-  async function post(path, headers = {}) {
-    const url = `${defaultUrl}${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-    };
-    const res = await fetch(url, options);
-    const data = await res.json();
-    if (res.ok) {
-      return data;
-    } else {
-      throw Error(data);
-    }
-  }
-
-  async function post(path, body, headers = {}) {
-    const url = `${defaultUrl}/${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    };
-    const res = await fetch(url, options);
-    const data = await res.json();
-    if (res.ok) {
-      return data;
-    } else {
-      throw Error(data);
-    }
-  }
-
-  async function postVoid(path, body, headers = {}) {
-
-    const url = `${defaultUrl}/${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    };
-    const res = await fetch(url, options);
-    if (res.ok) {
-      return res.ok;
-    } else {
-      throw Error(data);
-    }
   }
 
 </script>

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="/common.js"></script>
 </head>
 <body>
 
@@ -28,29 +29,28 @@
 </div>
 </body>
 <script>
-  const defaultUrl = window.location.origin;
   const local = window.location.pathname;
   const groupId = local.substring(7, local.length);
 
   function groupsInviteClick() {
     var email = document.getElementById("groupsInputEmail").value;
-    postVoid("api/groups/invite", {
+    post("api/groups/invite", {
       groupsId: groupId,
       email: email,
     })
     .then(() => location.reload())
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   function deptCreate() {
     var name = document.getElementById("deptName").value;
 
-    postVoid("api/group/add/dept", {
+    post("api/group/add/dept", {
       groupsId: groupId,
       name: name,
     })
     .then(() => location.reload())
-    .catch(error => console.log(error))
+    .catch(error => alert(error))
   }
 
   const init = function () {
@@ -108,52 +108,13 @@
 
   function teamCreate(deptId, groupsId) {
     const name = document.getElementById(groupsId + "-" + deptId + "-name").value;
-    postVoid("api/group/add/team", {
+    post("api/group/add/team", {
       groupsId: groupsId,
       deptId: deptId,
       name: name,
     })
     .then(() => location.reload())
-    .catch(message => console.log(message));
-  }
-
-  async function post(path, body, headers = {}) {
-
-    const url = `${defaultUrl}/${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    };
-    const res = await fetch(url, options);
-    const data = await res.json();
-    if (res.ok) {
-      return data;
-    } else {
-      throw Error(data);
-    }
-  }
-
-  async function postVoid(path, body, headers = {}) {
-
-    const url = `${defaultUrl}/${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    };
-    const res = await fetch(url, options);
-    if (res.ok) {
-      return res.ok;
-    } else {
-      throw Error(data);
-    }
+    .catch(error => alert(error))
   }
 
   init();
