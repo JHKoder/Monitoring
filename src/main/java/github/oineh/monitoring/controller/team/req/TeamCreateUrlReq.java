@@ -17,7 +17,7 @@ public class TeamCreateUrlReq {
     }
 
     public TeamCreateUrlReq filterUrl() {
-        if (url.contains("://")) {
+        if (!url.contains("://")) {
             updateUrlHttp();
         }
         return this;
