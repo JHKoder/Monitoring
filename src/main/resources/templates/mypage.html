@@ -13,6 +13,7 @@
       font-size: 17px;
     }
   </style>
+  <script src="/common.js"></script>
 </head>
 <body>
 
@@ -67,13 +68,11 @@
 </div>
 </body>
 <script>
-  const defaultUrl = window.location.origin;
-
   function pcCreate() {
 
     var pcName = document.getElementById("pcCreateInputName").value;
     var type = document.getElementById("pcCreateInputType").value;
-    postVoid("api/pc/create", {
+    post("api/pc/create", {
       pcName: pcName,
       type: type,
     })
@@ -125,14 +124,17 @@
     if (isInvite) {
       url += "accept";
     } else {
-      url += "cencel";
+      url += "cancel";
     }
     post(url, {
       groupsId: groupsId,
       inviteId: inviteId,
     })
     .then(() => location.reload())
-    .catch(message => console.log(message));
+    .catch(message => {
+      alert(message);
+      getGroupsInvitedList();
+    });
   }
 
   function groupsTeamInvite(isInvite, groupsId, teamId) {
@@ -140,14 +142,17 @@
     if (isInvite) {
       url += "accept";
     } else {
-      url += "cencel";
+      url += "cancel";
     }
     post(url, {
       groupsId: groupsId,
       teamId: teamId,
     })
     .then(() => location.reload())
-    .catch(message => console.log(message));
+    .catch(message => {
+      alert(message);
+      getGroupInTeamInvitedList();
+    });
   }
 
   function getGroupInTeamInvitedList() {
@@ -182,45 +187,6 @@
           + "</tr>";
     })
     return out;
-  }
-
-  async function post(path, body, headers = {}) {
-
-    const url = `${defaultUrl}/${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    };
-    const res = await fetch(url, options);
-    const data = await res.json();
-    if (res.ok) {
-      return data;
-    } else {
-      throw Error(data);
-    }
-  }
-
-  async function postVoid(path, body, headers = {}) {
-
-    const url = `${defaultUrl}/${path}`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    };
-    const res = await fetch(url, options);
-    if (res.ok) {
-      return res.ok;
-    } else {
-      throw Error(data);
-    }
   }
 
   init();
