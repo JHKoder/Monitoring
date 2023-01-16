@@ -38,8 +38,9 @@ public class GroupService {
 
     @Transactional
     public GroupListRes findGroupIn(Long groupId, String userId) {
+        User user = findUser(userId);
         return groupsRepository.findById(groupId)
-            .filter(groups -> checkGroupsInMember(groups, userId))
+            .filter(groups -> checkGroupsInMember(groups, user))
             .map(group -> GroupListRes.of(group.getId(), group.getDept()))
             .orElse(new GroupListRes());
     }
@@ -89,6 +90,7 @@ public class GroupService {
         User targetUser = getUserByEmail(req.getEmail(), ErrorCode.NOT_FOUND_TARGET_USER);
         User sendUser = findUser(userId, ErrorCode.NOT_FOUND_SEND_USER);
 
+        checkGroupsInMember(findGroups(req.getGroupsId()), targetUser);
         checkSendUserIsTeamMember(sendUser, team);
         checkFindTargetUserAndTeam(targetUser, team);
 
@@ -109,8 +111,8 @@ public class GroupService {
         return invited.stream().map(InviteTeamUserRes::new).collect(Collectors.toList());
     }
 
-    private boolean checkGroupsInMember(Groups group, String userId) {
-        if (!group.checkMember(findUser(userId))) {
+    private boolean checkGroupsInMember(Groups group, User user) {
+        if (!group.checkMember(user)) {
             throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
         }
         return true;
