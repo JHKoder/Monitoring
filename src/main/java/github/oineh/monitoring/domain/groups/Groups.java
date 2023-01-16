@@ -46,6 +46,10 @@ public class Groups extends BaseEntity {
         this.name = name;
     }
 
+    public boolean checkMember(User user) {
+        return memberUser.contains(user);
+    }
+
     public void updateMember(User user) {
         this.memberUser.add(user);
     }
