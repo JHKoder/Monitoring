@@ -38,33 +38,18 @@ public class GroupService {
 
     @Transactional
     public GroupListRes findGroupIn(Long groupId, String userId) {
-        checkUser(userId);
-
-        Groups groups = groupsRepository.findById(groupId)
-            .orElse(null);
-
-        return GroupListRes.of(groupId, findDeptByGroupId(groups));
+        return groupsRepository.findById(groupId)
+            .filter(groups -> checkGroupsInMember(groups, userId))
+            .map(group -> GroupListRes.of(group.getId(), group.getDept()))
+            .orElse(new GroupListRes());
     }
-
-    private List<Dept> findDeptByGroupId(Groups groups) {
-        List<Long> deptIds = groups.getDept().stream()
-            .map(Dept::getId)
-            .collect(Collectors.toList());
-
-        return deptRepository.findAllById(deptIds);
-    }
-
 
     @Transactional
     public void createGroup(GroupCreateTeamDeptReq req, String userId) {
-        Groups groups = groupsRepository.findById(req.getGroupsId())
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
-
-        Dept dept = deptRepository.save(new Dept(findUser(userId), req.getName()));
-
-        groups.updateDept(dept);
+        groupsRepository.findById(req.getGroupsId())
+            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS))
+            .updateDept(deptSave(findUser(userId), req.getName()));
     }
-
 
     @Transactional
     public void createGroup(GroupCreateTeamReq req, String userId) {
@@ -116,7 +101,6 @@ public class GroupService {
         }
     }
 
-
     private List<InvitedGroup> getInvitationsByTargetUser(User user) {
         return invitedGroupRepository.findByTargetUser(user).orElse(Collections.emptyList());
     }
@@ -125,10 +109,15 @@ public class GroupService {
         return invited.stream().map(InviteTeamUserRes::new).collect(Collectors.toList());
     }
 
+    private boolean checkGroupsInMember(Groups group, String userId) {
+        if (!group.checkMember(findUser(userId))) {
+            throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
+        }
+        return true;
+    }
 
-    private void checkUser(String loginId) {
-        userRepository.findByLoginId(loginId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+    private Dept deptSave(User user, String name) {
+        return deptRepository.save(new Dept(user, name));
     }
 
     private User findUser(String loginId) {
