@@ -62,12 +62,15 @@
     fetch(url)
     .then((response) => response.json())
     .then((data) => groupInDeptAndTeam(data))
-    .catch(error => console.log(error))
+    .catch((error) => console.log(error))
   }
 
   function groupInDeptAndTeam(datas) {
+    if (!Array.isArray(datas.group)) {
+      alert(datas);
+      location.href = defaultUrl;
+    }
     datas.group.forEach(function (data, idx) {
-      console.log(data);
       document.getElementById("group_in_dept_in_team")
           .innerHTML += groupInDeptAndTeamOut(data, datas.groupsId);
     })
