@@ -44,7 +44,6 @@ public class GroupsService {
         Groups groups = findGroups(req.getGroupsId());
 
         checkGroupsInMember(sendUser, groups);
-        checkGroupsInMember(targetUser, groups);
         checkInvited(targetUser, groups);
 
         invitedGroupsRepository.save(new InvitedGroups(targetUser, sendUser, groups));
