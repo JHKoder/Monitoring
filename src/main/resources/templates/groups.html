@@ -23,13 +23,13 @@
 </body>
 <script>
 
-  post("api/groups/list")
+  get("api/groups")
   .then(data => groupsList(data))
   .catch(error => console.log(error))
 
   function groupsAdd() {
     var name = document.getElementById("groupInputName").value;
-    post("api/groups/add", {
+    post("api/groups", {
       name: name,
     })
     .then(() => location.reload())
