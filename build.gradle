@@ -37,7 +37,7 @@ dependencies {
     //custom lib
 
     implementation 'com.github.oiNeh:tcp:0.1.16'
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     //lombok
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
