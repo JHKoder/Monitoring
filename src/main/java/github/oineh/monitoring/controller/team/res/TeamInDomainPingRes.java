@@ -1,6 +1,6 @@
 package github.oineh.monitoring.controller.team.res;
 
-import io.github.sno.network.NetStatus;
+import io.github.tcp.network.NetStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

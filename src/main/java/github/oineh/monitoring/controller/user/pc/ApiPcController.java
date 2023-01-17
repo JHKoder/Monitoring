@@ -3,7 +3,7 @@ package github.oineh.monitoring.controller.user.pc;
 import github.oineh.monitoring.controller.user.pc.req.PcAddReq;
 import github.oineh.monitoring.domain.user.pc.PcClientIpUtils;
 import github.oineh.monitoring.domain.user.pc.PcService;
-import io.github.sno.network.Host;
+import io.github.tcp.network.Host;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

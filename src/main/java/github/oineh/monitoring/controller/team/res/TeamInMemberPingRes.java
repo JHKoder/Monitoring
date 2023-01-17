@@ -1,7 +1,7 @@
 package github.oineh.monitoring.controller.team.res;
 
 import github.oineh.monitoring.domain.user.User;
-import io.github.sno.network.NetStatus;
+import io.github.tcp.network.NetStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

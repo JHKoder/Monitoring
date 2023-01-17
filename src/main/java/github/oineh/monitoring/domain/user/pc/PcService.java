@@ -6,7 +6,7 @@ import github.oineh.monitoring.controller.user.pc.req.PcAddReq;
 import github.oineh.monitoring.domain.connect.Connect;
 import github.oineh.monitoring.domain.user.User;
 import github.oineh.monitoring.domain.user.UserRepository;
-import io.github.sno.network.Host;
+import io.github.tcp.network.Host;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

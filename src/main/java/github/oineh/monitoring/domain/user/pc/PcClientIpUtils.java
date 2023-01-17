@@ -2,7 +2,7 @@ package github.oineh.monitoring.domain.user.pc;
 
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
-import io.github.sno.network.Host;
+import io.github.tcp.network.Host;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
