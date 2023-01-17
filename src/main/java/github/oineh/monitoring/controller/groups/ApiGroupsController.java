@@ -8,6 +8,7 @@ import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,15 +21,15 @@ public class ApiGroupsController {
 
     private final GroupsService groupsService;
 
-    @PostMapping("/list")
+    @GetMapping
     public ResponseEntity<List<GroupsFindRes>> list(Principal principal) {
         List<GroupsFindRes> listRes = groupsService.findList(principal.getName());
 
         return ResponseEntity.ok(listRes);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Void> add(@RequestBody GroupsCreateReq req, Principal principal) {
+    @PostMapping
+    public ResponseEntity<Void> createGroups(@RequestBody GroupsCreateReq req, Principal principal) {
 
         groupsService.add(principal.getName(), req.getName());
 

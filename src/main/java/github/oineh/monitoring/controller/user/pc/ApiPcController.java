@@ -21,7 +21,7 @@ public class ApiPcController {
     private final PcService pcService;
 
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Void> create(PcAddReq req, HttpServletRequest request, Principal principal) {
         Host host = PcClientIpUtils.filterIp(request);
 

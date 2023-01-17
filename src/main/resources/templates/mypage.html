@@ -72,7 +72,7 @@
 
     var pcName = document.getElementById("pcCreateInputName").value;
     var type = document.getElementById("pcCreateInputType").value;
-    post("api/pc/create", {
+    post("api/pc", {
       pcName: pcName,
       type: type,
     })
@@ -122,37 +122,51 @@
   function groupsInvite(isInvite, groupsId, inviteId) {
     let url = "api/user/groups/invite/";
     if (isInvite) {
-      url += "accept";
+      post(url, {
+        groupsId: groupsId,
+        inviteId: inviteId,
+      })
+      .then(() => location.reload())
+      .catch(message => {
+        alert(message);
+        getGroupsInvitedList();
+      });
     } else {
-      url += "cancel";
+      Delete(url, {
+        groupsId: groupsId,
+        inviteId: inviteId,
+      })
+      .then(() => location.reload())
+      .catch(message => {
+        alert(message);
+        getGroupsInvitedList();
+      });
     }
-    post(url, {
-      groupsId: groupsId,
-      inviteId: inviteId,
-    })
-    .then(() => location.reload())
-    .catch(message => {
-      alert(message);
-      getGroupsInvitedList();
-    });
   }
 
   function groupsTeamInvite(isInvite, groupsId, teamId) {
     let url = "api/user/team/invite/";
     if (isInvite) {
-      url += "accept";
+      post(url, {
+        groupsId: groupsId,
+        teamId: teamId,
+      })
+      .then(() => location.reload())
+      .catch(message => {
+        alert(message);
+        getGroupInTeamInvitedList();
+      });
     } else {
-      url += "cancel";
+      Delete(url, {
+        groupsId: groupsId,
+        teamId: teamId,
+      })
+      .then(() => location.reload())
+      .catch(message => {
+        alert(message);
+        getGroupInTeamInvitedList();
+      });
     }
-    post(url, {
-      groupsId: groupsId,
-      teamId: teamId,
-    })
-    .then(() => location.reload())
-    .catch(message => {
-      alert(message);
-      getGroupInTeamInvitedList();
-    });
   }
 
   function getGroupInTeamInvitedList() {

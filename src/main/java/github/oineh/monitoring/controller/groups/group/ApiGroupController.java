@@ -22,7 +22,7 @@ public class ApiGroupController {
 
     private final GroupService groupService;
 
-    @GetMapping("/room/{groupId}")
+    @GetMapping("/{groupId}")
     public ResponseEntity<GroupListRes> groupInRoom(@PathVariable("groupId") Long groupId, Principal principal) {
         GroupListRes res = groupService.findGroupIn(groupId, principal.getName());
 
@@ -30,14 +30,14 @@ public class ApiGroupController {
     }
 
 
-    @PostMapping("/add/dept")
+    @PostMapping("/dept")
     public ResponseEntity<Void> createGroupDept(@RequestBody GroupCreateTeamDeptReq req, Principal principal) {
         groupService.createGroup(req, principal.getName());
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/add/team")
+    @PostMapping("/team")
     public ResponseEntity<Void> createGroupTeam(@RequestBody GroupCreateTeamReq req, Principal principal) {
         groupService.createGroup(req, principal.getName());
 

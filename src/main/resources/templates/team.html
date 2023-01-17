@@ -94,7 +94,7 @@
 
   function funDomainPing(connectId) {
     return new Promise((resolve, reject) => {
-      post("api/team/ping/domain/" + teamId + "/" + connectId)
+      get("api/team/ping/domain/" + teamId + "/connect/" + connectId)
       .then((data) => {
         let address = data.name;
         let status = data.status;
@@ -107,7 +107,7 @@
 
   function memberTargetFunction(connectId) {
     return new Promise((resolve, reject) => {
-      post("api/team/ping/member/" + teamId + "/" + connectId)
+      get("api/team/ping/member/" + teamId + "/connect/" + connectId)
       .then((data) => {
         let username = data.name;
         let status = data.status;
@@ -138,7 +138,7 @@
   }
 
   function findDomain() {
-    post("api/team/find/domain/" + teamId)
+    get("api/team/domain/" + teamId)
     .then((datas) => {
       let out = "";
       const list = [];
@@ -168,7 +168,7 @@
   }
 
   function findMember() {
-    post("api/team/find/member/" + teamId)
+    get("api/team/member/" + teamId)
     .then((datas) => {
       var out = "";
       const list = [];
@@ -200,7 +200,7 @@
   function addressUrl() {
     var name = document.getElementById("addressUrlName").value;
     var url = document.getElementById("addressUrl").value;
-    post("api/team/add/url", {
+    post("api/team/url", {
       teamId: teamId,
       name: name,
       url: url,
@@ -222,7 +222,7 @@
     var cClass = document.getElementById("addressPortIpC").value;
     var dClass = document.getElementById("addressPortIpD").value;
 
-    post("api/team/add/ip/port", {
+    post("api/team/ip/port", {
       teamId: teamId,
       name: name,
       a: aClass,
@@ -245,7 +245,7 @@
     var BClass = document.getElementById("addressIpB").value;
     var CClass = document.getElementById("addressIpC").value;
     var DClass = document.getElementById("addressIpD").value;
-    post("api/team/add/ip/", {
+    post("api/team/ip/", {
       teamId: teamId,
       name: name,
       a: AClass,

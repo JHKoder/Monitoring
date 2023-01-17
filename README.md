@@ -47,7 +47,7 @@
 
 ## 마이페이지
 
-### POST /api/pc/create
+### POST /api/pc
 
 #### 설명
 
@@ -59,7 +59,7 @@
     - 유저에 PC를 등록 합니다.   
     - pc는 Icmp 형태의 초기 연결 방법을 갖습니다.
 
-### POST /api/user/groups/invite
+### GET /api/user/groups/invite
 
 #### 설명
 
@@ -70,7 +70,7 @@
     - 회원이 받은 그룹 초대장을 모두 조회한다.
     - 리스트 형태의 res를 반환 합니다.
 
-### POST /api/user/groups/invite/accept
+### POST /api/user/groups/invite
 
 #### 설명
 
@@ -82,17 +82,19 @@
     - 초대장에 서 그룹을 찾아 그룹 맴버에 등록합니다.
     - 초대장을 지움니다.
 
-### POST /api/user/groups/invite/cancel
+### DELETE /api/user/groups/invite
 
 #### 설명
 
-    그룹 초대 거부 
+    그룹 초대 거부
 
 #### 로직
 
+    - 초대장에 여부 확인
+    - 초대장에 회원님이 있는지 체크 
     - 초대장에 회원을 지움니다.
 
-### POST /api/user/team/invite
+### GET /api/user/team/invite
 
 #### 설명
 
@@ -101,8 +103,9 @@
 #### 로직
 
     - 회원이 받은 팀 초대장을 모두 조회한다. 
+    - Res 리스트 형식으로 반환 한다.
 
-### POST /api/user/team/invite/accept
+### POST /api/user/team/invite
 
 #### 설명
 
@@ -114,7 +117,7 @@
     - 있다면 팀에 회원을 등록한다.
     - 초대장을 지운다.
 
-### POST /api/user/team/invite/cancel
+### DELETE /api/user/team/invite
 
 #### 설명
 
@@ -122,13 +125,14 @@
 
 #### 로직
 
+    - 초대장에 회원이 있나 체크
     - 회원이 받은 팀 초대장을 지운다.
 
 ***
 
-## group
+## 그룹들 페이지
 
-### POST /api/groups/list
+### GET /api/groups
 
 #### 설명
 
@@ -139,11 +143,11 @@
     - 회원을 찾는다.
     - 회원이 속한 그룹들을 찾아 list로 반환한다. 
 
-### POST /api/groups/add
+### POST /api/groups
 
 #### 설명
 
-    그룹 등록 
+    그룹 등록
 
 #### 로직
 
@@ -166,7 +170,9 @@
 
 ***
 
-### POST /api/group/room/{groupId}
+## 그룹 페이지
+
+### GET /api/group/{groupId}
 
 #### 설명
 
@@ -177,22 +183,22 @@
     - 그룹 Id로 검색
     - 그룹에 회원이 포함되어 있나 확인
 
-### POST /api/group/add/{dept}
+### POST /api/group/dept
 
 #### 설명
 
-    그룹내 부서 생성 
+    그룹내 부서 생성
 
 #### 로직
 
     - 그룹 Id로 검색
     - 그룹 추가 
 
-### POST /api/group/add/{team}
+### POST /api/group/team
 
 #### 설명
 
-    부서내 팀 생성 
+    부서내 팀 생성
 
 #### 로직
 
@@ -202,7 +208,9 @@
 
 ***
 
-### POST /api/team/add/url
+## 팀 페이지
+
+### POST /api/team/url
 
 #### 설명
 
@@ -213,7 +221,7 @@
     - url 문자중 '://'가 포함 되어 있지 않다면 'http://'를 붙인다.
     - 팀 에 connect를 등록한다.
 
-### POST /api/team/add/ip/port
+### POST /api/team/ip/port
 
 #### 설명
 
@@ -224,7 +232,7 @@
     - AClass,BCalss,CClass,DClass 는 0~255 까지 입력 가능하다.
     - 팀 에 connect를 등록한다.
 
-### POST /api/team/add/ip
+### POST /api/team/ip
 
 #### 설명
 
@@ -248,7 +256,7 @@
     - 이미 초대장을 보낸 상대인지 체크 
     - 체크 이상없으면 초대장을 전송(마이페이지에서 확인 가능)
 
-### POST /api/team/find/domain/{teamId}
+### GET /api/team/domain/{teamId}
 
 #### 설명
 
@@ -259,7 +267,7 @@
     - 팀내에 등록된 URL,IP:PORT,IP 리스트를 가져 옴니다.
     - 이름과 connectId를 리스트 형태로 반환 합니다.
 
-### POST /api/team/find/domain/{teamId}/{connectId}
+### GET /api/team/ping/domain/{teamId}/connect/{connectId}
 
 #### 설명
 
@@ -271,7 +279,7 @@
     - connectId가 있나 비교하고 있다면 연결 확인 작업을 실행 합니다.
     - 작업 실행후 Res으로 반환 합니다.
 
-### POST /api/team/find/member/{teamId}
+### GET /api/team/member/{teamId}
 
 #### 설명
 
@@ -279,9 +287,10 @@
 
 #### 로직
 
-    - 팀내 등록된 유저중에서 PC 등록한 것들만 리스트로 반환 합니다. 
+    - 팀내 등록된 유저중에서 PC 등록한 것들만 조회 합니다.
+    - Res으로 반환 합니다.
 
-### POST /api/team/find/member/{teamId}/{connectId}
+### GET /api/team/ping/member/{teamId}/connect/{connectId}
 
 #### 설명
 

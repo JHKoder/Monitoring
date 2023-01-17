@@ -45,7 +45,7 @@
   function deptCreate() {
     var name = document.getElementById("deptName").value;
 
-    post("api/group/add/dept", {
+    post("api/group/dept", {
       groupsId: groupId,
       name: name,
     })
@@ -58,7 +58,7 @@
   }
 
   const fetchGet = function (groupId) {
-    const url = `${defaultUrl}/api/group/room/${groupId}`;
+    const url = `${defaultUrl}/api/group/${groupId}`;
     fetch(url)
     .then((response) => response.json())
     .then((data) => groupInDeptAndTeam(data))
@@ -108,7 +108,7 @@
 
   function teamCreate(deptId, groupsId) {
     const name = document.getElementById(groupsId + "-" + deptId + "-name").value;
-    post("api/group/add/team", {
+    post("api/group/team", {
       groupsId: groupsId,
       deptId: deptId,
       name: name,

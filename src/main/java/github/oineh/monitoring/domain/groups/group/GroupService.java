@@ -79,10 +79,12 @@ public class GroupService {
 
     @Transactional
     public void cancelInvite(UserGroupsTeamInviteReq req, String userId) {
-        User user = userRepository.findByLoginId(userId).orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+        User user = findUser(userId);
         Team team = findTeam(req.getTeamId());
+        InvitedGroup invited = findInvitedGroup(user, team);
 
-        invitedGroupRepository.delete(findInvitedGroup(user, team));
+        checkInvitedTargetUserAndTeamOK(user, team);
+        invitedGroupRepository.delete(invited);
     }
 
 

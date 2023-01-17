@@ -15,6 +15,7 @@ import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,22 +31,21 @@ public class ApiTeamController {
     private final GroupService groupService;
 
 
-    @PostMapping("/find/domain/{teamId}")
+    @GetMapping("/domain/{teamId}")
     public ResponseEntity<List<TeamInDomainRes>> domainList(@PathVariable("teamId") Long teamId) {
         List<TeamInDomainRes> res = connectService.findTeamInDomain(teamId);
 
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/find/member/{teamId}")
+    @GetMapping("/member/{teamId}")
     public ResponseEntity<List<TeamInMemberRes>> memberList(@PathVariable("teamId") Long teamId) {
         List<TeamInMemberRes> res = connectService.findTeamInMember(teamId);
 
         return ResponseEntity.ok(res);
     }
 
-
-    @PostMapping("/ping/domain/{teamId}/{connectId}")
+    @GetMapping("/ping/domain/{teamId}/connect/{connectId}")
     public ResponseEntity<TeamInDomainPingRes> findTeamDomain(@PathVariable("teamId") Long teamId,
         @PathVariable Long connectId) {
         TeamInDomainPingRes res = connectService.findTeamInConnectDomainList(teamId, connectId);
@@ -53,7 +53,7 @@ public class ApiTeamController {
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/ping/member/{teamId}/{connectId}")
+    @GetMapping("/ping/member/{teamId}/connect/{connectId}")
     public ResponseEntity<TeamInMemberPingRes> findTeam(@PathVariable("teamId") Long teamId,
         @PathVariable Long connectId) {
         TeamInMemberPingRes res = connectService.findTeamInConnectMemberList(teamId, connectId);
@@ -69,21 +69,21 @@ public class ApiTeamController {
     }
 
 
-    @PostMapping("/add/url")
+    @PostMapping("/url")
     public ResponseEntity<Void> createUrl(@RequestBody TeamCreateUrlReq req) {
         connectService.createUrl(req);
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/add/ip/port")
+    @PostMapping("/ip/port")
     public ResponseEntity<Void> createPort(@RequestBody TeamCreatePortReq req) {
         connectService.createIpPort(req);
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/add/ip")
+    @PostMapping("/ip")
     public ResponseEntity<Void> createIp(@RequestBody TeamCreateIpReq req) {
         connectService.createIp(req);
 

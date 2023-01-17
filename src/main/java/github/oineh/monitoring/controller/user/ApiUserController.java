@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,14 +36,14 @@ public class ApiUserController {
         return ResponseEntity.ok(list);
     }
 
-    @PostMapping("/groups/invite/accept")
+    @PostMapping("/groups/invite")
     public ResponseEntity<Void> acceptGroupsInvite(@RequestBody UserGroupsInviteReq req, Principal principal) {
         groupsService.acceptInvite(req, principal.getName());
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/groups/invite/cancel")
+    @DeleteMapping("/groups/invite")
     public ResponseEntity<Void> noGroupsInvite(@RequestBody UserGroupsInviteReq req, Principal principal) {
         groupsService.cancelInvite(req, principal.getName());
 
@@ -56,14 +57,14 @@ public class ApiUserController {
         return ResponseEntity.ok(list);
     }
 
-    @PostMapping("/team/invite/accept")
+    @PostMapping("/team/invite")
     public ResponseEntity<Void> acceptTeamInvite(@RequestBody UserGroupsTeamInviteReq req, Principal principal) {
         groupService.acceptInvite(req, principal.getName());
 
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/team/invite/cancel")
+    @DeleteMapping("/team/invite")
     public ResponseEntity<Void> noTeamInvite(@RequestBody UserGroupsTeamInviteReq req, Principal principal) {
         groupService.cancelInvite(req, principal.getName());
 

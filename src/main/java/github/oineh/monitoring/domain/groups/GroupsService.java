@@ -72,8 +72,15 @@ public class GroupsService {
 
     @Transactional
     public void cancelInvite(UserGroupsInviteReq req, String userId) {
-        findUser(userId);
-        invitedGroupsRepository.delete(findInvitedGroups(req.getInviteId()));
+        InvitedGroups invited = findInvitedGroups(req.getInviteId());
+        checkInvitedTarget(findUser(userId), invited);
+        invitedGroupsRepository.delete(invited);
+    }
+
+    private void checkInvitedTarget(User targetUser, InvitedGroups invited) {
+        if (!invited.getTargetUser().equals(targetUser)) {
+            throw new ApiException(ErrorCode.NO_GROUP_INVITES);
+        }
     }
 
     private void checkInvited(User targetUser, Groups groups) {
