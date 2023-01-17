@@ -34,7 +34,7 @@ dependencies {
 
     //custom lib
 
-    implementation 'com.github.oiNeh:sno:0.1.15'
+    implementation 'com.github.oiNeh:tcp:0.1.16'
     //lombok
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'

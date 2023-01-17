@@ -11,7 +11,7 @@
 ![H2](https://img.shields.io/badge/h2-blue)
 ![JPA](https://img.shields.io/badge/JPA-red)
 ![SECURITY](https://img.shields.io/badge/Security-yellow)
-[![libSno](https://img.shields.io/badge/lib-git.oiNeh.sno_0.1.5-red)](https://github.com/oiNeh/sno)<br>
+[![libTcp](https://img.shields.io/badge/lib-git.oiNeh.tcp_0.1.5-red)](https://github.com/oiNeh/tcp)<br>
 ![IntelliJ](https://img.shields.io/badge/IDE-intelliJ-blueviolet)
 ![Server](https://img.shields.io/badge/server-VM_VirtualBox-9cf)
 ![OS](https://img.shields.io/badge/OS-Ubuntu-red)
