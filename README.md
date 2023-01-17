@@ -10,7 +10,8 @@
 ![JAVA](https://img.shields.io/badge/java-11-green)
 ![H2](https://img.shields.io/badge/h2-blue)
 ![JPA](https://img.shields.io/badge/JPA-red)
-![SECURITY](https://img.shields.io/badge/Security-yellow)<br>
+![SECURITY](https://img.shields.io/badge/Security-yellow)
+[![libSno](https://img.shields.io/badge/lib-git.oiNeh.sno_0.1.5-red)](https://github.com/oiNeh/sno)<br>
 ![IntelliJ](https://img.shields.io/badge/IDE-intelliJ-blueviolet)
 ![Server](https://img.shields.io/badge/server-VM_VirtualBox-9cf)
 ![OS](https://img.shields.io/badge/OS-Ubuntu-red)
@@ -255,8 +256,8 @@
 
 #### 로직
 
-    팀내 등록된 URL,IP:PORT,IP 리스트를 가져와 
-    이름과 connectId를 반환 합니다.
+    - 팀내에 등록된 URL,IP:PORT,IP 리스트를 가져 옴니다.
+    - 이름과 connectId를 리스트 형태로 반환 합니다.
 
 ### POST /api/team/find/domain/{teamId}/{connectId}
 
@@ -266,9 +267,9 @@
 
 #### 로직
 
-    팀내 등록된 URL,IP:PORT,IP 리스트를 가져와 
-    connectId가 있나 비교하고 있다면 연결 확인 작업을 실행후
-    Res으로 반환 합니다.
+    - 팀내 등록된 URL,IP:PORT,IP 리스트를 가져 옴니다. 
+    - connectId가 있나 비교하고 있다면 연결 확인 작업을 실행 합니다.
+    - 작업 실행후 Res으로 반환 합니다.
 
 ### POST /api/team/find/member/{teamId}
 
@@ -278,7 +279,7 @@
 
 #### 로직
 
-    팀내 등록된 유저중에서 PC 등록한 것들만 리스트로 반환 합니다. 
+    - 팀내 등록된 유저중에서 PC 등록한 것들만 리스트로 반환 합니다. 
 
 ### POST /api/team/find/member/{teamId}/{connectId}
 
@@ -288,5 +289,6 @@
 
 #### 로직
 
-    유저가 PC를 등록하고 {connectId} 에 맞는 유저를 가져와 
-    연결 확인 작업후 Res로 반환 합니다.
+    - 유저가 가지고 있는 connect 를 가져 옵니다.
+    - 연결 확인 작업을 실행 합니다.
+    - 연결 확인 작업후 Res로 반환 합니다.
