@@ -38,9 +38,8 @@ public class GroupService {
 
     @Transactional
     public GroupListRes findGroupIn(Long groupId, String userId) {
-        User user = findUser(userId);
         return groupsRepository.findById(groupId)
-            .filter(groups -> checkGroupsInMember(groups, user))
+            .filter(groups -> checkGroupsInMember(groups, findUser(userId)))
             .map(group -> GroupListRes.of(group.getId(), group.getDept()))
             .orElse(new GroupListRes());
     }
@@ -71,9 +70,12 @@ public class GroupService {
         User user = findUser(userId, ErrorCode.NOT_FOUND_SEND_USER);
         Team team = findTeam(req.getTeamId());
 
+        checkInvitedTargetUserAndTeamOK(user, team);
+
         team.updateMember(user);
         invitedGroupRepository.delete(findInvitedGroup(user, team));
     }
+
 
     @Transactional
     public void cancelInvite(UserGroupsTeamInviteReq req, String userId) {
@@ -92,12 +94,18 @@ public class GroupService {
 
         checkGroupsInMember(findGroups(req.getGroupsId()), targetUser);
         checkSendUserIsTeamMember(sendUser, team);
-        checkFindTargetUserAndTeam(targetUser, team);
+        checkInvitedTargetUserAndTeam(targetUser, team);
 
         invitedGroupRepository.save(new InvitedGroup(targetUser, sendUser, team));
     }
 
-    private void checkFindTargetUserAndTeam(User targetUser, Team team) {
+    private void checkInvitedTargetUserAndTeamOK(User targetUser, Team team) {
+        if (invitedGroupRepository.findByTargetUserAndTeam(targetUser, team).isEmpty()) {
+            throw new ApiException(ErrorCode.NO_TEAM_INVITES);
+        }
+    }
+
+    private void checkInvitedTargetUserAndTeam(User targetUser, Team team) {
         if (invitedGroupRepository.findByTargetUserAndTeam(targetUser, team).isPresent()) {
             throw new ApiException(ErrorCode.OVERLAP_INVITED_TEAM);
         }
