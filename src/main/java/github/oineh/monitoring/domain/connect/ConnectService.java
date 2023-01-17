@@ -12,8 +12,8 @@ import github.oineh.monitoring.controller.team.res.TeamInMemberPingRes;
 import github.oineh.monitoring.controller.team.res.TeamInMemberRes;
 import github.oineh.monitoring.domain.groups.group.category.Team;
 import github.oineh.monitoring.domain.groups.group.category.TeamRepository;
-import io.github.sno.network.Host;
-import io.github.sno.network.NetStatus;
+import io.github.tcp.network.Host;
+import io.github.tcp.network.NetStatus;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -88,7 +88,7 @@ public class ConnectService {
         return teamRepository.findById(teamId)
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
     }
-    
+
 
     private NetStatus connectStatus(Connect connect) {
         if (connect.isIcmp()) {
