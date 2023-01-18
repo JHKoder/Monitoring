@@ -1,10 +1,10 @@
 package github.oineh.monitoring.controller.common;
 
-import github.oineh.monitoring.domain.connect.ConnectService;
-import github.oineh.monitoring.domain.groups.GroupsService;
-import github.oineh.monitoring.domain.groups.group.GroupService;
-import github.oineh.monitoring.domain.user.UserService;
-import github.oineh.monitoring.domain.user.pc.PcService;
+import github.oineh.monitoring.connect.service.ConnectService;
+import github.oineh.monitoring.groups.group.service.GroupService;
+import github.oineh.monitoring.groups.service.GroupsService;
+import github.oineh.monitoring.user.pc.service.PcService;
+import github.oineh.monitoring.user.service.SignUpService;
 import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ServiceTest extends RepositoryTest {
 
     @Autowired
-    public UserService userService;
+    public SignUpService signUpService;
 
     @Autowired
     public GroupsService groupsService;

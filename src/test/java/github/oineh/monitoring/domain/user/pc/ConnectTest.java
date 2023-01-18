@@ -2,9 +2,9 @@ package github.oineh.monitoring.domain.user.pc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import github.oineh.monitoring.domain.connect.Connect;
-import github.oineh.monitoring.domain.user.pc.Pc;
-import github.oineh.monitoring.domain.user.pc.Type;
+import github.oineh.monitoring.connect.domain.Connect;
+import github.oineh.monitoring.user.pc.domain.Pc;
+import github.oineh.monitoring.user.pc.domain.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +17,14 @@ public class ConnectTest {
     public void icmpCreate() {
         //given
         Pc pc = new Pc("name", Type.PC);
-        Connect connect = Connect.icmp("내컴", "127.0.0.1");
+        String ip = "127.0.0.1";
 
         //when
-        pc.updateConnect(connect);
+        pc.updateConnect("내컴", ip);
 
         //then
-        assertThat(connect).isNotNull();
+        assertThat(pc.getConnectHost()).isEqualTo(ip);
+        assertThat(pc.getConnectNickName()).isEqualTo("내컴");
     }
 
     @Test
@@ -31,13 +32,12 @@ public class ConnectTest {
     public void tcpPortCreate() {
         //given
         Pc pc = new Pc("name", Type.PC);
-        Connect connect = Connect.tcp("내컴", "127.0.0.1", 8089);
 
         //when
-        pc.updateConnect(connect);
+        pc.updateConnect("내컴", "127.0.0.1", 8089);
 
         //then
-        assertThat(connect).isNotNull();
+        assertThat(pc).isNotNull();
     }
 
     @Test
@@ -45,10 +45,10 @@ public class ConnectTest {
     public void tcpUrlCreate() {
         //given
         Pc pc = new Pc("name", Type.SERVER);
-        Connect connect = Connect.tcp("네이버", "www.naver.com");
+        Connect connect = Connect.tcp("네이버", "https://www.naver.com");
 
         //when
-        pc.updateConnect(connect);
+        pc.updateConnectUrl("네이버", connect.getUrl());
 
         //then
         assertThat(connect).isNotNull();

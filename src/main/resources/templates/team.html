@@ -146,11 +146,12 @@
         let name = data.name;
         let id = data.id;
         list.push(id);
-        out += ""
-            + " <div style='border:solid 1px; width:200px;height: 60px;float: left;margin-right:10px;'>\n"
-            + "   <label id ='domain_address_" + id + "'>주소 : [ " + name + " ]</label><br>\n"
-            + "   <label id ='domain_status_" + id + "'>연결 상태 : 대기중 </label>\n"
-            + " </div>";
+        out += ```
+          <div style='border:solid 1px; width:200px;height: 60px;float: left;margin-right:10px;'>
+              <label id ='domain_address_" + id + "'>주소 : [ " + name + " ]</label><br>
+              <label id ='domain_status_" + id + "'>연결 상태 : 대기중 </label>
+          </div>
+        ```
       })
       document.getElementById("connectDomain")
           .innerHTML = out;
@@ -215,12 +216,12 @@
   }
 
   function addressPort() {
-    var name = document.getElementById("addressPortName").value;
-    var port = document.getElementById("addressPortPort").value;
-    var aClass = document.getElementById("addressPortIpA").value;
-    var bClass = document.getElementById("addressPortIpB").value;
-    var cClass = document.getElementById("addressPortIpC").value;
-    var dClass = document.getElementById("addressPortIpD").value;
+    const name = document.getElementById("addressPortName").value;
+    const port = document.getElementById("addressPortPort").value;
+    const aClass = document.getElementById("addressPortIpA").value;
+    const bClass = document.getElementById("addressPortIpB").value;
+    const cClass = document.getElementById("addressPortIpC").value;
+    const dClass = document.getElementById("addressPortIpD").value;
 
     post("api/team/ip/port", {
       teamId: teamId,
@@ -240,11 +241,11 @@
   }
 
   function addressIp() {
-    var name = document.getElementById("addressIpName").value;
-    var AClass = document.getElementById("addressIpA").value;
-    var BClass = document.getElementById("addressIpB").value;
-    var CClass = document.getElementById("addressIpC").value;
-    var DClass = document.getElementById("addressIpD").value;
+    const name = document.getElementById("addressIpName").value;
+    const AClass = document.getElementById("addressIpA").value;
+    const BClass = document.getElementById("addressIpB").value;
+    const CClass = document.getElementById("addressIpC").value;
+    const DClass = document.getElementById("addressIpD").value;
     post("api/team/ip/", {
       teamId: teamId,
       name: name,
@@ -261,8 +262,8 @@
     })
   }
 
-  function postInviteTeam() {
-    var email = document.getElementById("email").value;
+  const postInviteTeam = async () => {
+    const email = document.getElementById("email").value;
 
     post("api/team/invite", {
       teamId: teamId,

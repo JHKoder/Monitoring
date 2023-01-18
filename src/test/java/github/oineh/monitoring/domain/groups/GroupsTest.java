@@ -3,7 +3,8 @@ package github.oineh.monitoring.domain.groups;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import fixture.UserFixture;
-import github.oineh.monitoring.domain.user.User;
+import github.oineh.monitoring.groups.domain.Groups;
+import github.oineh.monitoring.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

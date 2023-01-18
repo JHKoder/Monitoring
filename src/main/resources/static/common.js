@@ -1,7 +1,6 @@
 const defaultUrl = window.location.origin;
 
 async function post(path, body, headers = {}) {
-
   const url = `${defaultUrl}/${path}`;
   const options = {
     method: "POST",
