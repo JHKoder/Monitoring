@@ -1,7 +1,7 @@
 package fixture;
 
-import github.oineh.monitoring.domain.user.User;
-import github.oineh.monitoring.domain.user.User.Information;
+import github.oineh.monitoring.user.domain.User;
+import github.oineh.monitoring.user.domain.User.Information;
 
 public class UserFixture {
 

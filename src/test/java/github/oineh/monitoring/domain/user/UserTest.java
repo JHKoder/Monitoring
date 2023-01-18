@@ -1,9 +1,9 @@
 package github.oineh.monitoring.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
-import github.oineh.monitoring.domain.user.User.Information;
+import github.oineh.monitoring.user.domain.User;
+import github.oineh.monitoring.user.domain.User.Information;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

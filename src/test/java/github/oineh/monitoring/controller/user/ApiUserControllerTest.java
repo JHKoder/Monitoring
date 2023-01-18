@@ -8,20 +8,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import github.oineh.monitoring.controller.common.IntegrationTest;
-import github.oineh.monitoring.controller.user.req.SingUpReq;
-import github.oineh.monitoring.controller.user.req.UserGroupsInviteReq;
-import github.oineh.monitoring.controller.user.req.UserGroupsTeamInviteReq;
-import github.oineh.monitoring.domain.groups.Groups;
-import github.oineh.monitoring.domain.groups.GroupsRepository;
-import github.oineh.monitoring.domain.groups.group.category.Team;
-import github.oineh.monitoring.domain.groups.group.category.TeamRepository;
-import github.oineh.monitoring.domain.groups.group.invit.InvitedGroup;
-import github.oineh.monitoring.domain.groups.group.invit.InvitedGroupRepository;
-import github.oineh.monitoring.domain.groups.invit.InvitedGroups;
-import github.oineh.monitoring.domain.groups.invit.InvitedGroupsRepository;
-import github.oineh.monitoring.domain.user.User;
-import github.oineh.monitoring.domain.user.User.Information;
-import github.oineh.monitoring.domain.user.UserRepository;
+import github.oineh.monitoring.groups.domain.Groups;
+import github.oineh.monitoring.groups.domain.GroupsRepository;
+import github.oineh.monitoring.groups.group.team.domain.Team;
+import github.oineh.monitoring.groups.group.team.domain.TeamRepository;
+import github.oineh.monitoring.groups.group.invit.InvitedGroup;
+import github.oineh.monitoring.groups.group.invit.InvitedGroupRepository;
+import github.oineh.monitoring.groups.invit.InvitedGroups;
+import github.oineh.monitoring.groups.invit.InvitedGroupsRepository;
+import github.oineh.monitoring.user.domain.User;
+import github.oineh.monitoring.user.domain.User.Information;
+import github.oineh.monitoring.user.domain.UserRepository;
+import github.oineh.monitoring.user.web.req.SignUpReq;
+import github.oineh.monitoring.user.web.req.UserGroupsInviteReq;
+import github.oineh.monitoring.user.web.req.UserGroupsTeamInviteReq;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -173,7 +173,7 @@ class ApiUserControllerTest extends IntegrationTest {
     void singUp() throws Exception {
         //given
         Information info = user.getInformation();
-        SingUpReq req = new SingUpReq(info.getEmail() + "Co", info.getName() + "Na", info.getNickName() + "NI",
+        SignUpReq req = new SignUpReq(info.getEmail() + "Co", info.getName() + "Na", info.getNickName() + "NI",
             user.getLoginId() + "ID", user.getPw() + "!@");
 
         //when

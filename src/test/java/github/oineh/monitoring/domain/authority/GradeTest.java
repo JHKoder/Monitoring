@@ -3,7 +3,9 @@ package github.oineh.monitoring.domain.authority;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import fixture.UserFixture;
-import github.oineh.monitoring.domain.user.User;
+import github.oineh.monitoring.authority.domain.Auth;
+import github.oineh.monitoring.authority.domain.Grade;
+import github.oineh.monitoring.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

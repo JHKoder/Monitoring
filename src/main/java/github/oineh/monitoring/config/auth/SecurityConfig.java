@@ -6,11 +6,11 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import github.oineh.monitoring.authority.domain.Grade;
 import github.oineh.monitoring.config.auth.jwt.JWTUtil;
 import github.oineh.monitoring.config.auth.jwt.JwtAuthenticationFilter;
 import github.oineh.monitoring.config.auth.jwt.JwtAuthorizationFilter;
-import github.oineh.monitoring.domain.authority.Grade;
-import github.oineh.monitoring.domain.user.UserService;
+import github.oineh.monitoring.user.service.SignUpService;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final UserService userService;
+    private final SignUpService signUpService;
     private final AuthenticationConfiguration authConfig;
     private final JWTUtil jwtUtil;
 
@@ -81,7 +81,7 @@ public class SecurityConfig {
                 .clearAuthentication(true)
             )
             .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil))
-            .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
+            .addFilter(new JwtAuthorizationFilter(authenticationManager(), signUpService))
             .authorizeRequests(authroize -> authroize
                 .antMatchers("/", "/singup", "/api/user/singup", "/common.js", "/login").permitAll()
                 .anyRequest().hasAnyAuthority(Grade.USER.getAuthority())

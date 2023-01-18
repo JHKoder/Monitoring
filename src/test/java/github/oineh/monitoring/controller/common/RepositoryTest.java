@@ -1,15 +1,15 @@
 package github.oineh.monitoring.controller.common;
 
 
-import github.oineh.monitoring.domain.authority.AuthRepository;
-import github.oineh.monitoring.domain.connect.ConnectRepository;
-import github.oineh.monitoring.domain.groups.GroupsRepository;
-import github.oineh.monitoring.domain.groups.group.category.DeptRepository;
-import github.oineh.monitoring.domain.groups.group.category.TeamRepository;
-import github.oineh.monitoring.domain.groups.group.invit.InvitedGroupRepository;
-import github.oineh.monitoring.domain.groups.invit.InvitedGroupsRepository;
-import github.oineh.monitoring.domain.user.UserRepository;
-import github.oineh.monitoring.domain.user.pc.PcRepository;
+import github.oineh.monitoring.authority.domain.AuthRepository;
+import github.oineh.monitoring.connect.domain.ConnectRepository;
+import github.oineh.monitoring.groups.domain.GroupsRepository;
+import github.oineh.monitoring.groups.group.domain.DeptRepository;
+import github.oineh.monitoring.groups.group.team.domain.TeamRepository;
+import github.oineh.monitoring.groups.group.invit.InvitedGroupRepository;
+import github.oineh.monitoring.groups.invit.InvitedGroupsRepository;
+import github.oineh.monitoring.user.domain.UserRepository;
+import github.oineh.monitoring.user.pc.domain.PcRepository;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

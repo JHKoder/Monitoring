@@ -1,8 +1,8 @@
 package github.oineh.monitoring.config.auth;
 
-import github.oineh.monitoring.domain.authority.Auth;
-import github.oineh.monitoring.domain.authority.Grade;
-import github.oineh.monitoring.domain.user.User;
+import github.oineh.monitoring.authority.domain.Auth;
+import github.oineh.monitoring.authority.domain.Grade;
+import github.oineh.monitoring.user.domain.User;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,7 +48,7 @@ public class UserLogin implements UserDetails {
     }
 
     public static UserDetails of(User user, Auth auth) {
-        return new UserLogin(user.getLoginId(), user.getPw(), auth.getGrade());
+        return new UserLogin(user.getLoginId(), user.getPw(), auth.getGrades());
     }
 
     @Override

@@ -10,8 +10,8 @@
 //import github.oineh.monitoring.controller.groups.group.req.GroupInviteReq;
 //import github.oineh.monitoring.controller.groups.req.GroupsCreateReq;
 //import github.oineh.monitoring.domain.groups.Groups;
-//import github.oineh.monitoring.domain.user.User;
-//import github.oineh.monitoring.domain.user.User.Information;
+//import github.oineh.monitoring.domain.user.domain.User;
+//import github.oineh.monitoring.domain.user.domain.User.Information;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
