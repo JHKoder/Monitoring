@@ -28,7 +28,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void singup(SingUpReq req) {
         checkUser(req.getLoginId());
-        checkEmail(req.getEmail());
+        validateAlreadyEmailRegistered(req.getEmail());
 
         Information information = new User.Information(req.getEmail(), req.getName(), req.getNickName());
         User user = new User(req.getLoginId(), req.getPassword(), information);
@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
         authRepository.save(new Auth(user, Grade.USER));
     }
 
-    private void checkEmail(String email) {
+    private void validateAlreadyEmailRegistered(String email) {
         if (userRepository.findByInformationEmail(email).isPresent()) {
             throw new ApiException(ErrorCode.EMAIL_ALREADY_PRESENT);
         }
