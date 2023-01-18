@@ -1,6 +1,5 @@
 package github.oineh.monitoring.domain.connect;
 
-import github.oineh.monitoring.common.service.MonitoringService;
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.controller.team.req.TeamCreateIpReq;
@@ -12,7 +11,7 @@ import github.oineh.monitoring.controller.team.res.TeamInMemberPingRes;
 import github.oineh.monitoring.controller.team.res.TeamInMemberRes;
 import github.oineh.monitoring.domain.groups.group.category.Team;
 import github.oineh.monitoring.domain.groups.group.category.TeamRepository;
-import io.github.tcp.network.Host;
+import github.oineh.monitoring.domain.user.User;
 import io.github.tcp.network.NetStatus;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,13 +24,13 @@ import org.springframework.stereotype.Service;
 public class ConnectService {
 
     private final TeamRepository teamRepository;
-    private final MonitoringService monitoringService;
+    private final NetStatusFactory netStatusFactory;
 
 
     @Transactional
-    public TeamInDomainPingRes findTeamInConnectDomainList(Long teamId, Long connectId) {
+    public TeamInDomainPingRes findTeamInConnectDomain(Long teamId, Long connectId) {
         return findTeam(teamId).getConnects().stream()
-            .filter(ls -> ls.getId().equals(connectId))
+            .filter(connect -> connect.isSameId(connectId))
             .findFirst()
             .map(connect -> new TeamInDomainPingRes(connectId, connect.getName(), connectStatus(connect)))
             .orElse(new TeamInDomainPingRes());
@@ -39,19 +38,18 @@ public class ConnectService {
 
     @Transactional
     public TeamInMemberPingRes findTeamInConnectMemberList(Long teamId, Long connectId) {
-        return findTeam(teamId).getMember().stream()
-            .filter(member -> member.getPc() != null)
-            .filter(member -> member.getPc().getConnect().getId().equals(connectId))
+        return findTeam(teamId).getMembers().stream()
+            .filter(User::hasPc)
+            .filter(member -> member.isSameConnectId(connectId))
             .findFirst()
-            .map(member -> new TeamInMemberPingRes(member, connectStatus(member.getPc().getConnect())))
+            .map(member -> new TeamInMemberPingRes(member, connectStatus(member.getConnect())))
             .orElse(new TeamInMemberPingRes());
     }
-
 
     @Transactional
     public void createUrl(TeamCreateUrlReq req) {
         findTeam(req.getTeamId())
-            .updateConnect(Connect.tcp(req.getName(), req.filterUrl().getUrl()));
+            .updateConnect(Connect.tcp(req.getName(), req.filterUrl()));
     }
 
     @Transactional
@@ -78,7 +76,7 @@ public class ConnectService {
 
     @Transactional
     public List<TeamInMemberRes> findTeamInMember(Long teamId) {
-        return findTeam(teamId).getMember().stream()
+        return findTeam(teamId).getMembers().stream()
             .filter(member -> member.getPc() != null)
             .map(TeamInMemberRes::new)
             .collect(Collectors.toList());
@@ -91,16 +89,6 @@ public class ConnectService {
 
 
     private NetStatus connectStatus(Connect connect) {
-        if (connect.isIcmp()) {
-            return monitoringService.IcmpStatus(Host.from(connect.getIp()));
-        }
-        if (connect.isTcpPort()) {
-            return monitoringService.TcpStatus(Host.from(connect.getIp()), connect.getPort());
-        }
-        if (connect.isTcpUrl()) {
-            return monitoringService.TcpStatus(connect.getUrl());
-        }
-        return NetStatus.NOT_CONNECT;
+        return netStatusFactory.factory(connect.getConnectType()).apply(connect);
     }
-
 }

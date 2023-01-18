@@ -4,6 +4,7 @@ package github.oineh.monitoring.domain.connect;
 import static lombok.AccessLevel.PROTECTED;
 
 import github.oineh.monitoring.common.entity.BaseEntity;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -60,5 +61,7 @@ public class Connect extends BaseEntity {
         return connectType == ConnectType.TCP_URL;
     }
 
-
+    public boolean isSameId(Long id) {
+        return Objects.equals(this.id, id);
+    }
 }
