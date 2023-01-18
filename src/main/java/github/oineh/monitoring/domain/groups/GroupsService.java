@@ -26,7 +26,7 @@ public class GroupsService {
 
     @Transactional
     public List<GroupsFindRes> findList(String userId) {
-        List<Groups> groupsList = groupsRepository.findByMemberUser(findUser(userId))
+        List<Groups> groupsList = groupsRepository.findByMemberUsers(findUser(userId))
             .orElse(List.of());
 
         return new GroupsFindRes().ofList(groupsList);
@@ -63,7 +63,7 @@ public class GroupsService {
     public void acceptInvite(UserGroupsInviteReq req, String userId) {
         InvitedGroups invitedGroups = findInvitedGroups(req.getInviteId());
 
-        groupsRepository.findById(invitedGroups.getGroups().getId())
+        groupsRepository.findById(invitedGroups.getGroupsId())
             .orElseThrow(() -> new ApiException(ErrorCode.NO_TEAM_INVITES))
             .updateMember(findUser(userId));
 
@@ -78,7 +78,7 @@ public class GroupsService {
     }
 
     private void checkInvitedTarget(User targetUser, InvitedGroups invited) {
-        if (!invited.getTargetUser().equals(targetUser)) {
+        if (!invited.targetUserEquals(targetUser)) {
             throw new ApiException(ErrorCode.NO_GROUP_INVITES);
         }
     }
@@ -95,7 +95,7 @@ public class GroupsService {
     }
 
     private void checkGroupsInMember(User user, Groups groups) {
-        if (!groups.getMemberUser().contains(user)) {
+        if (!groups.isMembers(user)) {
             throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
         }
     }

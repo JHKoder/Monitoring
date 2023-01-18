@@ -38,4 +38,16 @@ public class InvitedGroup extends BaseEntity {
         this.sendUser = sendUser;
         this.team = team;
     }
+
+    public String getSendUserName() {
+        return this.sendUser.getName();
+    }
+
+    public Long getTeamId() {
+        return team.getId();
+    }
+
+    public String getTeamName() {
+        return team.getName();
+    }
 }
