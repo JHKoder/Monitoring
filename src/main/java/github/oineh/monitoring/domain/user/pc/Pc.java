@@ -41,11 +41,15 @@ public class Pc extends BaseEntity {
         this.connect = connect;
     }
 
-    public void updateConnect(Connect connect) {
-        this.connect = connect;
+    public void updateConnect(String nickName, String host) {
+        this.connect = Connect.icmp(nickName, host);
     }
 
     public boolean isSameConnectId(Long connectId) {
         return this.getConnect().isSameId(connectId);
+    }
+
+    public Long getConnectId() {
+        return connect.getId();
     }
 }
