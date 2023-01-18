@@ -11,7 +11,6 @@ import github.oineh.monitoring.domain.user.UserService;
 import java.security.Principal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,52 +29,39 @@ public class ApiUserController {
     private final UserService userService;
 
     @GetMapping("/groups/invite")
-    public ResponseEntity<List<InviteGroupsUserRes>> findGroupsInvite(Principal principal) {
-        List<InviteGroupsUserRes> list = groupsService.findInvite(principal.getName());
-
-        return ResponseEntity.ok(list);
+    public List<InviteGroupsUserRes> findGroupsInvite(Principal principal) {
+        return groupsService.findInvite(principal.getName());
     }
 
     @PostMapping("/groups/invite")
-    public ResponseEntity<Void> acceptGroupsInvite(@RequestBody UserGroupsInviteReq req, Principal principal) {
+    public void acceptGroupsInvite(@RequestBody UserGroupsInviteReq req, Principal principal) {
         groupsService.acceptInvite(req, principal.getName());
 
-        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/groups/invite")
-    public ResponseEntity<Void> cancelGroupsInvite(@RequestBody UserGroupsInviteReq req, Principal principal) {
+    public void cancelGroupsInvite(@RequestBody UserGroupsInviteReq req, Principal principal) {
         groupsService.cancelInvite(req, principal.getName());
-
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/team/invite")
-    public ResponseEntity<List<InviteTeamUserRes>> findTeamInvite(Principal principal) {
-        List<InviteTeamUserRes> list = groupService.findInvite(principal.getName());
-
-        return ResponseEntity.ok(list);
+    public List<InviteTeamUserRes> findTeamInvite(Principal principal) {
+        return groupService.findInvite(principal.getName());
     }
 
     @PostMapping("/team/invite")
-    public ResponseEntity<Void> acceptTeamInvite(@RequestBody UserGroupsTeamInviteReq req, Principal principal) {
+    public void acceptTeamInvite(@RequestBody UserGroupsTeamInviteReq req, Principal principal) {
         groupService.acceptInvite(req, principal.getName());
-
-        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/team/invite")
-    public ResponseEntity<Void> cancelTeamInvite(@RequestBody UserGroupsTeamInviteReq req, Principal principal) {
+    public void cancelTeamInvite(@RequestBody UserGroupsTeamInviteReq req, Principal principal) {
         groupService.cancelInvite(req, principal.getName());
-
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/singup")
-    public ResponseEntity<Void> postSingUp(@RequestBody SingUpReq singUpReq) {
+    public void postSingUp(@RequestBody SingUpReq singUpReq) {
         userService.singup(singUpReq);
-
-        return ResponseEntity.ok().build();
     }
 
 }
