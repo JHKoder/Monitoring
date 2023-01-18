@@ -20,4 +20,10 @@ public enum Grade implements GrantedAuthority {
     public String getAuthority() {
         return this.name;
     }
+
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

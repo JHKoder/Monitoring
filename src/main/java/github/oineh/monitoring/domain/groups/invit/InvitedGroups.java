@@ -40,4 +40,19 @@ public class InvitedGroups extends BaseEntity {
         this.groups = groups;
     }
 
+    public String getSendUserName() {
+        return sendUser.getName();
+    }
+
+    public Long getGroupsId() {
+        return groups.getId();
+    }
+
+    public String getGroupsName() {
+        return groups.getName();
+    }
+
+    public boolean targetUserEquals(User targetUser) {
+        return this.targetUser.getId().equals(targetUser.getId());
+    }
 }

@@ -35,28 +35,32 @@ public class Groups extends BaseEntity {
     private User adminUser;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<User> memberUser = new ArrayList<>();
+    private List<User> memberUsers = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Dept> dept = new ArrayList<>();
+    private List<Dept> depts = new ArrayList<>();
 
     public Groups(User adminUser, String name) {
         this.adminUser = adminUser;
-        this.memberUser.add(adminUser);
+        this.memberUsers.add(adminUser);
         this.name = name;
     }
 
     public boolean checkMember(User user) {
-        return memberUser.contains(user);
+        return memberUsers.contains(user);
     }
 
     public Groups updateMember(User user) {
-        this.memberUser.add(user);
+        this.memberUsers.add(user);
 
         return this;
     }
 
     public void updateDept(Dept dept) {
-        this.dept.add(dept);
+        this.depts.add(dept);
+    }
+
+    public boolean isMembers(User user) {
+        return memberUsers.contains(user);
     }
 }

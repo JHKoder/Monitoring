@@ -14,8 +14,8 @@ public class TeamInMemberPingRes {
     private Long id;
 
     public TeamInMemberPingRes(User member, NetStatus status) {
-        this.id = member.getPc().getConnect().getId();
-        this.name = member.getInformation().getName();
+        this.id = member.getConnectId();
+        this.name = member.getName();
         this.status = status;
     }
 }

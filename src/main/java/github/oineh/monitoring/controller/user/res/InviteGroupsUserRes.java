@@ -15,8 +15,8 @@ public class InviteGroupsUserRes {
 
     public InviteGroupsUserRes(InvitedGroups groups) {
         this.id = groups.getId();
-        this.groupsName = groups.getGroups().getName();
-        this.groupsId = groups.getGroups().getId();
-        this.sendName = groups.getSendUser().getInformation().getName();
+        this.groupsName = groups.getGroupsName();
+        this.groupsId = groups.getGroupsId();
+        this.sendName = groups.getSendUserName();
     }
 }

@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GroupsRepository extends JpaRepository<Groups, Long> {
 
-    Optional<List<Groups>> findByMemberUser(User memberUser);
+    Optional<List<Groups>> findByMemberUsers(User memberUser);
 }

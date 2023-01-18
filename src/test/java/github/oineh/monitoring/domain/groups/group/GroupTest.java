@@ -35,7 +35,7 @@ public class GroupTest {
         groups.updateDept(dept);
 
         //then
-        assertThat(groups.getDept()).contains(dept);
+        assertThat(groups.getDepts()).contains(dept);
     }
 
     @Test

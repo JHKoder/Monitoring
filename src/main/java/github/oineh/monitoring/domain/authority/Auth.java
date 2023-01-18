@@ -36,4 +36,7 @@ public class Auth extends BaseEntity {
         this.grade.add(grade);
     }
 
+    public String getGradeName() {
+        return grade.toString();
+    }
 }
