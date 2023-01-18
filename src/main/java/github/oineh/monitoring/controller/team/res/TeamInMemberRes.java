@@ -12,7 +12,7 @@ public class TeamInMemberRes {
     private Long id;
 
     public TeamInMemberRes(User user) {
-        this.name = user.getInformation().getName();
-        this.id = user.getPc().getConnect().getId();
+        this.name = user.getName();
+        this.id = user.getConnectId();
     }
 }

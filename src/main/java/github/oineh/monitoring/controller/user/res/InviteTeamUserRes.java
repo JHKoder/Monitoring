@@ -15,8 +15,8 @@ public class InviteTeamUserRes {
 
     public InviteTeamUserRes(InvitedGroup invited) {
         this.id = invited.getId();
-        this.teamName = invited.getTeam().getName();
-        this.teamId = invited.getTeam().getId();
-        this.sendName = invited.getSendUser().getInformation().getName();
+        this.teamName = invited.getTeamName();
+        this.teamId = invited.getTeamId();
+        this.sendName = invited.getSendUserName();
     }
 }
