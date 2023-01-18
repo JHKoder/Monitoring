@@ -161,7 +161,7 @@ public class GroupService {
     }
 
     private void checkSendUserIsTeamMember(User sendUser, Team team) {
-        if (!team.getMember().contains(sendUser)) {
+        if (!team.getMembers().contains(sendUser)) {
             throw new ApiException(ErrorCode.YOUR_NOT_TEAM);
         }
     }

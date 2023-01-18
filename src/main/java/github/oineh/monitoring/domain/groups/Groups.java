@@ -50,8 +50,10 @@ public class Groups extends BaseEntity {
         return memberUser.contains(user);
     }
 
-    public void updateMember(User user) {
+    public Groups updateMember(User user) {
         this.memberUser.add(user);
+
+        return this;
     }
 
     public void updateDept(Dept dept) {
