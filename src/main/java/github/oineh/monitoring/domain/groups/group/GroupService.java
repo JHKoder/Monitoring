@@ -40,7 +40,7 @@ public class GroupService {
     public GroupListRes findGroupIn(Long groupId, String userId) {
         return groupsRepository.findById(groupId)
             .filter(groups -> checkGroupsInMember(groups, findUser(userId)))
-            .map(group -> GroupListRes.of(group.getId(), group.getDept()))
+            .map(group -> GroupListRes.of(group.getId(), group.getDepts()))
             .orElse(new GroupListRes());
     }
 
@@ -53,7 +53,7 @@ public class GroupService {
 
     @Transactional
     public void createGroup(GroupCreateTeamReq req, String userId) {
-        findGroups(req.getGroupsId()).getDept().stream()
+        findGroups(req.getGroupsId()).getDepts().stream()
             .filter(dep -> dep.getId().equals(req.getDeptId()))
             .findFirst()
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_GROUPS_DEPT))
