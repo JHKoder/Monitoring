@@ -6,7 +6,6 @@ import github.oineh.monitoring.controller.groups.group.res.GroupListRes;
 import github.oineh.monitoring.domain.groups.group.GroupService;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,25 +22,19 @@ public class ApiGroupController {
     private final GroupService groupService;
 
     @GetMapping("/{groupId}")
-    public ResponseEntity<GroupListRes> groupInRoom(@PathVariable("groupId") Long groupId, Principal principal) {
-        GroupListRes res = groupService.findGroupIn(groupId, principal.getName());
-
-        return ResponseEntity.ok(res);
+    public GroupListRes groupInRoom(@PathVariable("groupId") Long groupId, Principal principal) {
+        return groupService.findGroupIn(groupId, principal.getName());
     }
 
 
     @PostMapping("/dept")
-    public ResponseEntity<Void> createGroupDept(@RequestBody GroupCreateTeamDeptReq req, Principal principal) {
+    public void createGroupDept(@RequestBody GroupCreateTeamDeptReq req, Principal principal) {
         groupService.createGroup(req, principal.getName());
-
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/team")
-    public ResponseEntity<Void> createGroupTeam(@RequestBody GroupCreateTeamReq req, Principal principal) {
+    public void createGroupTeam(@RequestBody GroupCreateTeamReq req, Principal principal) {
         groupService.createGroup(req, principal.getName());
-
-        return ResponseEntity.ok().build();
     }
 
 
