@@ -45,4 +45,7 @@ public class Pc extends BaseEntity {
         this.connect = connect;
     }
 
+    public boolean isSameConnectId(Long connectId) {
+        return this.getConnect().isSameId(connectId);
+    }
 }

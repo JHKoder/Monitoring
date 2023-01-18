@@ -1,9 +1,11 @@
 package github.oineh.monitoring.domain.user;
 
+import static java.util.Objects.isNull;
 import static lombok.AccessLevel.PROTECTED;
 
 import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.domain.authority.Auth;
+import github.oineh.monitoring.domain.connect.Connect;
 import github.oineh.monitoring.domain.groups.Groups;
 import github.oineh.monitoring.domain.user.pc.Pc;
 import java.util.ArrayList;
@@ -58,6 +60,21 @@ public class User extends BaseEntity {
         this.pw = pw;
         this.information = information;
         this.auth = auth;
+    }
+
+    public boolean hasPc() {
+        return !isNull(pc);
+    }
+
+    public boolean isSameConnectId(Long connectId) {
+        return this.getPc().isSameConnectId(connectId);
+    }
+
+    public Connect getConnect() {
+        if (isNull(pc)) {
+            return null;
+        }
+        return this.pc.getConnect();
     }
 
     @Getter
