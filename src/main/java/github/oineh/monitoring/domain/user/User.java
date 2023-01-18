@@ -8,6 +8,7 @@ import github.oineh.monitoring.domain.authority.Auth;
 import github.oineh.monitoring.domain.connect.Connect;
 import github.oineh.monitoring.domain.groups.Groups;
 import github.oineh.monitoring.domain.user.pc.Pc;
+import github.oineh.monitoring.domain.user.pc.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -77,6 +78,22 @@ public class User extends BaseEntity {
         return this.pc.getConnect();
     }
 
+    public String getName() {
+        return information.getName();
+    }
+
+    public Long getConnectId() {
+        return pc.getConnectId();
+    }
+
+    public String getNickName() {
+        return information.getNickName();
+    }
+
+    public void updateConnect(String nickname, String host) {
+        pc.updateConnect(nickname, host);
+    }
+
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -88,7 +105,7 @@ public class User extends BaseEntity {
         private String nickName;
     }
 
-    public void updatePc(Pc pc) {
-        this.pc = pc;
+    public void updatePc(String nickname, Type type) {
+        this.pc = new Pc(nickname, type);
     }
 }

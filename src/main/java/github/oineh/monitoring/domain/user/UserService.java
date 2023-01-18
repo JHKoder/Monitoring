@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
         User user = findByUserId(username, ErrorCode.NOT_FOUND_USER);
         Auth auth = authRepository.findByUser(user)
             .orElseThrow();
-        log.info("loadUserByUsername  : " + user.getId() + " Auth:" + auth.getGrade().iterator().next().getName());
+        log.info("loadUserByUsername  : " + user.getId() + " Auth:" + auth.getGradeName());
         return UserLogin.of(user, auth);
     }
 
