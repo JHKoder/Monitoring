@@ -44,7 +44,7 @@ public class ApiUserController {
     }
 
     @DeleteMapping("/groups/invite")
-    public ResponseEntity<Void> noGroupsInvite(@RequestBody UserGroupsInviteReq req, Principal principal) {
+    public ResponseEntity<Void> cancelGroupsInvite(@RequestBody UserGroupsInviteReq req, Principal principal) {
         groupsService.cancelInvite(req, principal.getName());
 
         return ResponseEntity.ok().build();
@@ -65,7 +65,7 @@ public class ApiUserController {
     }
 
     @DeleteMapping("/team/invite")
-    public ResponseEntity<Void> noTeamInvite(@RequestBody UserGroupsTeamInviteReq req, Principal principal) {
+    public ResponseEntity<Void> cancelTeamInvite(@RequestBody UserGroupsTeamInviteReq req, Principal principal) {
         groupService.cancelInvite(req, principal.getName());
 
         return ResponseEntity.ok().build();
