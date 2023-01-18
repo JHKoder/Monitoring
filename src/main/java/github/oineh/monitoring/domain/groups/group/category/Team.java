@@ -32,20 +32,20 @@ public class Team extends BaseEntity {
     private User createUser;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<User> member = new ArrayList<>();
+    private List<User> members = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Connect> connects = new ArrayList<>();
     private String name;
 
     public Team(User createUser, String name) {
-        this.member.add(createUser);
+        this.members.add(createUser);
         this.createUser = createUser;
         this.name = name;
     }
 
     public void updateMember(User user) {
-        this.member.add(user);
+        this.members.add(user);
     }
 
     public void updateConnect(Connect connect) {

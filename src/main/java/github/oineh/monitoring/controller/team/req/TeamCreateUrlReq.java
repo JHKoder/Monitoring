@@ -12,14 +12,10 @@ public class TeamCreateUrlReq {
     private String name;
     private String url;
 
-    public void updateUrlHttp() {
-        this.url = "http://" + url;
-    }
-
-    public TeamCreateUrlReq filterUrl() {
+    public String filterUrl() {
         if (!url.contains("://")) {
-            updateUrlHttp();
+            return String.format("http://%s", url);
         }
-        return this;
+        return url;
     }
 }

@@ -18,7 +18,7 @@ public class TeamInDomainPingRes {
         this.status = statusToStr(status);
     }
 
-    private String statusToStr(NetStatus status) {
+    public String statusToStr(NetStatus status) {
         if (status == NetStatus.OK) {
             return "정상";
         }
@@ -30,6 +30,4 @@ public class TeamInDomainPingRes {
         }
         return "";
     }
-
-
 }
