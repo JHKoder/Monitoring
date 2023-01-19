@@ -1,8 +1,8 @@
-package github.oineh.monitoring.user.pc.web;
+package github.oineh.monitoring.pc.web;
 
-import github.oineh.monitoring.user.pc.web.req.PcAddReq;
-import github.oineh.monitoring.user.pc.service.PcClientIpUtils;
-import github.oineh.monitoring.user.pc.service.PcService;
+import github.oineh.monitoring.pc.service.PcClientIpUtils;
+import github.oineh.monitoring.pc.service.PcService;
+import github.oineh.monitoring.pc.web.req.PcAddReq;
 import io.github.tcp.network.Host;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;

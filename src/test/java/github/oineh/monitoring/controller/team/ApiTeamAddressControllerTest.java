@@ -8,21 +8,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import github.oineh.monitoring.controller.common.IntegrationTest;
-import github.oineh.monitoring.groups.group.team.web.req.TeamInviteReq;
-import github.oineh.monitoring.groups.group.team.web.res.TeamInDomainPingRes;
 import github.oineh.monitoring.connect.domain.Connect;
 import github.oineh.monitoring.connect.domain.ConnectRepository;
+import github.oineh.monitoring.connect.web.res.TeamInDomainPingRes;
+import github.oineh.monitoring.controller.common.IntegrationTest;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
-import github.oineh.monitoring.groups.group.domain.Dept;
-import github.oineh.monitoring.groups.group.domain.DeptRepository;
-import github.oineh.monitoring.groups.group.team.domain.Team;
-import github.oineh.monitoring.groups.group.team.domain.TeamRepository;
+import github.oineh.monitoring.groups.group.dept.domain.Dept;
+import github.oineh.monitoring.groups.group.dept.domain.DeptRepository;
+import github.oineh.monitoring.groups.group.dept.team.domain.Team;
+import github.oineh.monitoring.groups.group.dept.team.domain.TeamRepository;
+import github.oineh.monitoring.groups.group.dept.team.web.req.TeamInviteReq;
+import github.oineh.monitoring.pc.domain.Type;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.User.Information;
 import github.oineh.monitoring.user.domain.UserRepository;
-import github.oineh.monitoring.user.pc.domain.Type;
 import io.github.tcp.network.Monitoring;
 import io.github.tcp.network.NetStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 @DisplayName("api 팀 컨트롤 테스트")
-class ApiTeamControllerTest extends IntegrationTest {
+class ApiTeamAddressControllerTest extends IntegrationTest {
 
     @Mock
     Monitoring mockMonitoringService;
