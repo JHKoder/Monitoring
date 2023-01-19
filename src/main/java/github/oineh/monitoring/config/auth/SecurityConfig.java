@@ -10,7 +10,7 @@ import github.oineh.monitoring.authority.domain.Grade;
 import github.oineh.monitoring.config.auth.jwt.JWTUtil;
 import github.oineh.monitoring.config.auth.jwt.JwtAuthenticationFilter;
 import github.oineh.monitoring.config.auth.jwt.JwtAuthorizationFilter;
-import github.oineh.monitoring.user.service.SignUpService;
+import github.oineh.monitoring.user.service.LoginService;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final SignUpService signUpService;
+    private final LoginService loginService;
     private final AuthenticationConfiguration authConfig;
     private final JWTUtil jwtUtil;
 
@@ -81,7 +81,7 @@ public class SecurityConfig {
                 .clearAuthentication(true)
             )
             .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil))
-            .addFilter(new JwtAuthorizationFilter(authenticationManager(), signUpService))
+            .addFilter(new JwtAuthorizationFilter(authenticationManager(), loginService))
             .authorizeRequests(authroize -> authroize
                 .antMatchers("/", "/singup", "/api/user/singup", "/common.js", "/login").permitAll()
                 .anyRequest().hasAnyAuthority(Grade.USER.getAuthority())
