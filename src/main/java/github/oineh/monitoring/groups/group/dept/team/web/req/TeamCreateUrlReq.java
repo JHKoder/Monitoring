@@ -12,6 +12,7 @@ public class TeamCreateUrlReq {
     private String name;
     private String url;
 
+
     public String filterUrl() {
         if (!url.contains("://")) {
             return String.format("http://%s", url);

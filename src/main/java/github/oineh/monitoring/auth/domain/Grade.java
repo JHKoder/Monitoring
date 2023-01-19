@@ -5,8 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 @Getter
 public enum Grade implements GrantedAuthority {
-    ADMIN(1, "ROLE_ADMIN"),
-    USER(2, "ROLE_USER");
+    ADMIN(1, "ROLE_ADMIN"), USER(2, "ROLE_USER");
 
     private final int number;
     private final String name;
@@ -20,7 +19,6 @@ public enum Grade implements GrantedAuthority {
     public String getAuthority() {
         return this.name;
     }
-
 
     @Override
     public String toString() {

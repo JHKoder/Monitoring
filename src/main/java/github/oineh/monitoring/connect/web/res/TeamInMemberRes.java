@@ -11,6 +11,7 @@ public class TeamInMemberRes {
     private String name;
     private Long id;
 
+
     public TeamInMemberRes(User user) {
         this.name = user.getName();
         this.id = user.getConnectId();

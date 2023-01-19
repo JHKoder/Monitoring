@@ -1,16 +1,13 @@
 package github.oineh.monitoring.groups.group.dept.team.web.req;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class TeamInviteReq {
+public class TeamCreateReq {
 
-    private Long teamId;
     private Long groupsId;
-    private String email;
-
+    private Long deptId;
+    private String name;
 }

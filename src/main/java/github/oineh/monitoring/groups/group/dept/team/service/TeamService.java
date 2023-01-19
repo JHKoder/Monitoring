@@ -6,7 +6,7 @@ import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.groups.group.dept.team.domain.Team;
 import github.oineh.monitoring.groups.group.dept.team.domain.TeamRepository;
-import github.oineh.monitoring.groups.group.dept.team.web.req.GroupCreateTeamReq;
+import github.oineh.monitoring.groups.group.dept.team.web.req.TeamCreateReq;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class TeamService {
 
 
     @Transactional
-    public void createTeam(GroupCreateTeamReq req, String userId) {
+    public void createTeam(TeamCreateReq req, String userId) {
         findGroups(req.getGroupsId()).getDepts().stream()
             .filter(dep -> dep.getId().equals(req.getDeptId()))
             .findFirst()

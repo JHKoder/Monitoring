@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserGroupsTeamInviteReq {
+public class TeamInviteCancelReq {
 
-    private Long groupsId;
     private Long teamId;
-
+    private Long groupsId;
+    private String email;
 }

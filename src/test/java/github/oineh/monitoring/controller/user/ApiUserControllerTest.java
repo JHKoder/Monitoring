@@ -12,12 +12,12 @@ import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.groups.group.dept.team.domain.Team;
 import github.oineh.monitoring.groups.group.dept.team.domain.TeamRepository;
-import github.oineh.monitoring.groups.group.dept.team.invit.domain.InvitedGroup;
+import github.oineh.monitoring.groups.group.dept.team.invit.domain.InvitedTeam;
 import github.oineh.monitoring.groups.group.dept.team.invit.domain.InvitedGroupRepository;
-import github.oineh.monitoring.groups.group.dept.team.invit.web.req.UserGroupsTeamInviteReq;
+import github.oineh.monitoring.groups.group.dept.team.invit.web.req.TeamInviteAcceptReq;
 import github.oineh.monitoring.groups.invit.domain.InvitedGroups;
 import github.oineh.monitoring.groups.invit.domain.InvitedGroupsRepository;
-import github.oineh.monitoring.groups.invit.web.req.UserGroupsInviteReq;
+import github.oineh.monitoring.groups.invit.web.req.GroupInviteReq;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.User.Information;
 import github.oineh.monitoring.user.domain.UserRepository;
@@ -89,7 +89,7 @@ class ApiUserControllerTest extends IntegrationTest {
     void acceptGroupsInvite() throws Exception {
         //given
         InvitedGroups invited = invitedGroupsRepository.save(new InvitedGroups(user, adminUser, groups));
-        UserGroupsInviteReq req = new UserGroupsInviteReq(invited.getId(), groups.getId());
+        GroupInviteReq req = new GroupInviteReq(invited.getId(), groups.getId());
 
         //when
         ResultActions action = mvc.perform(
@@ -105,7 +105,7 @@ class ApiUserControllerTest extends IntegrationTest {
     void cancelGroupsInvite() throws Exception {
         //given
         InvitedGroups invited = invitedGroupsRepository.save(new InvitedGroups(user, adminUser, groups));
-        UserGroupsInviteReq req = new UserGroupsInviteReq(invited.getId(), groups.getId());
+        GroupInviteReq req = new GroupInviteReq(invited.getId(), groups.getId());
 
         //when
         ResultActions action = mvc.perform(
@@ -121,7 +121,7 @@ class ApiUserControllerTest extends IntegrationTest {
     void findTeamInviteList() throws Exception {
         //given
         Team team = teamRepository.save(new Team(adminUser, "team_name"));
-        InvitedGroup invited = invitedGroupRepository.save(new InvitedGroup(user, adminUser, team));
+        InvitedTeam invited = invitedGroupRepository.save(new InvitedTeam(user, adminUser, team));
 
         //when
         ResultActions action = mvc.perform(get(TARGET_RESOURCE + "/team/invite"));
@@ -138,9 +138,9 @@ class ApiUserControllerTest extends IntegrationTest {
     void acceptTeamInvite() throws Exception {
         //given
         Team team = teamRepository.save(new Team(adminUser, "team_name"));
-        InvitedGroup invited = invitedGroupRepository.save(new InvitedGroup(user, adminUser, team));
+        InvitedTeam invited = invitedGroupRepository.save(new InvitedTeam(user, adminUser, team));
 
-        UserGroupsTeamInviteReq req = new UserGroupsTeamInviteReq(invited.getId(), team.getId());
+        TeamInviteAcceptReq req = new TeamInviteAcceptReq(invited.getId(), team.getId());
 
         //when
         ResultActions action = mvc.perform(
@@ -156,8 +156,8 @@ class ApiUserControllerTest extends IntegrationTest {
     void cancelTeamInvite() throws Exception {
         //given
         Team team = teamRepository.save(new Team(adminUser, "team_name"));
-        InvitedGroup invited = invitedGroupRepository.save(new InvitedGroup(user, adminUser, team));
-        UserGroupsTeamInviteReq req = new UserGroupsTeamInviteReq(invited.getId(), team.getId());
+        InvitedTeam invited = invitedGroupRepository.save(new InvitedTeam(user, adminUser, team));
+        TeamInviteAcceptReq req = new TeamInviteAcceptReq(invited.getId(), team.getId());
 
         //when
         ResultActions action = mvc.perform(

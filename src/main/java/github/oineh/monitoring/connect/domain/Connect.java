@@ -21,13 +21,13 @@ public class Connect extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String ip;
     private String url;
     private int port;
     @Enumerated
     private ConnectType connectType;
+
 
     public Connect(String name, String ip, String url, int port, ConnectType connectType) {
         this.name = name;

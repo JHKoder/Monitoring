@@ -18,7 +18,7 @@ import github.oineh.monitoring.groups.group.dept.domain.Dept;
 import github.oineh.monitoring.groups.group.dept.domain.DeptRepository;
 import github.oineh.monitoring.groups.group.dept.team.domain.Team;
 import github.oineh.monitoring.groups.group.dept.team.domain.TeamRepository;
-import github.oineh.monitoring.groups.group.dept.team.web.req.TeamInviteReq;
+import github.oineh.monitoring.groups.group.dept.team.invit.web.req.TeamInviteReq;
 import github.oineh.monitoring.pc.domain.Type;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.User.Information;

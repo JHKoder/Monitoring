@@ -1,14 +1,15 @@
-package github.oineh.monitoring.auth.config;
+package github.oineh.monitoring.auth.token;
 
 import github.oineh.monitoring.auth.domain.Auth;
 import github.oineh.monitoring.auth.domain.Grade;
 import github.oineh.monitoring.user.domain.User;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -36,7 +37,6 @@ public class UserLogin implements UserDetails {
         this.credentialsNonExpired = true;
         this.accountNonLocked = true;
     }
-
 
     public static UserLogin ofPricipal(Object principal) {
         return (UserLogin) principal;

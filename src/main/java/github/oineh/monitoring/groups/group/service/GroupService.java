@@ -18,12 +18,13 @@ public class GroupService {
     private final UserRepository userRepository;
     private final GroupsRepository groupsRepository;
 
+
     @Transactional(readOnly = true)
     public GroupListRes findGroupIn(Long groupId, String userId) {
         return groupsRepository.findById(groupId)
-            .filter(groups -> checkGroupsInMember(groups, findUser(userId)))
-            .map(group -> GroupListRes.of(group.getId(), group.getDepts()))
-            .orElse(new GroupListRes());
+                .filter(groups -> checkGroupsInMember(groups, findUser(userId)))
+                .map(group -> GroupListRes.of(group.getId(), group.getDepts()))
+                .orElse(new GroupListRes());
     }
 
     private boolean checkGroupsInMember(Groups group, User user) {
@@ -35,6 +36,6 @@ public class GroupService {
 
     private User findUser(String loginId) {
         return userRepository.findByLoginId(loginId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
     }
 }

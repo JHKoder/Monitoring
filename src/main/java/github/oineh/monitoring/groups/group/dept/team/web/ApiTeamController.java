@@ -1,8 +1,10 @@
 package github.oineh.monitoring.groups.group.dept.team.web;
 
 import github.oineh.monitoring.groups.group.dept.team.service.TeamService;
-import github.oineh.monitoring.groups.group.dept.team.web.req.GroupCreateTeamReq;
+import github.oineh.monitoring.groups.group.dept.team.web.req.TeamCreateReq;
+
 import java.security.Principal;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +18,9 @@ public class ApiTeamController {
 
     private final TeamService teamService;
 
+
     @PostMapping
-    public void createGroupTeam(@RequestBody GroupCreateTeamReq req, Principal principal) {
+    public void createGroupTeam(@RequestBody TeamCreateReq req, Principal principal) {
         teamService.createTeam(req, principal.getName());
     }
 }

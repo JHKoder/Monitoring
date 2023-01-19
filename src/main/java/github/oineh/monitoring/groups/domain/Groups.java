@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PROTECTED;
 import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.groups.group.dept.domain.Dept;
 import github.oineh.monitoring.user.domain.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,6 +42,7 @@ public class Groups extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Dept> depts = new ArrayList<>();
 
+
     public Groups(User adminUser, String name) {
         this.adminUser = adminUser;
         this.memberUsers.add(adminUser);
@@ -58,9 +61,5 @@ public class Groups extends BaseEntity {
 
     public void updateDept(Dept dept) {
         this.depts.add(dept);
-    }
-
-    public boolean isMembers(User user) {
-        return memberUsers.contains(user);
     }
 }

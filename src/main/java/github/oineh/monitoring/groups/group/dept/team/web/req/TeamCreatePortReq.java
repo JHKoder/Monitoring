@@ -11,7 +11,6 @@ public class TeamCreatePortReq {
 
     private Long teamId;
     private String name;
-
     private int a;
     private int b;
     private int c;

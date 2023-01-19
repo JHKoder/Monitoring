@@ -6,7 +6,9 @@ import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.user.domain.UserRepository;
 import github.oineh.monitoring.user.web.req.SignUpReq;
+
 import javax.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,8 @@ import org.springframework.stereotype.Service;
 public class SignUpService {
 
     private final UserRepository userRepository;
-
     private final AuthRepository authRepository;
+
 
     @Transactional
     public void signUp(SignUpReq req) {

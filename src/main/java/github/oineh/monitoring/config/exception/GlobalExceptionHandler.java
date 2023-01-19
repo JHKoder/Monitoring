@@ -28,5 +28,4 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_VALUE);
         return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
     }
-
 }

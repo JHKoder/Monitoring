@@ -6,8 +6,8 @@ import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.groups.invit.domain.InvitedGroups;
 import github.oineh.monitoring.groups.invit.domain.InvitedGroupsRepository;
+import github.oineh.monitoring.groups.invit.web.req.GroupInviteSendReq;
 import github.oineh.monitoring.groups.invit.web.req.GroupInviteReq;
-import github.oineh.monitoring.groups.invit.web.req.UserGroupsInviteReq;
 import github.oineh.monitoring.groups.invit.web.res.InviteGroupsUserRes;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
@@ -27,12 +27,12 @@ public class InviteGroupService {
 
 
     @Transactional
-    public void targetUserInvite(GroupInviteReq req, String userId) {
+    public void targetUserInvite(GroupInviteSendReq req, String userId) {
         User sendUser = findUser(userId);
         User targetUser = findTargetUserEmail(req.getEmail());
         Groups groups = findGroups(req.getGroupsId());
 
-        checkGroupsInMember(sendUser, groups);
+        validateGroupInMember(sendUser, groups);
         checkInvited(targetUser, groups);
 
         invitedGroupsRepository.save(new InvitedGroups(targetUser, sendUser, groups));
@@ -48,7 +48,7 @@ public class InviteGroupService {
     }
 
     @Transactional
-    public void acceptInvite(UserGroupsInviteReq req, String userId) {
+    public void acceptInvite(GroupInviteReq req, String userId) {
         InvitedGroups invitedGroups = findInvitedGroups(req.getInviteId());
 
         groupsRepository.findById(invitedGroups.getGroupsId())
@@ -59,7 +59,7 @@ public class InviteGroupService {
     }
 
     @Transactional
-    public void cancelInvite(UserGroupsInviteReq req, String userId) {
+    public void cancelInvite(GroupInviteReq req, String userId) {
         InvitedGroups invited = findInvitedGroups(req.getInviteId());
         checkInvitedTarget(findUser(userId), invited);
         invitedGroupsRepository.delete(invited);
@@ -82,8 +82,8 @@ public class InviteGroupService {
             .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TARGET_USER));
     }
 
-    private void checkGroupsInMember(User user, Groups groups) {
-        if (!groups.isMembers(user)) {
+    private void validateGroupInMember(User user, Groups groups) {
+        if (!groups.checkMember(user)) {
             throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
         }
     }

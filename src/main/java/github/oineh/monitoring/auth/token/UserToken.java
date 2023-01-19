@@ -1,7 +1,8 @@
-package github.oineh.monitoring.auth.config;
+package github.oineh.monitoring.auth.token;
+
+import lombok.Getter;
 
 import java.util.Map;
-import lombok.Getter;
 
 @Getter
 public class UserToken {
@@ -11,7 +12,6 @@ public class UserToken {
     private String userId;
     private String password;
 
-
     public UserToken(Object principal) {
         System.out.println(principal);
         Map<String, String> map = (Map<String, String>) principal;
@@ -20,5 +20,4 @@ public class UserToken {
         this.userId = map.get("userId");
         this.password = map.get("password");
     }
-
 }

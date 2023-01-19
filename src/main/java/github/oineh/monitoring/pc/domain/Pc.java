@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.connect.domain.Connect;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,13 +36,6 @@ public class Pc extends BaseEntity {
         this.name = name;
         this.pcType = pcType;
     }
-
-    public Pc(String name, Type pcType, Connect connect) {
-        this.name = name;
-        this.pcType = pcType;
-        this.connect = connect;
-    }
-
 
     public boolean isSameConnectId(Long connectId) {
         return this.getConnect().isSameId(connectId);

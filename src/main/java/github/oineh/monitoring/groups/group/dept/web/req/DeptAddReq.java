@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupCreateTeamDeptReq {
+public class DeptAddReq {
 
     private String name;
     private Long groupsId;
