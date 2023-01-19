@@ -1,6 +1,6 @@
-package github.oineh.monitoring.config.auth.jwt;
+package github.oineh.monitoring.auth.config.jwt;
 
-import github.oineh.monitoring.config.auth.UserLogin;
+import github.oineh.monitoring.auth.config.UserLogin;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.http.Cookie;
@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor

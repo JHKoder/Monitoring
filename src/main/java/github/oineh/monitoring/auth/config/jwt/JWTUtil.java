@@ -1,12 +1,13 @@
-package github.oineh.monitoring.config.auth.jwt;
+package github.oineh.monitoring.auth.config.jwt;
 
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import github.oineh.monitoring.config.auth.VerifyResult;
+import github.oineh.monitoring.auth.config.VerifyResult;
 import java.time.Instant;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType;
 
 @Configuration
 public class JWTUtil {

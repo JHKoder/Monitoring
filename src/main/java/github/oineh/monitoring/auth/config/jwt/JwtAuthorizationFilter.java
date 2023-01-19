@@ -1,10 +1,10 @@
-package github.oineh.monitoring.config.auth.jwt;
+package github.oineh.monitoring.auth.config.jwt;
 
 
-import static github.oineh.monitoring.config.auth.jwt.JWTUtil.BEARER;
+import static github.oineh.monitoring.auth.config.jwt.JWTUtil.BEARER;
 
-import github.oineh.monitoring.config.auth.UserLogin;
-import github.oineh.monitoring.config.auth.VerifyResult;
+import github.oineh.monitoring.auth.config.UserLogin;
+import github.oineh.monitoring.auth.config.VerifyResult;
 import github.oineh.monitoring.user.service.LoginService;
 import java.io.IOException;
 import java.util.Arrays;

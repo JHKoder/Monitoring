@@ -1,4 +1,4 @@
-package github.oineh.monitoring.config.auth;
+package github.oineh.monitoring.auth.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
