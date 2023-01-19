@@ -3,8 +3,8 @@ package github.oineh.monitoring.user.domain;
 import static java.util.Objects.isNull;
 import static lombok.AccessLevel.PROTECTED;
 
+import github.oineh.monitoring.auth.domain.Auth;
 import github.oineh.monitoring.common.entity.BaseEntity;
-import github.oineh.monitoring.authority.domain.Auth;
 import github.oineh.monitoring.connect.domain.Connect;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.pc.domain.Pc;

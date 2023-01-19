@@ -1,4 +1,4 @@
-package github.oineh.monitoring.config.auth;
+package github.oineh.monitoring.auth.config;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -6,10 +6,10 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import github.oineh.monitoring.authority.domain.Grade;
-import github.oineh.monitoring.config.auth.jwt.JWTUtil;
-import github.oineh.monitoring.config.auth.jwt.JwtAuthenticationFilter;
-import github.oineh.monitoring.config.auth.jwt.JwtAuthorizationFilter;
+import github.oineh.monitoring.auth.config.jwt.JWTUtil;
+import github.oineh.monitoring.auth.config.jwt.JwtAuthenticationFilter;
+import github.oineh.monitoring.auth.config.jwt.JwtAuthorizationFilter;
+import github.oineh.monitoring.auth.domain.Grade;
 import github.oineh.monitoring.user.service.LoginService;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;

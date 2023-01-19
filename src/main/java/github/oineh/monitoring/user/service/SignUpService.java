@@ -1,7 +1,7 @@
 package github.oineh.monitoring.user.service;
 
-import github.oineh.monitoring.authority.domain.Auth;
-import github.oineh.monitoring.authority.domain.AuthRepository;
+import github.oineh.monitoring.auth.domain.Auth;
+import github.oineh.monitoring.auth.domain.AuthRepository;
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.user.domain.UserRepository;

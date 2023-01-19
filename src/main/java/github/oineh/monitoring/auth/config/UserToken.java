@@ -1,4 +1,4 @@
-package github.oineh.monitoring.config.auth;
+package github.oineh.monitoring.auth.config;
 
 import java.util.Map;
 import lombok.Getter;

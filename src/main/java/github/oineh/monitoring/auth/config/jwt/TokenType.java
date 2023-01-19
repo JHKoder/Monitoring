@@ -1,4 +1,4 @@
-package github.oineh.monitoring.config.auth.jwt;
+package github.oineh.monitoring.auth.config.jwt;
 
 public enum TokenType {
     ACCESS,

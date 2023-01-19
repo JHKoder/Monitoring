@@ -1,4 +1,4 @@
-package github.oineh.monitoring.authority.domain;
+package github.oineh.monitoring.auth.domain;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
