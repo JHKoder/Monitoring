@@ -1,10 +1,10 @@
-package github.oineh.monitoring.groups.group.domain;
+package github.oineh.monitoring.groups.group.dept.domain;
 
 import static lombok.AccessLevel.PROTECTED;
 
 import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.groups.domain.Groups;
-import github.oineh.monitoring.groups.group.team.domain.Team;
+import github.oineh.monitoring.groups.group.dept.team.domain.Team;
 import github.oineh.monitoring.user.domain.User;
 import java.util.ArrayList;
 import java.util.List;

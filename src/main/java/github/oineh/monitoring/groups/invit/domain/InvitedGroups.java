@@ -1,4 +1,4 @@
-package github.oineh.monitoring.groups.invit;
+package github.oineh.monitoring.groups.invit.domain;
 
 
 import static lombok.AccessLevel.PROTECTED;

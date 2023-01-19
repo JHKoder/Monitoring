@@ -1,10 +1,10 @@
-package github.oineh.monitoring.groups.group.invit;
+package github.oineh.monitoring.groups.group.dept.team.invit.domain;
 
 
 import static lombok.AccessLevel.PROTECTED;
 
 import github.oineh.monitoring.common.entity.BaseEntity;
-import github.oineh.monitoring.groups.group.team.domain.Team;
+import github.oineh.monitoring.groups.group.dept.team.domain.Team;
 import github.oineh.monitoring.user.domain.User;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

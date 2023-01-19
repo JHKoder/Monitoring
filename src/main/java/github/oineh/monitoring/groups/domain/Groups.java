@@ -4,7 +4,7 @@ package github.oineh.monitoring.groups.domain;
 import static lombok.AccessLevel.PROTECTED;
 
 import github.oineh.monitoring.common.entity.BaseEntity;
-import github.oineh.monitoring.groups.group.domain.Dept;
+import github.oineh.monitoring.groups.group.dept.domain.Dept;
 import github.oineh.monitoring.user.domain.User;
 import java.util.ArrayList;
 import java.util.List;

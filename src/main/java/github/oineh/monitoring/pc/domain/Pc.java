@@ -1,4 +1,4 @@
-package github.oineh.monitoring.user.pc.domain;
+package github.oineh.monitoring.pc.domain;
 
 
 import static lombok.AccessLevel.PROTECTED;
