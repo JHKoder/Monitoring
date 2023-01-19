@@ -1,4 +1,4 @@
-package github.oineh.monitoring.user.web.req;
+package github.oineh.monitoring.groups.group.dept.team.web.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserGroupsTeamInviteReq {
+public class TeamInviteReq {
 
-    private Long groupsId;
     private Long teamId;
+    private Long groupsId;
+    private String email;
 
 }

@@ -1,4 +1,4 @@
-package github.oineh.monitoring.groups.group.team.web.res;
+package github.oineh.monitoring.connect.web.res;
 
 import io.github.tcp.network.NetStatus;
 import lombok.Getter;

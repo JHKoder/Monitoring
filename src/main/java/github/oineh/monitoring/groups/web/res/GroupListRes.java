@@ -1,7 +1,7 @@
-package github.oineh.monitoring.groups.group.web.res;
+package github.oineh.monitoring.groups.web.res;
 
-import github.oineh.monitoring.groups.group.domain.Dept;
-import github.oineh.monitoring.groups.group.team.domain.Team;
+import github.oineh.monitoring.groups.group.dept.domain.Dept;
+import github.oineh.monitoring.groups.group.dept.team.domain.Team;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

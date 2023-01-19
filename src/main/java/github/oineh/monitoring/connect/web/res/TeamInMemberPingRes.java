@@ -1,4 +1,4 @@
-package github.oineh.monitoring.groups.group.team.web.res;
+package github.oineh.monitoring.connect.web.res;
 
 import github.oineh.monitoring.user.domain.User;
 import io.github.tcp.network.NetStatus;

@@ -1,6 +1,5 @@
-package github.oineh.monitoring.groups.group.team.domain;
+package github.oineh.monitoring.groups.group.dept.team.domain;
 
-import github.oineh.monitoring.groups.group.team.domain.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TeamRepository extends JpaRepository<Team, Long> {
