@@ -36,4 +36,8 @@ public class Auth extends BaseEntity {
         this.user = user;
         this.grades.add(grade);
     }
+
+    public static Auth ofUser(User user) {
+        return new Auth(user, Grade.USER);
+    }
 }

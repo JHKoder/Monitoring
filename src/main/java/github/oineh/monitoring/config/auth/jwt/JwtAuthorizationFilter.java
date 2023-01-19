@@ -5,7 +5,7 @@ import static github.oineh.monitoring.config.auth.jwt.JWTUtil.BEARER;
 
 import github.oineh.monitoring.config.auth.UserLogin;
 import github.oineh.monitoring.config.auth.VerifyResult;
-import github.oineh.monitoring.user.service.SignUpService;
+import github.oineh.monitoring.user.service.LoginService;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.servlet.FilterChain;
@@ -21,11 +21,12 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private final SignUpService signUpService;
+    private final LoginService loginService;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, SignUpService signUpService) {
+
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, LoginService loginService) {
         super(authenticationManager);
-        this.signUpService = signUpService;
+        this.loginService = loginService;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             response.sendRedirect("/logout");
         }
         if (result.isResult()) {
-            UserLogin user = (UserLogin) signUpService.loadUserByUsername(result.getUserId());
+            UserLogin user = (UserLogin) loginService.loadUserByUsername(result.getUserId());
             SecurityContextHolder.getContext()
                 .setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
             chain.doFilter(request, response);

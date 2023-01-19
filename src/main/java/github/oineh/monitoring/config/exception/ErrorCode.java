@@ -32,7 +32,9 @@ public enum ErrorCode {
     YOUR_NOT_GROUP(400, "회원님의 그룹이 아닙니다."),
     OVERLAP_INVITED_TEAM(400, "팀에서 이미 초대한 회원 입니다."),
     OVERLAP_INVITED_GROUPS(400, "그룹에서 이미 초대한 회원 입니다."),
-    EMAIL_ALREADY_PRESENT(400, "이미 사용중인 이메일 입니다.");
+    EMAIL_ALREADY_PRESENT(400, "이미 사용중인 이메일 입니다."),
+
+    VALIDATE_AUTHENTICATION(401, "RNJS");
 
     private final int status;
     private final String message;
