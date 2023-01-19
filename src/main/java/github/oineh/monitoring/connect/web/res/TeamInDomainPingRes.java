@@ -12,6 +12,7 @@ public class TeamInDomainPingRes {
     private String status;
     private Long connectId;
 
+
     public TeamInDomainPingRes(Long connectId, String name, NetStatus status) {
         this.connectId = connectId;
         this.name = name;

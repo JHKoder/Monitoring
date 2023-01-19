@@ -1,7 +1,8 @@
 package github.oineh.monitoring.config.exception;
 
-import java.util.Arrays;
 import lombok.Getter;
+
+import java.util.Arrays;
 
 @Getter
 public enum ErrorCode {
@@ -46,8 +47,8 @@ public enum ErrorCode {
 
     public static ErrorCode fromMessage(String message) {
         return Arrays.stream(ErrorCode.values())
-            .filter(errorCode -> errorCode.getMessage().equals(message))
-            .findFirst()
-            .orElse(null);
+                .filter(errorCode -> errorCode.getMessage().equals(message))
+                .findFirst()
+                .orElse(null);
     }
 }

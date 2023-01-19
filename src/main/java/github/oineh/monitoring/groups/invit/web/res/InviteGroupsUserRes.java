@@ -13,6 +13,7 @@ public class InviteGroupsUserRes {
     private Long groupsId;
     private String sendName;
 
+
     public InviteGroupsUserRes(InvitedGroups groups) {
         this.id = groups.getId();
         this.groupsName = groups.getGroupsName();

@@ -1,21 +1,22 @@
 package github.oineh.monitoring.user.service;
 
-import github.oineh.monitoring.auth.config.UserLogin;
 import github.oineh.monitoring.auth.domain.Auth;
 import github.oineh.monitoring.auth.domain.AuthRepository;
+import github.oineh.monitoring.auth.token.UserLogin;
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.AuthenticationCustomException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
+
 import javax.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 
 @Slf4j
 @Service
@@ -24,6 +25,7 @@ public class LoginService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final AuthRepository authRepository;
+
 
     @Override
     @Transactional
@@ -37,11 +39,11 @@ public class LoginService implements UserDetailsService {
 
     private Auth findAuth(User user) {
         return authRepository.findByUser(user)
-            .orElseThrow(() -> new AuthenticationCustomException(ErrorCode.VALIDATE_AUTHENTICATION));
+                .orElseThrow(() -> new AuthenticationCustomException(ErrorCode.VALIDATE_AUTHENTICATION));
     }
 
     private User findUser(String userId) {
         return userRepository.findByLoginId(userId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
     }
 }

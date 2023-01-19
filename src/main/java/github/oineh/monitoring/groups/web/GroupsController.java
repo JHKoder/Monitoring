@@ -14,5 +14,4 @@ public class GroupsController {
     public String groups() {
         return "groups";
     }
-
 }

@@ -10,13 +10,12 @@ import lombok.NoArgsConstructor;
 public class TeamCreateIpReq {
 
     private Long teamId;
-
     private String name;
-
     private int a;
     private int b;
     private int c;
     private int d;
+
 
     public String getIp() {
         valid();

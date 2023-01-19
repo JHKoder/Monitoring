@@ -9,6 +9,7 @@ import github.oineh.monitoring.connect.domain.Connect;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.pc.domain.Pc;
 import github.oineh.monitoring.pc.domain.Type;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -22,6 +23,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,18 +39,15 @@ public class User extends BaseEntity {
     private Long id;
     private String loginId;
     private String pw;
-
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Pc pc;
-
     @OneToMany(fetch = FetchType.LAZY)
     private List<Groups> groups = new ArrayList<>();
-
     @OneToOne(fetch = FetchType.LAZY)
     private Auth auth;
-
     @Embedded
     private Information information;
+
 
     public User(String loginId, String pw, Information information) {
         this.loginId = loginId;

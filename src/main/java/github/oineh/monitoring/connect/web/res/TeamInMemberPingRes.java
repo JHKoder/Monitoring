@@ -13,6 +13,7 @@ public class TeamInMemberPingRes {
     private NetStatus status;
     private Long id;
 
+
     public TeamInMemberPingRes(User member, NetStatus status) {
         this.id = member.getConnectId();
         this.name = member.getName();

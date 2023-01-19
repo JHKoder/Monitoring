@@ -1,4 +1,4 @@
-package github.oineh.monitoring.groups.invit.web.req;
+package github.oineh.monitoring.groups.web.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

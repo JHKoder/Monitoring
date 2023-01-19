@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PROTECTED;
 import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.connect.domain.Connect;
 import github.oineh.monitoring.user.domain.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -38,6 +40,7 @@ public class Team extends BaseEntity {
     private List<Connect> connects = new ArrayList<>();
     private String name;
 
+
     public Team(User createUser, String name) {
         this.members.add(createUser);
         this.createUser = createUser;
@@ -50,5 +53,9 @@ public class Team extends BaseEntity {
 
     public void updateConnect(Connect connect) {
         this.connects.add(connect);
+    }
+
+    public boolean checkMember(User user) {
+        return members.contains(user);
     }
 }

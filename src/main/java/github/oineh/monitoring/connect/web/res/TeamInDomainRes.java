@@ -11,6 +11,7 @@ public class TeamInDomainRes {
     private String name;
     private Long id;
 
+
     public TeamInDomainRes(Connect connect) {
         this.name = connect.getName();
         this.id = connect.getId();

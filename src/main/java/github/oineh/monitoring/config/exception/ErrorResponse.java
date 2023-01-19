@@ -1,12 +1,13 @@
 package github.oineh.monitoring.config.exception;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.BindingResult;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -38,11 +39,11 @@ public class ErrorResponse {
         public static List<FieldError> of(BindingResult bindingResult) {
             List<org.springframework.validation.FieldError> fieldErrors = bindingResult.getFieldErrors();
             return fieldErrors.stream()
-                .map(error -> new FieldError(
-                    error.getField(),
-                    error.getRejectedValue() == null ? "" : error.getRejectedValue().toString(),
-                    error.getDefaultMessage()
-                )).collect(Collectors.toList());
+                    .map(error -> new FieldError(
+                            error.getField(),
+                            error.getRejectedValue() == null ? "" : error.getRejectedValue().toString(),
+                            error.getDefaultMessage()
+                    )).collect(Collectors.toList());
         }
     }
 }
