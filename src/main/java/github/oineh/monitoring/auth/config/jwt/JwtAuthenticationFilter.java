@@ -1,5 +1,6 @@
 package github.oineh.monitoring.auth.config.jwt;
 
+import github.oineh.monitoring.auth.config.TokenType;
 import github.oineh.monitoring.auth.config.UserLogin;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -13,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
@@ -45,6 +45,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
         Authentication authResult) throws IOException {
         UserLogin userToken = UserLogin.ofPricipal(authResult.getPrincipal());
+
         response.addCookie(new Cookie(JWTUtil.BEARER,
             JWTUtil.BEARER + jwtUtil.generate(userToken.getUsername(), TokenType.ACCESS)));
         response.sendRedirect("/");
