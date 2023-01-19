@@ -1,4 +1,4 @@
-package github.oineh.monitoring.groups.group.domain;
+package github.oineh.monitoring.groups.group.dept.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

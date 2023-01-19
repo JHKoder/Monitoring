@@ -1,4 +1,4 @@
-package github.oineh.monitoring.groups.invit;
+package github.oineh.monitoring.groups.invit.domain;
 
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.user.domain.User;

@@ -1,6 +1,6 @@
-package github.oineh.monitoring.groups.group.invit;
+package github.oineh.monitoring.groups.group.dept.team.invit.domain;
 
-import github.oineh.monitoring.groups.group.team.domain.Team;
+import github.oineh.monitoring.groups.group.dept.team.domain.Team;
 import github.oineh.monitoring.user.domain.User;
 import java.util.List;
 import java.util.Optional;
