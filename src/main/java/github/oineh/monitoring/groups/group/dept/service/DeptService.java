@@ -1,36 +1,36 @@
-package github.oineh.monitoring.groups.group.service;
+package github.oineh.monitoring.groups.group.dept.service;
 
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
-import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
-import github.oineh.monitoring.groups.web.res.GroupListRes;
+import github.oineh.monitoring.groups.group.dept.domain.Dept;
+import github.oineh.monitoring.groups.group.dept.domain.DeptRepository;
+import github.oineh.monitoring.groups.group.dept.web.req.GroupCreateTeamDeptReq;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 @RequiredArgsConstructor
-public class GroupService {
+public class DeptService {
 
+
+    private final DeptRepository deptRepository;
     private final UserRepository userRepository;
     private final GroupsRepository groupsRepository;
 
     @Transactional(readOnly = true)
-    public GroupListRes findGroupIn(Long groupId, String userId) {
-        return groupsRepository.findById(groupId)
-            .filter(groups -> checkGroupsInMember(groups, findUser(userId)))
-            .map(group -> GroupListRes.of(group.getId(), group.getDepts()))
-            .orElse(new GroupListRes());
+    public void createGroup(GroupCreateTeamDeptReq req, String userId) {
+        groupsRepository.findById(req.getGroupsId())
+            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS))
+            .updateDept(deptSave(findUser(userId), req.getName()));
     }
 
-    private boolean checkGroupsInMember(Groups group, User user) {
-        if (!group.checkMember(user)) {
-            throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
-        }
-        return true;
+    private Dept deptSave(User user, String name) {
+        return deptRepository.save(new Dept(user, name));
     }
 
     private User findUser(String loginId) {

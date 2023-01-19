@@ -1,8 +1,8 @@
-package github.oineh.monitoring.user.pc.service;
+package github.oineh.monitoring.pc.service;
 
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
-import github.oineh.monitoring.user.pc.web.req.PcAddReq;
+import github.oineh.monitoring.pc.web.req.PcAddReq;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
 import io.github.tcp.network.Host;
