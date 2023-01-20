@@ -26,7 +26,11 @@
             .then((data) => {
                 groupsList(data);
             })
-            .catch(error => console.log(error))
+            .catch(function (error) {
+                let message = error.response.data.message;
+                let code = error.response.data.status;
+                alert("error code:" + code + ", message:" + message);
+            })
 
     const groupsAdd = () => {
         const name = document.getElementById("groupInputName").value;
@@ -42,10 +46,8 @@
     }
 
     const groupsList = (response) => {
-        let out;
-        if (response.data !== []) {
-            return;
-        }
+        let out = "";
+        console.log(response.data);
         response.data.forEach(function (data) {
             let groupsId = data.groupsId;
             let name = data.name;
