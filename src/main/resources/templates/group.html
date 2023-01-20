@@ -1,122 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-  <script src="/common.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
 <!--소속 ( 대,중,th)-->
 <div>
-  부서 생성
-  <div>
-    <label> name </label> <input id="deptName" name="name" type="text"/>
-    <button type="button" onclick="deptCreate()">추가</button>
-  </div>
+    부서 생성
+    <div>
+        <label> name </label> <input id="deptName" name="name" type="text"/>
+        <button type="button" onclick="deptCreate()">추가</button>
+    </div>
 </div>
 <hr>
 <div style="border:solid 1px; margin-bottom: 9px;">
-  그룹 맴버 초대
-  <div>
-    <label style="margin-left:3px;"> email </label><input id="groupsInputEmail" name="email" type="email">
-    <button type="button" onclick="groupsInviteClick()">초대</button>
-  </div>
+    그룹 맴버 초대
+    <div>
+        <label style="margin-left:3px;"> email </label><input id="groupsInputEmail" name="email" type="email">
+        <button type="button" onclick="groupsInviteClick()">초대</button>
+    </div>
 </div>
 <!-- 그룹네 있는 부서 & 팀 생성 -->
 <div id="group_in_dept_in_team" class="group_in_dept_in_team" style="width:930px;">
 </div>
 </body>
 <script>
-  const local = window.location.pathname;
-  const groupId = local.substring(7, local.length);
+    const local = window.location.pathname;
+    const groupId = local.substring("/groups/".length, local.length);
 
-  function groupsInviteClick() {
-    var email = document.getElementById("groupsInputEmail").value;
-    post("api/groups/invite", {
-      groupsId: groupId,
-      email: email,
-    })
-    .then(() => location.reload())
-    .catch(error => alert(error))
-  }
-
-  function deptCreate() {
-    var name = document.getElementById("deptName").value;
-
-    post("api/group/dept", {
-      groupsId: groupId,
-      name: name,
-    })
-    .then(() => location.reload())
-    .catch(error => alert(error))
-  }
-
-  const init = function () {
-    fetchGet(groupId);
-  }
-
-  const fetchGet = function (groupId) {
-    const url = `${defaultUrl}/api/group/${groupId}`;
-    fetch(url)
-    .then((response) => response.json())
-    .then((data) => groupInDeptAndTeam(data))
-    .catch((error) => console.log(error))
-  }
-
-  function groupInDeptAndTeam(datas) {
-    if (!Array.isArray(datas.group)) {
-      alert(datas);
-      location.href = defaultUrl;
+    const groupsInviteClick = async () => {
+        const email = document.getElementById("groupsInputEmail").value;
+        axios.post("/api/group/invite", {
+            groupsId: groupId,
+            email: email,
+        })
+                .then(() => location.reload())
+                .catch(function (error) {
+                    let message = error.response.data.message;
+                    let code = error.response.data.status;
+                    alert("error code:" + code + ", message:" + message);
+                })
     }
-    datas.group.forEach(function (data, idx) {
-      document.getElementById("group_in_dept_in_team")
-          .innerHTML += groupInDeptAndTeamOut(data, datas.groupsId);
-    })
-  }
 
-  function groupInDeptAndTeamOut(data, groupsId) {
-    // 부서
-    var out = ""
-        + "  <div style='border:groove; margin-right:10px; width:300px; box-sizing: border-box; float: left;'>\n"
-        + "    <label style='font-size:22px'> 부서명 :" + data.name + "</label>\n";
-    // 팀 for
-    data.list.forEach(function (team) {
-      console.log(team);
-      let teamId = team.teamId;
-      let teamName = team.name;
-      let href = "/team/room/" + groupsId + "/" + teamId;
+    const deptCreate = async () => {
+        const name = document.getElementById("deptName").value;
+        axios.post("/api/dept", {
+            groupsId: groupId,
+            name: name,
+        })
+                .then(() => location.reload())
+                .catch(function (error) {
+                    let message = error.response.data.message;
+                    let code = error.response.data.status;
+                    alert("error code:" + code + ", message:" + message);
+                })
+    }
 
-      out += "    <div style=' background-color: rgb(167 181 243); box-shadow: 1px 3px 2px;border:groove;' " +
-          "onclick='location.href=`" + href + "`'>\n"
-          + "      <label> 팀명 : " + teamName + "</label><br>\n"
-          + "    </div>\n"
-    })
+    const init = async () => {
+        await fetchGet(groupId);
+    }
 
-    out += "    <br>\n"
-        + "    <div>\n"
-        + "        <input type='text' id='" + groupsId + "-" + data.deptId
-        + "-name' name='name' style='position:absolute' placeholder='팀 이름'>\n"
-        + "        <button onclick='teamCreate(" + data.deptId + "," + groupsId + ")'"
-        + "    style='margin-left:187px' type='submit' id='groupTeam-" + groupsId
-        + "'><label>팀 생성</label></button>\n"
-        + "    </div>\n"
-        + "  </div>";
-    return out;
-  }
+    const fetchGet = async (groupId) => {
+        const url = `/api/groups/${groupId}`;
+        axios.get(url)
+                .then((data) => groupInDeptAndTeam(data))
+                .catch(function (error) {
+                    let message = error.response.data.message;
+                    let code = error.response.data.status;
+                    alert("error code:" + code + ", message:" + message);
+                })
+    }
 
-  function teamCreate(deptId, groupsId) {
-    const name = document.getElementById(groupsId + "-" + deptId + "-name").value;
-    post("api/group/team", {
-      groupsId: groupsId,
-      deptId: deptId,
-      name: name,
-    })
-    .then(() => location.reload())
-    .catch(error => alert(error))
-  }
+    const groupInDeptAndTeam = async (datas) => {
+        console.log(datas.data.group);
+        datas.data.group.forEach(function (data, idx) {
+            document.getElementById("group_in_dept_in_team")
+                    .innerHTML += groupInDeptAndTeamOut(data);
+        })
+    }
 
-  init();
+    const groupInDeptAndTeamOut = (dept) => {
+        // 부서
+        var out = `
+            <div style='border:groove; margin-right:10px; width:300px; box-sizing: border-box; float: left;'>
+            <label style='font-size:22px'> 부서명 :${dept.name}</label>
+        `;
+        // 팀 for
+        dept.list.forEach(function (team) {
+            let teamId = team.teamId;
+            let teamName = team.name;
+            let href = `/room/groups/${groupId}/teams/${teamId}`;
+            out += `
+            <div style='background-color: rgb(167 181 243); box-shadow: 1px 3px 2px;border:groove;' onclick='location.href="${href}"'>
+                <label> 팀명 : ${teamName} </label><br>
+            </div>
+            `;
+        })
+        out += `
+        <br>
+        <div>
+        <input type='text' id='${groupId}-${dept.deptId}-name' name='name' style='position:absolute' placeholder='팀 이름'>
+            <button style='margin-left:187px' type="button" id='groupTeam-${groupId}' onclick='teamCreate(${dept.deptId},${groupId})' >
+                <label>팀 생성</label>
+            </button>
+        </div>
+        </div>
+        `;
+        return out;
+    }
+
+    const teamCreate = async (deptId, groupsId) => {
+        const name = document.getElementById(groupsId + "-" + deptId + "-name").value;
+        axios.post("/api/team", {
+            groupsId: groupsId,
+            deptId: deptId,
+            name: name,
+        })
+                .then(() => location.reload())
+                .catch(function (error) {
+                    let message = error.response.data.message;
+                    let code = error.response.data.status;
+                    alert("error code:" + code + ", message:" + message);
+                })
+    }
+
+    init();
 </script>
 </html>

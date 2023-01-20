@@ -8,15 +8,13 @@ import github.oineh.monitoring.config.exception.AuthenticationCustomException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
-
-import javax.transaction.Transactional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -28,11 +26,10 @@ public class LoginService implements UserDetailsService {
 
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findUser(username);
         Auth auth = findAuth(user);
-
         log.info("loadUserByUsername  : " + user.getId() + " Auth:" + auth.getGrades().toString());
         return UserLogin.of(user, auth);
     }

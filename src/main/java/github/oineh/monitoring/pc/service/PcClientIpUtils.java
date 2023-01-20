@@ -3,11 +3,10 @@ package github.oineh.monitoring.pc.service;
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import io.github.tcp.network.Host;
-
-import javax.servlet.http.HttpServletRequest;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @Component
@@ -29,6 +28,7 @@ public class PcClientIpUtils {
 
     public static Host filterIp(HttpServletRequest request) {
         try {
+            log.info("접근IP:" + request.getRemoteAddr());
             for (String header : IP_HEADER_CANDIDATES) {
                 String ipList = request.getHeader(header);
                 if (ipList != null && ipList.length() != 0 && !"unknown".equalsIgnoreCase(ipList)) {

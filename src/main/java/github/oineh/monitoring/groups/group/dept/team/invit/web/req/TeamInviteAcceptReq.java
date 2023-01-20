@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TeamInviteAcceptReq {
 
-    private Long groupsId;
+    private Long inviteId;
     private Long teamId;
 }

@@ -22,7 +22,7 @@ public class DeptService {
     private final GroupsRepository groupsRepository;
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void createGroup(DeptAddReq req, String userId) {
         groupsRepository.findById(req.getGroupsId())
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS))

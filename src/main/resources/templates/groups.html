@@ -1,52 +1,60 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>그룹</title>
-  <script src="/common.js"></script>
+    <meta charset="UTF-8">
+    <title>그룹</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <!-- 그룹 등록 -->
 그룹 등록
 <div>
-  <div>
-    <label>그룹 명 :
-      <input id="groupInputName" name="name" type="text">
-    </label>
-    <button type="button" onclick="groupsAdd()"> 생성</button>
-  </div>
+    <div>
+        <label>그룹 명 :
+            <input id="groupInputName" name="name" type="text">
+        </label>
+        <button type="button" onclick="groupsAdd()"> 생성</button>
+    </div>
 </div>
 <div>
-  <table id="groupList" style="border: 1px solid ">
-  </table>
+    <table id="groupList" style="border: 1px solid ">
+    </table>
 </div>
 </body>
 <script>
+    axios.get("/api/groups")
+            .then((data) => {
+                groupsList(data);
+            })
+            .catch(error => console.log(error))
 
-  get("api/groups")
-  .then(data => groupsList(data))
-  .catch(error => console.log(error))
+    const groupsAdd = () => {
+        const name = document.getElementById("groupInputName").value;
+        axios.post("/api/groups", {
+            name: name,
+        })
+                .then(() => location.reload())
+                .catch(function (error) {
+                    let message = error.response.data.message;
+                    let code = error.response.data.status;
+                    alert("error code:" + code + ", message:" + message);
+                })
+    }
 
-  function groupsAdd() {
-    var name = document.getElementById("groupInputName").value;
-    post("api/groups", {
-      name: name,
-    })
-    .then(() => location.reload())
-    .catch(error => console.log(error))
-  }
-
-  function groupsList(datas) {
-    let out = "";
-    datas.forEach(function (data, idx) {
-      let groupId = data.groupsId;
-      out += "" +
-          "<tr onclick='location.href=`group/" + groupId + "`'>" +
-          "<td>" + data.name + "</td>" +
-          "</tr >";
-    });
-    document.getElementById("groupList").innerHTML = out;
-  }
+    const groupsList = (response) => {
+        let out;
+        if (response.data !== []) {
+            return;
+        }
+        response.data.forEach(function (data) {
+            let groupsId = data.groupsId;
+            let name = data.name;
+            out += `<tr onclick='location.href="/groups/${groupsId}"'>
+                        <td>${name}</td>
+                    </tr>`;
+        });
+        document.getElementById("groupList").innerHTML = out;
+    }
 
 </script>
 </html>

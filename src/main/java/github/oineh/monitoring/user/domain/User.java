@@ -1,32 +1,20 @@
 package github.oineh.monitoring.user.domain;
 
-import static java.util.Objects.isNull;
-import static lombok.AccessLevel.PROTECTED;
-
-import github.oineh.monitoring.auth.domain.Auth;
 import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.connect.domain.Connect;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.pc.domain.Pc;
 import github.oineh.monitoring.pc.domain.Type;
-
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Objects.isNull;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -43,8 +31,6 @@ public class User extends BaseEntity {
     private Pc pc;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Groups> groups = new ArrayList<>();
-    @OneToOne(fetch = FetchType.LAZY)
-    private Auth auth;
     @Embedded
     private Information information;
 
@@ -53,13 +39,6 @@ public class User extends BaseEntity {
         this.loginId = loginId;
         this.pw = pw;
         this.information = information;
-    }
-
-    public User(String loginId, String pw, Information information, Auth auth) {
-        this.loginId = loginId;
-        this.pw = pw;
-        this.information = information;
-        this.auth = auth;
     }
 
     public boolean hasPc() {

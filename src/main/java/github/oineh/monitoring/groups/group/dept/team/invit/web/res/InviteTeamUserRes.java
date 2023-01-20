@@ -8,15 +8,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InviteTeamUserRes {
 
-    private Long id;
-    private String teamName;
+    private Long inviteId;
     private Long teamId;
+    private String groupName;
     private String sendName;
 
 
     public InviteTeamUserRes(InvitedTeam invited) {
-        this.id = invited.getId();
-        this.teamName = invited.getTeamName();
+        this.inviteId = invited.getId();
+        this.groupName = invited.getTeamName();
         this.teamId = invited.getTeamId();
         this.sendName = invited.getSendUserName();
     }
