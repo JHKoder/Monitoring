@@ -6,16 +6,17 @@ import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.groups.invit.domain.InvitedGroups;
 import github.oineh.monitoring.groups.invit.domain.InvitedGroupsRepository;
-import github.oineh.monitoring.groups.invit.web.req.GroupInviteSendReq;
 import github.oineh.monitoring.groups.invit.web.req.GroupInviteReq;
+import github.oineh.monitoring.groups.invit.web.req.GroupInviteSendReq;
 import github.oineh.monitoring.groups.invit.web.res.InviteGroupsUserRes;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,10 +42,10 @@ public class InviteGroupService {
     @Transactional
     public List<InviteGroupsUserRes> findInvite(String userId) {
         List<InvitedGroups> invitedGroups = invitedGroupsRepository.findByTargetUser(findUser(userId))
-            .orElse(List.of());
+                .orElse(List.of());
 
         return invitedGroups.stream().map(InviteGroupsUserRes::new)
-            .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -52,8 +53,8 @@ public class InviteGroupService {
         InvitedGroups invitedGroups = findInvitedGroups(req.getInviteId());
 
         groupsRepository.findById(invitedGroups.getGroupsId())
-            .orElseThrow(() -> new ApiException(ErrorCode.NO_TEAM_INVITES))
-            .updateMember(findUser(userId));
+                .orElseThrow(() -> new ApiException(ErrorCode.NO_TEAM_INVITES))
+                .updateMember(findUser(userId));
 
         invitedGroupsRepository.delete(invitedGroups);
     }
@@ -79,7 +80,7 @@ public class InviteGroupService {
 
     private User findTargetUserEmail(String email) {
         return userRepository.findByInformationEmail(email)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TARGET_USER));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TARGET_USER));
     }
 
     private void validateGroupInMember(User user, Groups groups) {
@@ -90,16 +91,16 @@ public class InviteGroupService {
 
     private InvitedGroups findInvitedGroups(Long inviteId) {
         return invitedGroupsRepository.findById(inviteId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NO_GROUP_INVITES));
+                .orElseThrow(() -> new ApiException(ErrorCode.NO_GROUP_INVITES));
     }
 
     private Groups findGroups(Long groupsId) {
         return groupsRepository.findById(groupsId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
     }
 
     private User findUser(String userId) {
         return userRepository.findByLoginId(userId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
     }
 }
