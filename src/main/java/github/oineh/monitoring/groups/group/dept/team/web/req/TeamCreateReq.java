@@ -1,9 +1,9 @@
 package github.oineh.monitoring.groups.group.dept.team.web.req;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 public class TeamCreateReq {
 

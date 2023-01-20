@@ -1,10 +1,10 @@
 package github.oineh.monitoring.groups.group.dept.team.web.req;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamCreateIpReq {
