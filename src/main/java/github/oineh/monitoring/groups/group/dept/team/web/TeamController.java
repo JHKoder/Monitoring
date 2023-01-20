@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/team")
+@RequestMapping("/room")
 public class TeamController {
 
-    @GetMapping("/room/{groupId}/{teamId}")
+    @GetMapping("/groups/{groupId}/teams/{teamId}")
     public String get() {
         return "team";
     }
