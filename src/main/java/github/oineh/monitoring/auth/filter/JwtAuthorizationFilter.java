@@ -56,6 +56,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         if (result.isResult()) {
             UserLogin user = (UserLogin) loginService.loadUserByUsername(result.getUserId());
+            System.out.println(user.getAuthorities().toString());
             SecurityContextHolder.getContext()
                     .setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
             chain.doFilter(request, response);

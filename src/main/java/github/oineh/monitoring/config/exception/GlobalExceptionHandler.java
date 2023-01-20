@@ -17,9 +17,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = ApiException.class)
-    public ResponseEntity<ErrorCode> handlerApiException(ApiException e) {
-        log.error(e.getMessage(), e);
-        return ResponseEntity.status(e.getErrorCode().getStatus()).body(e.getErrorCode());
+    public ResponseEntity<ErrorResponse> handlerApiException(ApiException e) {
+        ErrorResponse errorResponse = ErrorResponse.of(e.getErrorCode());
+        return ResponseEntity.status(e.getErrorCode().getStatus()).body(errorResponse);
     }
 
     @ExceptionHandler(value = IllegalArgumentException.class)

@@ -20,7 +20,7 @@ public class Auth extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
     @ElementCollection
     private Set<Grade> grades = new HashSet<>();
@@ -33,4 +33,5 @@ public class Auth extends BaseEntity {
     public static Auth ofUser(User user) {
         return new Auth(user, Grade.USER);
     }
+
 }

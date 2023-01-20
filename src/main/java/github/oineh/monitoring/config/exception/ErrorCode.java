@@ -35,7 +35,9 @@ public enum ErrorCode {
     OVERLAP_INVITED_GROUPS(400, "그룹에서 이미 초대한 회원 입니다."),
     EMAIL_ALREADY_PRESENT(400, "이미 사용중인 이메일 입니다."),
 
-    VALIDATE_AUTHENTICATION(401, "RNJS");
+    VALIDATE_AUTHENTICATION(401, "RNJS"),
+    NOT_FOUND_GROUP_TARGET_EMAIL_USER(400, "그룹에 포함된 유저를 찾지 못했습니다."),
+    NOT_FOUND_TARGET_EMAIL_USER(400, "해당 이메일로 유저를 찾지 못햇습니다.");
 
     private final int status;
     private final String message;
