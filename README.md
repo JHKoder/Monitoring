@@ -59,7 +59,7 @@
     - 유저에 PC를 등록 합니다.   
     - pc는 Icmp 형태의 초기 연결 방법을 갖습니다.
 
-### GET /api/user/groups/invite
+### GET /api/group/invite
 
 #### 설명
 
@@ -70,7 +70,7 @@
     - 회원이 받은 그룹 초대장을 모두 조회한다.
     - 리스트 형태의 res를 반환 합니다.
 
-### POST /api/user/groups/invite
+### PATCH /api/groups/invite
 
 #### 설명
 
@@ -82,7 +82,7 @@
     - 초대장에 서 그룹을 찾아 그룹 맴버에 등록합니다.
     - 초대장을 지움니다.
 
-### DELETE /api/user/groups/invite
+### DELETE /api/groups/invite
 
 #### 설명
 
@@ -94,7 +94,7 @@
     - 초대장에 회원님이 있는지 체크 
     - 초대장에 회원을 지움니다.
 
-### GET /api/user/team/invite
+### GET /api/team/invite
 
 #### 설명
 
@@ -105,7 +105,7 @@
     - 회원이 받은 팀 초대장을 모두 조회한다. 
     - Res 리스트 형식으로 반환 한다.
 
-### POST /api/user/team/invite
+### PATCH /api/user/team/invite
 
 #### 설명
 
@@ -155,7 +155,7 @@
     - 그룹을 만든다.
     - 그룹 생성자,맴버에 회원을 넣는다. 
 
-### POST /api/groups/invite
+### POST /api/group/invite
 
 #### 설명
 
@@ -172,7 +172,7 @@
 
 ## 그룹 페이지
 
-### GET /api/group/{groupId}
+### GET /api/groups/{groupId}
 
 #### 설명
 
@@ -183,7 +183,7 @@
     - 그룹 Id로 검색
     - 그룹에 회원이 포함되어 있나 확인
 
-### POST /api/group/dept
+### POST /api/dept
 
 #### 설명
 
@@ -194,7 +194,7 @@
     - 그룹 Id로 검색
     - 그룹 추가 
 
-### POST /api/group/team
+### POST /api/team
 
 #### 설명
 
@@ -210,7 +210,7 @@
 
 ## 팀 페이지
 
-### POST /api/team/url
+### POST /api/team/address/url
 
 #### 설명
 
@@ -221,7 +221,7 @@
     - url 문자중 '://'가 포함 되어 있지 않다면 'http://'를 붙인다.
     - 팀 에 connect를 등록한다.
 
-### POST /api/team/ip/port
+### POST /api/team/address/ip-port
 
 #### 설명
 
@@ -232,7 +232,7 @@
     - AClass,BCalss,CClass,DClass 는 0~255 까지 입력 가능하다.
     - 팀 에 connect를 등록한다.
 
-### POST /api/team/ip
+### POST /api/team/address/ip
 
 #### 설명
 
@@ -256,7 +256,7 @@
     - 이미 초대장을 보낸 상대인지 체크 
     - 체크 이상없으면 초대장을 전송(마이페이지에서 확인 가능)
 
-### GET /api/team/domain/{teamId}
+### GET /api/address/teams/{teamId}
 
 #### 설명
 
@@ -267,7 +267,7 @@
     - 팀내에 등록된 URL,IP:PORT,IP 리스트를 가져 옴니다.
     - 이름과 connectId를 리스트 형태로 반환 합니다.
 
-### GET /api/team/ping/domain/{teamId}/connect/{connectId}
+### GET /api/address/teams/{teamId}/connects/{connectId}
 
 #### 설명
 
@@ -279,7 +279,7 @@
     - connectId가 있나 비교하고 있다면 연결 확인 작업을 실행 합니다.
     - 작업 실행후 Res으로 반환 합니다.
 
-### GET /api/team/member/{teamId}
+### GET /api/member/teams/{teamId}
 
 #### 설명
 
@@ -290,7 +290,7 @@
     - 팀내 등록된 유저중에서 PC 등록한 것들만 조회 합니다.
     - Res으로 반환 합니다.
 
-### GET /api/team/ping/member/{teamId}/connect/{connectId}
+### GET /api/member/teams/{teamId}/connects/{connectId}
 
 #### 설명
 
