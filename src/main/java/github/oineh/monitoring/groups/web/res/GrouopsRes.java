@@ -1,15 +1,14 @@
 package github.oineh.monitoring.groups.web.res;
 
 import github.oineh.monitoring.groups.domain.Groups;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-
-@Data
+@Getter
 @NoArgsConstructor
 public class GrouopsRes {
 

@@ -1,10 +1,10 @@
 package github.oineh.monitoring.groups.group.dept.team.invit.web.res;
 
 import github.oineh.monitoring.groups.group.dept.team.invit.domain.InvitedTeam;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 public class InviteTeamUserRes {
 

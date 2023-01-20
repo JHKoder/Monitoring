@@ -1,11 +1,11 @@
 package github.oineh.monitoring.pc.web.req;
 
 import github.oineh.monitoring.pc.domain.Type;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
-@Data
+@Getter
 @NoArgsConstructor
 public class PcAddReq {
 
