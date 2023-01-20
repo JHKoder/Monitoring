@@ -8,14 +8,14 @@ jwt:
     key: classpath:app.key
 spring:
   datasource:
-    url: jdbc:h2:~/test;MODE=MYSQL
+    url: jdbc:h2:~/monitoring;MODE=MYSQL
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true
