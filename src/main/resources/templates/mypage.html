@@ -1,208 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title> 마이 페이지</title>
-  <style>
-    thead td {
-      border: solid 1px;
-      width: 350px;
-    }
+    <meta charset="UTF-8">
+    <title> 마이 페이지</title>
+    <style>
+        thead td {
+            border: solid 1px;
+            width: 350px;
+        }
 
-    button {
-      font-size: 17px;
-    }
-  </style>
-  <script src="/common.js"></script>
+        button {
+            font-size: 17px;
+        }
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
 
 <div>
-  <div>
-    <label>내 PC 정보 추가</label>
-    <div style="border:solid 1px; width:415px;height: 40px;">
-      <div style="margin-left:15px;margin-top:9px;">
-        <label> 이름 :</label> <input id="pcCreateInputName" name="pcName" type="text">
-        <label>분류</label>
-        <select id="pcCreateInputType" name="type">
-          <option value="PC">pc</option>
-          <option value="SERVER">server</option>
-        </select>
-        <button type="button" onclick="pcCreate()">추가</button>
-      </div>
+    <div>
+        <label>내 PC 정보 추가</label>
+        <div style="border:solid 1px; width:415px;height: 40px;">
+            <div style="margin-left:15px;margin-top:9px;">
+                <label> 이름 :</label> <input id="pcCreateInputName" name="pcName" type="text">
+                <label>분류</label>
+                <select id="pcCreateInputType" name="type">
+                    <option value="PC">pc</option>
+                    <option value="SERVER">server</option>
+                </select>
+                <button type="button" onclick="pcCreate()">추가</button>
+            </div>
+        </div>
     </div>
-  </div>
-  <br>
-  <div style="width:355px;">
-    그룹 초대 목록
-    <div style="border:solid 1px;width:350px; margin-bottom:15px ;">
-      <table style="margin-bottom: 15px;">
-        <thead>
-        <tr>
-          <td>그룹명</td>
-          <td>초대자</td>
-          <td>수락여부</td>
-        </tr>
-        </thead>
-        <tbody id="groupsInvitedDiv">
-        <tbody>
-      </table>
+    <br>
+    <div style="width:355px;">
+        그룹 초대 목록
+        <div style="border:solid 1px;width:350px; margin-bottom:15px ;">
+            <table style="margin-bottom: 15px;">
+                <thead>
+                <tr>
+                    <td>그룹명</td>
+                    <td>초대자</td>
+                    <td>수락여부</td>
+                </tr>
+                </thead>
+                <tbody id="groupsInvitedDiv">
+                <tbody>
+            </table>
+        </div>
     </div>
-  </div>
-  <div>
-    팀 초대 목록
-    <div style="border:solid 1px;width:350px; margin-bottom:15px ;">
-      <table style="margin-bottom: 15px;">
-        <thead>
-        <tr>
-          <td>팀명</td>
-          <td>초대자</td>
-          <td>수락여부</td>
-        </tr>
-        </thead>
-        <tbody id="groupsInTeamInvitedDiv">
-        <tbody>
-      </table>
+    <div>
+        팀 초대 목록
+        <div style="border:solid 1px;width:350px; margin-bottom:15px ;">
+            <table style="margin-bottom: 15px;">
+                <thead>
+                <tr>
+                    <td>팀명</td>
+                    <td>초대자</td>
+                    <td>수락여부</td>
+                </tr>
+                </thead>
+                <tbody id="groupsInTeamInvitedDiv">
+                <tbody>
+            </table>
+        </div>
     </div>
-  </div>
 </div>
 </body>
 <script>
-  function pcCreate() {
 
-    var pcName = document.getElementById("pcCreateInputName").value;
-    var type = document.getElementById("pcCreateInputType").value;
-    post("api/pc", {
-      pcName: pcName,
-      type: type,
-    })
-    .then(() => alert("내 pc를 (재)등록 했습니다."))
-    .catch(error => console.log(error))
-  }
-
-  const init = function () {
-    getGroupsInvitedList();
-    getGroupInTeamInvitedList();
-  }
-
-  function getGroupsInvitedList() {
-    fetch("api/user/groups/invite")
-    .then((request) => request.json())
-    .then(data => {
-      document.getElementById("groupsInvitedDiv")
-          .innerHTML = getGroupsInvitedListThen(data);
-    })
-    .catch(error => console.log(error))
-  }
-
-  function getGroupsInvitedListThen(datas) {
-    var out = "";
-    datas.forEach(function (data) {
-      let groupsName = data.groupsName;
-      let groupsId = data.groupsId;
-      let sendName = data.sendName;
-      let id = data.id;
-
-      out += " <tr> \n"
-          + "       <td>" + groupsName + "</td>\n"
-          + "       <td>" + sendName + "</td>\n"
-          + "      <td>\n"
-          + "      <div style='float:right;width:100%'>\n"
-          + "                <button onclick='return groupsInvite(true," + groupsId + "," + id + ")' "
-          + "type='submit' style='float:left; width:50%;'>초대 수락</button>\n"
-          + "                <button onclick='return groupsInvite(false," + groupsId + "," + id + ")' "
-          + "type='submit' style='float:left; width:50%;'>초대 거부</button>\n"
-          + "      </div>\n"
-          + "      </td>\n"
-          + " </tr>";
-    })
-    return out;
-  }
-
-  function groupsInvite(isInvite, groupsId, inviteId) {
-    let url = "api/user/groups/invite/";
-    if (isInvite) {
-      post(url, {
-        groupsId: groupsId,
-        inviteId: inviteId,
-      })
-      .then(() => location.reload())
-      .catch(message => {
-        alert(message);
+    const init = async () => {
         getGroupsInvitedList();
-      });
-    } else {
-      Delete(url, {
-        groupsId: groupsId,
-        inviteId: inviteId,
-      })
-      .then(() => location.reload())
-      .catch(message => {
-        alert(message);
-        getGroupsInvitedList();
-      });
-    }
-  }
-
-  function groupsTeamInvite(isInvite, groupsId, teamId) {
-    let url = "api/user/team/invite/";
-    if (isInvite) {
-      post(url, {
-        groupsId: groupsId,
-        teamId: teamId,
-      })
-      .then(() => location.reload())
-      .catch(message => {
-        alert(message);
         getGroupInTeamInvitedList();
-      });
-    } else {
-      Delete(url, {
-        groupsId: groupsId,
-        teamId: teamId,
-      })
-      .then(() => location.reload())
-      .catch(message => {
-        alert(message);
-        getGroupInTeamInvitedList();
-      });
     }
-  }
 
-  function getGroupInTeamInvitedList() {
-    fetch("api/user/team/invite")
-    .then((response) => response.json())
-    .then(data => {
-      document.getElementById("groupsInTeamInvitedDiv")
-          .innerHTML = getGroupsInTeamInvitedThen(data);
-    })
-    .catch(error => console.log(error))
-  }
+    const pcCreate = async () => {
+        const pcName = document.getElementById("pcCreateInputName").value;
+        const type = document.getElementById("pcCreateInputType").value;
+        axios.post("/api/pc", {
+            pcName: pcName,
+            type: type,
+        })
+                .then(() => alert("내 pc를 (재)등록 했습니다."))
+                .catch(function (error) {
+                    let message = error.response.data.message;
+                    let code = error.response.data.status;
+                    alert("error code:" + code + ", message:" + message);
+                })
+    }
 
-  function getGroupsInTeamInvitedThen(datas) {
-    var out = "";
-    datas.forEach(function (data) {
-      let groupsId = data.groupsId;
-      let teamId = data.teamId;
-      let teamName = data.teamName;
-      let sendName = data.sendName;
+    const getGroupsInvitedList = async () => {
+        axios.get("/api/group/invite")
+                .then(data => {
+                    document.getElementById("groupsInvitedDiv")
+                            .innerHTML = getGroupsInvitedListThen(data);
+                })
+                .catch(function (error) {
+                    let message = error.response.data.message;
+                    let code = error.response.data.status;
+                    alert("error code:" + code + ", message:" + message);
+                })
+    }
 
-      out += "<tr>\n"
-          + "   <td>" + teamName + "</td>\n"
-          + "   <td>" + sendName + "</td>\n"
-          + "   <td>\n"
-          + "   <div style='float:right;width:100%'>\n"
-          + "       <button onclick='groupsTeamInvite(true," + groupsId + "," + teamId + ")' type='submit' "
-          + " style='float:left; width:50%;'>초대 수락</button>\n"
-          + "       <button onclick='groupsTeamInvite(false," + groupsId + "," + teamId + ")' type='submit' "
-          + " style='float:right; width:50%;'>초대 거부</button>\n"
-          + "   </div>\n"
-          + "   </td>\n"
-          + "</tr>";
-    })
-    return out;
-  }
+    const getGroupsInvitedListThen = (datas) => {
+        var out = "";
+        datas.data.forEach(function (data) {
+            console.log(data);
+            let inviteId = data.id; // invite ID
+            let teamId = data.teamId; // teamId;
+            let sendName = data.groupName;
+            let groupName = data.groupName;
+            out += `
+            <tr>
+                <td>${groupName}</td>
+                <td>${sendName}</td>
+                <td>
+                <div style='float:right;width:100%'>
+                <button onclick='return groupsInvite(true,${teamId},${inviteId})'
+                type='submit' style='float:left; width:50%;'>초대 수락</button>
+                <button onclick='return groupsInvite(false,${teamId},${inviteId})'
+                type='submit' style='float:left; width:50%;'>초대 거부</button>
+                </div>
+                </td>
+            </tr>
+            `;
+        })
+        return out;
+    }
 
-  init();
+    const groupsInvite = async (isInvite, teamId, inviteId) => {
+        console.log("teamId:" + teamId + ", inviteId: " + inviteId);
+        if (isInvite) {
+            axios.patch("/api/group/invite", {
+                teamId: teamId,
+                inviteId: inviteId,
+            })
+                    .then(() => location.reload())
+                    .catch(message => {
+                        alert(message);
+                        getGroupsInvitedList();
+                    });
+        } else {
+            axios.delete("/api/group/invite", {
+                teamId: teamId,
+                inviteId: inviteId,
+            })
+                    .then(() => location.reload())
+                    .catch(message => {
+                        alert(message);
+                        getGroupsInvitedList();
+                    });
+        }
+    }
+
+    const groupsTeamInvite = async (isInvite, groupsId, teamId) => {
+        if (isInvite) {
+            axios.post("/api/team/invite", {
+                groupsId: groupsId,
+                teamId: teamId,
+            })
+                    .then(() => location.reload())
+                    .catch(message => {
+                        alert(message);
+                        getGroupInTeamInvitedList();
+                    });
+        } else {
+            axios.delete("/api/team/invite", {
+                groupsId: groupsId,
+                teamId: teamId,
+            })
+                    .then(() => location.reload())
+                    .catch(message => {
+                        alert(message);
+                        getGroupInTeamInvitedList();
+                    });
+        }
+    }
+
+    const getGroupInTeamInvitedList = async () => {
+        axios.get("/api/team/invite")
+                .then(data => {
+                    document.getElementById("groupsInTeamInvitedDiv")
+                            .innerHTML = getGroupsInTeamInvitedThen(data);
+                })
+                .catch(function (error) {
+                    let message = error.response.data.message;
+                    let code = error.response.data.status;
+                    alert("error code:" + code + ", message:" + message);
+                })
+    }
+
+    const getGroupsInTeamInvitedThen = (datas) => {
+        var out = "";
+        datas.data.forEach(function (data) {
+            let groupsId = data.groupsId;
+            let teamId = data.teamId;
+            let teamName = data.teamName;
+            let sendName = data.sendName;
+            out += `
+            <tr>
+                <td>${teamName}</td>
+                <td>${sendName}</td>
+                <td>
+                    <div style='float:right;width:100%'>
+                        <button onclick='groupsTeamInvite(true,${groupsId} , ${teamId})' type='submit'
+                            style='float:left; width:50%;'>초대 수락</button>
+                        <button onclick='groupsTeamInvite(false,${groupsId}, ${teamId} )' type='submit'
+                            style='float:right; width:50%;'>초대 거부</button>
+                    </div>
+                </td>
+            </tr>
+            `;
+        })
+        return out;
+    }
+
+    init();
 </script>
 </html>
