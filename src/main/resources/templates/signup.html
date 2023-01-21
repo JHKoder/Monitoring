@@ -1,0 +1,47 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div style="border:solid 1px; width:350px;">
+    <div style="margin-left:50px;">
+        아이디 : <input name="loginId" id="loginId" type="text"></br>
+        비번 : <input name="password" id="password" type="password"></br>
+        이메일 : <input name="email" id="email" type="email"></br>
+        이름 : <input name="name" id="name" type="text"></br>
+        닉네임 : <input name="nickName" id="nickName" type="text"></br>
+        <button type="button" onclick="signup()">회원가입</button>
+    </div>
+</div>
+</body>
+<script>
+
+    const singup = async () => {
+        var loginId = document.getElementById("loginId").value;
+        var password = document.getElementById("password").value;
+        var email = document.getElementById("email").value;
+        var name = document.getElementById("name").value;
+        var nickName = document.getElementById("nickName").value;
+        console.log(loginId, password, email, name, nickName);
+
+        axios.post("/api/user/signup", {
+            loginId: loginId,
+            password: password,
+            email: email,
+            name: name,
+            nickName: nickName,
+        })
+                .then(function (response) {
+                    location.href = "/";
+                })
+                .catch(function (error) {
+                    let message = error.response.data.message;
+                    let code = error.response.data.status;
+                    alert("error code:" + code  +", message:"+message);
+                })
+
+    }
+</script>
+</html>

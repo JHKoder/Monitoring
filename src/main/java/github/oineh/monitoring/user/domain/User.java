@@ -72,6 +72,14 @@ public class User extends BaseEntity {
         pc.updateConnect(nickname, host);
     }
 
+    public void updateConnect(Connect connect) {
+        pc.updateConnect(connect);
+    }
+
+    public String getEmail() {
+        return information.getEmail();
+    }
+
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
