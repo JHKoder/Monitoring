@@ -1,21 +1,14 @@
 package github.oineh.monitoring.pc.domain;
 
 
-import static lombok.AccessLevel.PROTECTED;
-
 import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.connect.domain.Connect;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -63,5 +56,9 @@ public class Pc extends BaseEntity {
 
     public void updateConnectUrl(String name, String url) {
         this.connect = Connect.tcp(name, url);
+    }
+
+    public void updateConnect(Connect connect) {
+        this.connect = connect;
     }
 }

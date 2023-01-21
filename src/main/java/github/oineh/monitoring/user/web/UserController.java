@@ -15,7 +15,7 @@ public class UserController {
 
     @GetMapping("/singup")
     public String singup() {
-        return "singup";
+        return "signup";
     }
 
     @GetMapping("/login")

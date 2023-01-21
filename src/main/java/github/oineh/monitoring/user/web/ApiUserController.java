@@ -16,7 +16,7 @@ public class ApiUserController {
     private final SignUpService signUpService;
 
 
-    @PostMapping("/singup")
+    @PostMapping("/signup")
     public void postSingUp(@RequestBody SignUpReq signUpReq) {
         signUpService.signUp(signUpReq);
     }
