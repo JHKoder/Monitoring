@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 주소 컨트롤 테스트")
+@DisplayName("api 주소 연결 컨트롤 테스트")
 public class ApiAddressControllerTest extends IntegrationTest {
 
     @Mock
