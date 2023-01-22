@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 부서 컨트롤 테스트")
+@DisplayName("api 부서 테스트")
 public class ApiDeptControllerTest extends IntegrationTest {
 
     String rest = "/api/dept";
