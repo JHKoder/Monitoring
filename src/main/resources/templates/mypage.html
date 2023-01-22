@@ -154,10 +154,10 @@
         }
     }
 
-    const groupsTeamInvite = async (isInvite, groupsId, teamId) => {
+    const groupsTeamInvite = async (isInvite, inviteId, teamId) => {
         if (isInvite) {
             axios.post("/api/team/invite", {
-                groupsId: groupsId,
+                inviteId: inviteId,
                 teamId: teamId,
             })
                     .then(() => location.reload())
@@ -167,7 +167,7 @@
                     });
         } else {
             axios.delete("/api/team/invite", {
-                groupsId: groupsId,
+                inviteId: inviteId,
                 teamId: teamId,
             })
                     .then(() => location.reload())
@@ -194,7 +194,7 @@
     const getGroupsInTeamInvitedThen = (datas) => {
         var out = "";
         datas.data.forEach(function (data) {
-            let groupsId = data.groupsId;
+            let inviteId = data.inviteId;
             let teamId = data.teamId;
             let teamName = data.teamName;
             let sendName = data.sendName;
@@ -204,9 +204,9 @@
                 <td>${sendName}</td>
                 <td>
                     <div style='float:right;width:100%'>
-                        <button onclick='groupsTeamInvite(true,${groupsId} , ${teamId})' type='submit'
+                        <button onclick='groupsTeamInvite(true,${inviteId} , ${teamId})' type='submit'
                             style='float:left; width:50%;'>초대 수락</button>
-                        <button onclick='groupsTeamInvite(false,${groupsId}, ${teamId} )' type='submit'
+                        <button onclick='groupsTeamInvite(false,${inviteId}, ${teamId} )' type='submit'
                             style='float:right; width:50%;'>초대 거부</button>
                     </div>
                 </td>
