@@ -10,14 +10,14 @@ public class InviteTeamUserRes {
 
     private Long inviteId;
     private Long teamId;
-    private String groupName;
+    private String teamName;
     private String sendName;
 
 
     public InviteTeamUserRes(InvitedTeam invited) {
         this.inviteId = invited.getId();
-        this.groupName = invited.getTeamName();
         this.teamId = invited.getTeamId();
+        this.teamName = invited.getTeamName();
         this.sendName = invited.getSendUserName();
     }
 }
