@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("그룹 entity 테스트")
+@DisplayName("entity 그룹")
 public class GroupsTest {
 
     User user = UserFixture.getUser();

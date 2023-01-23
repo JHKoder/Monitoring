@@ -11,12 +11,13 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@DisplayName("팀 entity test")
+@DisplayName("entity 팀")
 public class TeamTest {
 
     User user;
     Groups groups;
     Dept dept;
+
 
     @BeforeEach
     void setup() {

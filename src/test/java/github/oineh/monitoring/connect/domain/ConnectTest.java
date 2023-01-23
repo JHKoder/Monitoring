@@ -7,9 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("Pc Connect entity 테스트")
+@DisplayName("entity connect")
 public class ConnectTest {
-
 
     @Test
     @DisplayName("PC Icmp 연결 타입 생성")

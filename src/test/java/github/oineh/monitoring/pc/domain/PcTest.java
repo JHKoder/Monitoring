@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("PC 정보 entity 테스트")
+@DisplayName("entity PC")
 public class PcTest {
 
     @Test

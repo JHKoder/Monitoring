@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("유저 entity 테스트")
+@DisplayName("entity 유저 ")
 public class UserTest {
 
     @Test
-    @DisplayName("유저 생성")
+    @DisplayName("유저 생성 하기")
     public void create() {
         //given
         String id = "loginId";
