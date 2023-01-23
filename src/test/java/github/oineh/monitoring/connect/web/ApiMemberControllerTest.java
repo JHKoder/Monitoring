@@ -28,9 +28,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 맴버 연결 테스트")
+@DisplayName("api 맴버 연결 ")
 public class ApiMemberControllerTest extends IntegrationTest {
 
+    private final String url = "/api/member/teams";
+    User user;
+    Groups groups;
+    Dept dept;
+    Team team;
 
     @Mock
     Monitoring mockMonitoringService;
@@ -46,13 +51,6 @@ public class ApiMemberControllerTest extends IntegrationTest {
     @Autowired
     ConnectRepository connectRepository;
 
-    String rest = "/api/member/teams";
-
-    User user;
-    Groups groups;
-    Dept dept;
-    Team team;
-
 
     @BeforeEach
     void setup() {
@@ -64,14 +62,14 @@ public class ApiMemberControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("연결 체크를 할 팀원이 PC가 등록이 되어 있다면 리스트를 가져올수 있는지 테스트")
+    @DisplayName("연결 체크를 할 팀원이 PC가 등록이 되어 있다면 리스트를 가져올수 있는지 보기")
     void createDept() throws Exception {
         //given
         user.updatePc("강 pc", Type.PC);
         user.updateConnect(user.getNickName(), "127.0.0.1");
 
         //when
-        ResultActions action = mvc.perform(get(rest + "/" + team.getId()));
+        ResultActions action = mvc.perform(get(url + "/" + team.getId()));
 
         //then
         action.andExpect(status().isOk())
@@ -81,7 +79,7 @@ public class ApiMemberControllerTest extends IntegrationTest {
 
 
     @Test
-    @DisplayName("팀원 연결 상태 확인 테스트")
+    @DisplayName("팀원 연결 상태 확인")
     void pingMember() throws Exception {
         //given
         Connect connect = connectRepository.save(Connect.icmp("내ip", "127.0.0.1"));
@@ -92,7 +90,7 @@ public class ApiMemberControllerTest extends IntegrationTest {
 
         //when
         ResultActions action = mvc.perform(
-                get(rest + "/" + team.getId() + "/connects/" + connect.getId()));
+                get(url + "/" + team.getId() + "/connects/" + connect.getId()));
 
         //then
         action.andExpect(status().isOk())

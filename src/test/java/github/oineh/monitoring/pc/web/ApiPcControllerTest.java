@@ -17,11 +17,11 @@ import static github.oineh.monitoring.user.domain.User.Information;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api PC 테스트")
+@DisplayName("api PC")
 public class ApiPcControllerTest extends IntegrationTest {
 
 
-    static final String TARGET_RESOURCE = "/api/pc";
+    final String url = "/api/pc";
     User user;
 
     @Autowired
@@ -34,19 +34,17 @@ public class ApiPcControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("팀 초대 수락 테스트")
+    @DisplayName("팀 초대 수락 하기")
     void acceptTeamInvite() throws Exception {
         //given
         PcAddReq req = new PcAddReq("pc", Type.PC);
 
         //when
-        ResultActions action = mvc.perform(post(TARGET_RESOURCE)
+        ResultActions action = mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)));
 
         //then
         action.andExpect(status().isOk());
     }
-
-
 }

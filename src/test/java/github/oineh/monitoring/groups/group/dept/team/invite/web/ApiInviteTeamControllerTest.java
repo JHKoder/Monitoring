@@ -22,10 +22,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 팀 초대 테스트")
+@DisplayName("api 팀 초대")
 public class ApiInviteTeamControllerTest extends IntegrationTest {
 
-    static final String TARGET_RESOURCE = "/api/team/invite";
+    static final String url = "/api/team/invite";
 
     User adminUser;
     Groups groups;
@@ -53,7 +53,7 @@ public class ApiInviteTeamControllerTest extends IntegrationTest {
 
 
     @Test
-    @DisplayName("팀 초대 리스트 테스트")
+    @DisplayName("팀 초대 리스트 보기")
     void findTeamInviteList() throws Exception {
         //given
         Team team1 = teamRepository.save(new Team(adminUser, "team_name"));
@@ -62,7 +62,7 @@ public class ApiInviteTeamControllerTest extends IntegrationTest {
         InvitedTeam invited2 = invitedGroupRepository.save(new InvitedTeam(user, adminUser, team2));
 
         //when
-        ResultActions action = mvc.perform(get(TARGET_RESOURCE));
+        ResultActions action = mvc.perform(get(url));
 
         System.out.println(action.andReturn().getResponse().getContentAsString());
         //then
@@ -78,7 +78,7 @@ public class ApiInviteTeamControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("팀 초대 수락 테스트")
+    @DisplayName("팀 초대 수락 하기")
     void acceptTeamInvite() throws Exception {
         //given
         Team team = teamRepository.save(new Team(adminUser, "team_name"));
@@ -88,7 +88,7 @@ public class ApiInviteTeamControllerTest extends IntegrationTest {
 
         //when
         ResultActions action = mvc.perform(
-                patch(TARGET_RESOURCE).contentType(MediaType.APPLICATION_JSON)
+                patch(url).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(req)));
 
         //then
@@ -96,7 +96,7 @@ public class ApiInviteTeamControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("팀 초대 거부 테스트")
+    @DisplayName("팀 초대 거부 하기")
     void cancelTeamInvite() throws Exception {
         //given
         Team team = teamRepository.save(new Team(adminUser, "team_name"));
@@ -105,11 +105,10 @@ public class ApiInviteTeamControllerTest extends IntegrationTest {
 
         //when
         ResultActions action = mvc.perform(
-                delete(TARGET_RESOURCE).contentType(MediaType.APPLICATION_JSON)
+                delete(url).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(req)));
 
         //then
         action.andExpect(status().isOk());
     }
-
 }
