@@ -24,10 +24,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 그룹 컨트롤 테스트")
+@DisplayName("api 그룹")
 public class ApiGroupsControllerTest extends IntegrationTest {
 
-    String rest = "/api/groups";
+    String url = "/api/groups";
 
     User user;
     User targetUser;
@@ -54,7 +54,7 @@ public class ApiGroupsControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("그룹 보기 테스트")
+    @DisplayName("그룹 내 부서 & 팀 보기")
     void findGroup() throws Exception {
         //given
         Dept dept = deptRepository.save(new Dept(user, "dept"));
@@ -65,7 +65,7 @@ public class ApiGroupsControllerTest extends IntegrationTest {
         dept.updateTeam(team2);
 
         //when
-        ResultActions action = mvc.perform(get(rest + "/" + groups.getId()));
+        ResultActions action = mvc.perform(get(url + "/" + groups.getId()));
 
         //then
         action.andExpect(status().isOk())
@@ -79,14 +79,14 @@ public class ApiGroupsControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("그룹들 리스트 보기 테스트")
+    @DisplayName("그룹들 리스트 보기")
     void findList() throws Exception {
         //given
         Groups groups1 = groupsRepository.save(new Groups(user, "groups_1"));
         Groups groups2 = groupsRepository.save(new Groups(user, "groups_2"));
 
         //when
-        ResultActions action = mvc.perform(get(rest));
+        ResultActions action = mvc.perform(get(url));
 
         //then
         action.andExpect(status().isOk())
@@ -99,13 +99,13 @@ public class ApiGroupsControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("그룹 생성 테스트")
+    @DisplayName("그룹 생성 하기")
     void createGroups() throws Exception {
         //given
         GroupsCreateReq req = new GroupsCreateReq("groupName");
 
         //when
-        ResultActions action = mvc.perform(post(rest)
+        ResultActions action = mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)));
 

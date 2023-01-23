@@ -15,7 +15,6 @@ import github.oineh.monitoring.groups.group.dept.team.web.req.TeamCreateUrlReq;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.User.Information;
 import github.oineh.monitoring.user.domain.UserRepository;
-import io.github.tcp.network.NetStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +28,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("api 팀 테스트")
 class ApiTeamAddressControllerTest extends IntegrationTest {
 
+    private final String url = "/api/team/address";
+    User user;
+    Groups groups;
+    Dept dept;
+    Team team;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -40,12 +44,6 @@ class ApiTeamAddressControllerTest extends IntegrationTest {
     @Autowired
     ConnectRepository connectRepository;
 
-    String rest = "/api/team/address";
-
-    User user;
-    Groups groups;
-    Dept dept;
-    Team team;
 
     @BeforeEach
     void setup() {
@@ -66,7 +64,7 @@ class ApiTeamAddressControllerTest extends IntegrationTest {
         TeamCreateUrlReq req = new TeamCreateUrlReq(team.getId(), groups.getId(), "naver", "https://naver.com");
 
         //when
-        ResultActions action = mvc.perform(post(rest + "/url")
+        ResultActions action = mvc.perform(post(url + "/url")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)));
 
@@ -81,7 +79,7 @@ class ApiTeamAddressControllerTest extends IntegrationTest {
         TeamCreatePortReq req = new TeamCreatePortReq(team.getId(), "my pc", 127, 0, 0, 1, 80);
 
         //when
-        ResultActions action = mvc.perform(post(rest + "/ip-port")
+        ResultActions action = mvc.perform(post(url + "/ip-port")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)));
 
@@ -96,16 +94,11 @@ class ApiTeamAddressControllerTest extends IntegrationTest {
         TeamCreateIpReq req = new TeamCreateIpReq(team.getId(), "my pc", 127, 0, 0, 1);
 
         //when
-        ResultActions action = mvc.perform(post(rest + "/ip")
+        ResultActions action = mvc.perform(post(url + "/ip")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)));
 
         //then
         action.andExpect(status().isOk());
-    }
-
-
-    private NetStatus tcp() {
-        return NetStatus.OK;
     }
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("부서 entity test")
+@DisplayName("entity 부서 ")
 public class DeptTest {
 
     User user;

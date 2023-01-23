@@ -16,10 +16,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 유저 컨트롤 테스트")
+@DisplayName("api 유저")
 class ApiUserControllerTest extends IntegrationTest {
 
-    static final String TARGET_RESOURCE = "/api/user";
+    final String url = "/api/user";
     User user;
 
     @Autowired
@@ -33,7 +33,7 @@ class ApiUserControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("회원가입 테스트")
+    @DisplayName("회원가입 하기")
     void singUp() throws Exception {
         //given
         Information info = user.getInformation();
@@ -41,7 +41,7 @@ class ApiUserControllerTest extends IntegrationTest {
                 user.getLoginId() + "ID", user.getPw() + "!@");
 
         //when
-        ResultActions action = mvc.perform(post(TARGET_RESOURCE + "/signup").contentType(MediaType.APPLICATION_JSON)
+        ResultActions action = mvc.perform(post(url + "/signup").contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)));
 
         //then

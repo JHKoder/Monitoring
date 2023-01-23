@@ -21,11 +21,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 그룹 초대장 web 테스 ")
+@DisplayName("api 그룹 초대장")
 public class ApiGroupInviteControllerTest extends IntegrationTest {
 
-    static final String TARGET_RESOURCE = "/api/group/invite";
-
+    static final String url = "/api/group/invite";
     User adminUser;
     Groups groups;
     User user;
@@ -54,14 +53,14 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("그룹 초대장 리스트 가져오기 테스트")
+    @DisplayName("그룹 초대장 리스트 가져오기")
     void findGroupsInvite() throws Exception {
         //given
         InvitedGroups invited = new InvitedGroups(user, adminUser, groups);
         invitedGroupsRepository.save(invited);
 
         //when
-        ResultActions action = mvc.perform(get(TARGET_RESOURCE));
+        ResultActions action = mvc.perform(get(url));
 
         //then
         action.andExpect(status().isOk()).andExpect(jsonPath("$[0].groupsName").value(groups.getName()))
@@ -70,14 +69,14 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
 
 
     @Test
-    @DisplayName("그룹 초대 하기 테스트")
+    @DisplayName("그룹 초대 하기 하기")
     void invite() throws Exception {
         //given
         groups.updateMember(user);
         GroupInviteSendReq req = new GroupInviteSendReq(groups.getId(), targetUser.getEmail());
 
         //when
-        ResultActions action = mvc.perform(post(TARGET_RESOURCE)
+        ResultActions action = mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)));
 
@@ -86,7 +85,7 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("그룹 초대 수락 테스트")
+    @DisplayName("그룹 초대 수락 하기")
     void acceptGroupsInvite() throws Exception {
         //given
         InvitedGroups invited = invitedGroupsRepository.save(new InvitedGroups(user, adminUser, groups));
@@ -94,7 +93,7 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
 
         //when
         ResultActions action = mvc.perform(
-                patch(TARGET_RESOURCE).contentType(MediaType.APPLICATION_JSON)
+                patch(url).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(req)));
 
         //then
@@ -102,7 +101,7 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("그룹 초대 거부 테스트")
+    @DisplayName("그룹 초대 거부 하기")
     void cancelGroupsInvite() throws Exception {
         //given
         InvitedGroups invited = invitedGroupsRepository.save(new InvitedGroups(user, adminUser, groups));
@@ -110,7 +109,7 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
 
         //when
         ResultActions action = mvc.perform(
-                delete(TARGET_RESOURCE).contentType(MediaType.APPLICATION_JSON)
+                delete(url).contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(req)));
 
         //then

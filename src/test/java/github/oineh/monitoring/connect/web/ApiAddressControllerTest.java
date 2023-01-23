@@ -27,12 +27,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 주소 연결 컨트롤 테스트")
+@DisplayName("api 주소 연결")
 public class ApiAddressControllerTest extends IntegrationTest {
+
+    private final String url = "/api/address/teams";
+    User user;
+    User adminUser;
+    Groups groups;
+    Dept dept;
+    Team team;
 
     @Mock
     Monitoring mockMonitoringService;
-
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -44,14 +50,6 @@ public class ApiAddressControllerTest extends IntegrationTest {
     @Autowired
     ConnectRepository connectRepository;
 
-    String rest = "/api/address/teams";
-
-    User user;
-    User adminUser;
-    User targetUser;
-    Groups groups;
-    Dept dept;
-    Team team;
 
     @BeforeEach
     void setup() {
@@ -71,7 +69,7 @@ public class ApiAddressControllerTest extends IntegrationTest {
 
 
     @Test
-    @DisplayName("팀에서 외부 연결 상태를 알아야할 도메인을 리스트로 가져올수 있는지 테스트")
+    @DisplayName("팀에서 외부 연결 상태를 알아야할 도메인을 리스트로 가져올수 있는지 보기")
     void findGroup() throws Exception {
         //given
         Connect connectUrl1 = Connect.tcp("네이버", "https://naver.com");
@@ -80,7 +78,7 @@ public class ApiAddressControllerTest extends IntegrationTest {
         team.updateConnect(connectUrl2);
 
         //when
-        ResultActions action = mvc.perform(get(rest + "/" + team.getId()));
+        ResultActions action = mvc.perform(get(url + "/" + team.getId()));
 
         //then
         action.andExpect(status().isOk())
@@ -89,7 +87,7 @@ public class ApiAddressControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("도메인의 연결 상태 확인 테스트")
+    @DisplayName("주소 연결 상태 확인")
     void pingDomain() throws Exception {
         //given
         Connect connectUrl = connectRepository.save(Connect.tcp("네이버", "https://naver.com"));
@@ -100,7 +98,7 @@ public class ApiAddressControllerTest extends IntegrationTest {
 
         //when
         ResultActions action = mvc.perform(
-                get(rest + "/" + team.getId() + "/connects/" + connectUrl.getId()));
+                get(url + "/" + team.getId() + "/connects/" + connectUrl.getId()));
 
         //then
         action.andExpect(status().isOk())
@@ -113,5 +111,4 @@ public class ApiAddressControllerTest extends IntegrationTest {
     private NetStatus tcp() {
         return NetStatus.OK;
     }
-
 }

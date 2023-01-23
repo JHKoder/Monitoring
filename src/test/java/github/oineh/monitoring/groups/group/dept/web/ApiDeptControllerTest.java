@@ -19,10 +19,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 부서 테스트")
+@DisplayName("api 부서")
 public class ApiDeptControllerTest extends IntegrationTest {
 
-    String rest = "/api/dept";
+    final String url = "/api/dept";
     User user;
     Groups groups;
 
@@ -40,13 +40,13 @@ public class ApiDeptControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("부서 생성 테스트")
+    @DisplayName("부서 생성 하기")
     void createDept() throws Exception {
         //given
         DeptAddReq req = new DeptAddReq("부서이름", groups.getId());
 
         //when
-        ResultActions action = mvc.perform(post(rest)
+        ResultActions action = mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)));
 

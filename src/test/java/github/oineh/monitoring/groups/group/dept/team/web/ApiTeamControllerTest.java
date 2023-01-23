@@ -27,8 +27,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("api 팀 테스트")
 public class ApiTeamControllerTest extends IntegrationTest {
 
+    static final String url = "/api/team";
 
-    static final String TARGET_RESOURCE = "/api/team";
+    User user;
+    Groups groups;
+    Dept dept;
+    Team team;
+
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -40,12 +45,6 @@ public class ApiTeamControllerTest extends IntegrationTest {
     @Autowired
     ConnectRepository connectRepository;
 
-    String rest = "/api/team/address";
-
-    User user;
-    Groups groups;
-    Dept dept;
-    Team team;
 
     @BeforeEach
     void setup() {
@@ -65,7 +64,7 @@ public class ApiTeamControllerTest extends IntegrationTest {
         TeamCreateReq req = new TeamCreateReq(groups.getId(), dept.getId(), "team_name");
 
         //when
-        ResultActions action = mvc.perform(post(TARGET_RESOURCE)
+        ResultActions action = mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(req)));
 
