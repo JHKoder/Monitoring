@@ -94,9 +94,10 @@
         return new Promise((resolve, reject) => {
             axios.get("/api/address/teams/" + teamId + "/connects/" + connectId)
                     .then((data) => {
-                        let address = data.name;
-                        let status = data.status;
-                        let connectId = data.connectId;
+                        console.log(data);
+                        let address = data.data.name;
+                        let status = data.data.status;
+                        let connectId = data.data.connectId;
                         document.getElementById("domain_address_" + connectId).innerHTML = "주소 : [" + address + "]";
                         document.getElementById("domain_status_" + connectId).innerHTML = "주소 : [" + status + "]";
                     })
