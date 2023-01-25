@@ -1,4 +1,4 @@
-package github.oineh.monitoring.groups.group.dept.team.invite.web;
+package github.oineh.monitoring.team.invite.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import github.oineh.monitoring.common.IntegrationTest;

@@ -1,12 +1,12 @@
-package github.oineh.monitoring.groups.group.dept.team.web;
+package github.oineh.monitoring.team.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import github.oineh.monitoring.common.IntegrationTest;
 import github.oineh.monitoring.connect.domain.ConnectRepository;
-import github.oineh.monitoring.groups.domain.Groups;
-import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.dept.domain.Dept;
 import github.oineh.monitoring.dept.domain.DeptRepository;
+import github.oineh.monitoring.groups.domain.Groups;
+import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.team.domain.Team;
 import github.oineh.monitoring.team.domain.TeamRepository;
 import github.oineh.monitoring.team.web.req.TeamCreateIpReq;

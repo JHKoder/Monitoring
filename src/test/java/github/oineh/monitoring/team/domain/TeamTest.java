@@ -1,4 +1,4 @@
-package github.oineh.monitoring.groups.group.dept.domain;
+package github.oineh.monitoring.team.domain;
 
 import fixture.UserFixture;
 import github.oineh.monitoring.dept.domain.Dept;
@@ -10,8 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("entity 부서 ")
-public class DeptTest {
+
+@DisplayName("entity 팀")
+public class TeamTest {
 
     User user;
     Groups groups;
@@ -26,14 +27,14 @@ public class DeptTest {
     }
 
     @Test
-    void deptCreate() {
+    void teamCreate() {
         //given
-        Dept dept = new Dept(user, "부서");
+        Team team = new Team(user, "개발팀");
 
         //when
-        groups.updateDept(dept);
+        dept.updateTeam(team);
 
         //then
-        assertThat(groups.getDepts()).contains(dept);
+        assertThat(dept.getTeams()).contains(team);
     }
 }
