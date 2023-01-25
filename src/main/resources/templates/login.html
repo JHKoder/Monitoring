@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <form th:action="@{/login}" method="POST">
-  <p>
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username"/>
-  </p>
-  <p>
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password"/>
-  </p>
-  <input type="submit">
+    <p>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username"/>
+    </p>
+    <p>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"/>
+    </p>
+    <input type="submit">
 </form>
 <br>
 <hr>
-<form action="/singup" method="get">
-  <input type="submit" value="회원가입">
+<form action="/signup" method="get">
+    <input type="submit" value="회원가입">
 </form>
 <br>
 <form action="/" method="get">
-  <input type="submit" value="메인화면">
+    <input type="submit" value="메인화면">
 </form>
 </body>
 </html>

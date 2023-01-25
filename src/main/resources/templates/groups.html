@@ -34,7 +34,7 @@
 
     const groupsAdd = () => {
         const name = document.getElementById("groupInputName").value;
-        axios.post("/api/groups", {
+        axios.post("/api/group", {
             name: name,
         })
                 .then(() => location.reload())
