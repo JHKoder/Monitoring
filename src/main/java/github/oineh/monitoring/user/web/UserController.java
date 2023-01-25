@@ -10,11 +10,11 @@ public class UserController {
 
     @GetMapping
     public String index() {
-        return "index";
+        return "main";
     }
 
-    @GetMapping("/singup")
-    public String singup() {
+    @GetMapping("/signup")
+    public String signUp() {
         return "signup";
     }
 
