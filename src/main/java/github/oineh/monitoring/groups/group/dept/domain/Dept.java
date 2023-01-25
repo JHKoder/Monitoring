@@ -1,25 +1,17 @@
 package github.oineh.monitoring.groups.group.dept.domain;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import github.oineh.monitoring.common.entity.BaseEntity;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.group.dept.team.domain.Team;
 import github.oineh.monitoring.user.domain.User;
-
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -29,10 +21,8 @@ public class Dept extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @OneToOne(fetch = FetchType.LAZY)
     private User adminUser;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Groups groups;
     @OneToMany(fetch = FetchType.LAZY)
@@ -47,5 +37,9 @@ public class Dept extends BaseEntity {
 
     public void updateTeam(Team team) {
         this.teams.add(team);
+    }
+
+    public boolean isId(Long deptId) {
+        return this.id.equals(deptId);
     }
 }

@@ -22,7 +22,7 @@ public class ApiGroupsController {
 
     @GetMapping("/{groupId}")
     public GroupListRes groupInRoom(@PathVariable("groupId") Long groupId, Principal principal) {
-        return groupService.findGroupIn(groupId, principal.getName());
+        return groupService.findAllDepartmentsAndTeamMembers(groupId, principal.getName());
     }
 
     @GetMapping
@@ -32,6 +32,6 @@ public class ApiGroupsController {
 
     @PostMapping
     public void createGroups(@RequestBody GroupsCreateReq req, Principal principal) {
-        groupsService.add(principal.getName(), req.getName());
+        groupsService.createGroup(principal.getName(), req.getName());
     }
 }

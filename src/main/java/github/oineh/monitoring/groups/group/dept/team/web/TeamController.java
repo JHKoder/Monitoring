@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TeamController {
 
     @GetMapping("/groups/{groupId}/teams/{teamId}")
-    public String get() {
+    public String teamPage() {
         return "team";
     }
 }

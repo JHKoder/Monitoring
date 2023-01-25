@@ -27,9 +27,9 @@ public class ApiInviteTeamController {
     }
 
     @PostMapping
-    public void invite(@RequestBody TeamInviteReq req, Principal principal) {
+    public void makeInvite(@RequestBody TeamInviteReq req, Principal principal) {
         groupsService.validateGroupInMember(req.getGroupsId(), req.getEmail());
-        inviteTeamService.inviteUser(req, principal.getName());
+        inviteTeamService.makeInvite(req, principal.getName());
     }
 
     @PatchMapping

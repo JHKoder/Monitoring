@@ -2,6 +2,7 @@ package github.oineh.monitoring.groups.group.dept.service;
 
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
+import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.groups.group.dept.domain.Dept;
 import github.oineh.monitoring.groups.group.dept.domain.DeptRepository;
@@ -23,14 +24,14 @@ public class DeptService {
 
 
     @Transactional
-    public void createGroup(DeptAddReq req, String userId) {
-        groupsRepository.findById(req.getGroupsId())
-                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS))
-                .updateDept(deptSave(findUser(userId), req.getName()));
-    }
+    public void makeDept(DeptAddReq req, String userId) {
+        Groups groups = groupsRepository.findById(req.getGroupsId())
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
 
-    private Dept deptSave(User user, String name) {
-        return deptRepository.save(new Dept(user, name));
+        Dept dept = new Dept(findUser(userId), req.getName());
+
+        deptRepository.save(dept);
+        groups.updateDept(dept);
     }
 
     private User findUser(String loginId) {

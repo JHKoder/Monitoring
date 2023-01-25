@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping
 public class GroupController {
     @GetMapping("/groups/{groupId}")
-    public String findGroupPage() {
+    public String groupPage() {
         return "group";
     }
 }
