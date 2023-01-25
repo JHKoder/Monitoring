@@ -1,7 +1,5 @@
 package github.oineh.monitoring.groups.group.dept.team.invit.service;
 
-import static github.oineh.monitoring.config.exception.ErrorCode.NOT_FOUND_TARGET_USER;
-
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.groups.group.dept.team.domain.Team;
@@ -14,14 +12,15 @@ import github.oineh.monitoring.groups.group.dept.team.invit.web.req.TeamInviteRe
 import github.oineh.monitoring.groups.group.dept.team.invit.web.res.InviteTeamUserRes;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import static github.oineh.monitoring.config.exception.ErrorCode.NOT_FOUND_TARGET_USER;
 
 @Service
 @RequiredArgsConstructor
@@ -34,11 +33,11 @@ public class InviteTeamService {
 
     @Transactional(readOnly = true)
     public List<InviteTeamUserRes> findInvite(String userId) {
-        return mapInvitationsToResponse(getInvitationsByTargetUser(findUser(userId)));
+        return convertInvitationsToRes(findUserByInvite(findUser(userId)));
     }
 
     @Transactional
-    public void inviteUser(TeamInviteReq req, String userId) {
+    public void makeInvite(TeamInviteReq req, String userId) {
         Team team = findTeam(req.getTeamId());
         User targetUser = findUserEmail(req.getEmail());
         User sendUser = findSendUser(userId);
@@ -54,31 +53,26 @@ public class InviteTeamService {
         User user = findSendUser(userId);
         Team team = findTeam(req.getTeamId());
 
-        checkInvitedTargetUserAndTeamOK(user, team);
+        validateInvitedTargetUserAndTeamOK(user, team);
 
         team.updateMember(user);
-        invitedGroupRepository.delete(findTeamInvite(user, team));
+        invitedGroupRepository.delete(findInvite(user, team));
     }
 
     @Transactional
     public void cancelInvite(TeamInviteCancelReq req, String userId) {
         User user = findUser(userId);
         Team team = findTeam(req.getTeamId());
-        InvitedTeam invited = findTeamInvite(user, team);
+        InvitedTeam invited = findInvite(user, team);
 
-        checkInvitedTargetUserAndTeamOK(user, team);
+        validateInvitedTargetUserAndTeamOK(user, team);
+
         invitedGroupRepository.delete(invited);
     }
 
-    private InvitedTeam findTeamInvite(User user, Team team) {
-        return invitedGroupRepository.findByTargetUserAndTeam(user, team)
-                .orElseThrow(() -> new ApiException(ErrorCode.NO_TEAM_INVITES));
-    }
-
-    private void checkInvitedTargetUserAndTeamOK(User targetUser, Team team) {
-        if (invitedGroupRepository.findByTargetUserAndTeam(targetUser, team).isEmpty()) {
-            throw new ApiException(ErrorCode.NO_TEAM_INVITES);
-        }
+    private User findUser(String userId) {
+        return userRepository.findByLoginId(userId)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
     }
 
     private User findSendUser(String userId) {
@@ -86,13 +80,29 @@ public class InviteTeamService {
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_SEND_USER));
     }
 
+    private User findUserEmail(String email) {
+        return userRepository.findByInformationEmail(email)
+                .orElseThrow(() -> new ApiException(NOT_FOUND_TARGET_USER));
+    }
+
     private Team findTeam(Long id) {
         return teamRepository.findById(id).orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TEAM));
     }
 
-    private User findUserEmail(String email) {
-        return userRepository.findByInformationEmail(email)
-                .orElseThrow(() -> new ApiException(NOT_FOUND_TARGET_USER));
+    private InvitedTeam findInvite(User user, Team team) {
+        return invitedGroupRepository.findByTargetUserAndTeam(user, team)
+                .orElseThrow(() -> new ApiException(ErrorCode.NO_TEAM_INVITES));
+    }
+
+    private List<InvitedTeam> findUserByInvite(User user) {
+        return invitedGroupRepository.findByTargetUser(user)
+                .orElse(Collections.emptyList());
+    }
+
+    private void validateInvitedTargetUserAndTeamOK(User targetUser, Team team) {
+        if (invitedGroupRepository.findByTargetUserAndTeam(targetUser, team).isEmpty()) {
+            throw new ApiException(ErrorCode.NO_TEAM_INVITES);
+        }
     }
 
     private void validateGroupInMember(User sendUser, Team team) {
@@ -107,17 +117,7 @@ public class InviteTeamService {
         }
     }
 
-    private List<InviteTeamUserRes> mapInvitationsToResponse(List<InvitedTeam> invited) {
+    private List<InviteTeamUserRes> convertInvitationsToRes(List<InvitedTeam> invited) {
         return invited.stream().map(InviteTeamUserRes::new).collect(Collectors.toList());
-    }
-
-    private List<InvitedTeam> getInvitationsByTargetUser(User user) {
-        return invitedGroupRepository.findByTargetUser(user)
-                .orElse(Collections.emptyList());
-    }
-
-    private User findUser(String userId) {
-        return userRepository.findByLoginId(userId)
-                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
     }
 }

@@ -29,14 +29,12 @@ public class GroupsService {
     }
 
     @Transactional
-    public void add(String userId, String name) {
+    public void createGroup(String userId, String name) {
         groupsRepository.save(new Groups(findUser(userId), name));
     }
 
-
     public void validateGroupInMember(Long groupId, String email) {
-        System.out.println("email" + email);
-        validateUserGroup(findGroups(groupId), findUserEmail(email));
+        validateUserInGroup(findGroups(groupId), findUserEmail(email));
     }
 
     private User findUser(String userId) {
@@ -54,7 +52,7 @@ public class GroupsService {
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
     }
 
-    private void validateUserGroup(Groups group, User user) {
+    private void validateUserInGroup(Groups group, User user) {
         if (!group.checkMember(user)) {
             throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
         }

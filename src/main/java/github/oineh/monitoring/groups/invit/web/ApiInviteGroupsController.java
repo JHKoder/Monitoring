@@ -1,21 +1,14 @@
 package github.oineh.monitoring.groups.invit.web;
 
 import github.oineh.monitoring.groups.invit.service.InviteGroupService;
-import github.oineh.monitoring.groups.invit.web.req.GroupInviteSendReq;
 import github.oineh.monitoring.groups.invit.web.req.GroupInviteReq;
+import github.oineh.monitoring.groups.invit.web.req.GroupInviteSendReq;
 import github.oineh.monitoring.groups.invit.web.res.InviteGroupsUserRes;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/group/invite")
@@ -31,8 +24,8 @@ public class ApiInviteGroupsController {
     }
 
     @PostMapping
-    public void invite(@RequestBody GroupInviteSendReq req, Principal principal) {
-        inviteGroupService.targetUserInvite(req, principal.getName());
+    public void makeInvite(@RequestBody GroupInviteSendReq req, Principal principal) {
+        inviteGroupService.makeInvite(req, principal.getName());
     }
 
     @PatchMapping

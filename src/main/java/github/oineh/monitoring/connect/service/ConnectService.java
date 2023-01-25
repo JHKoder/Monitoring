@@ -30,7 +30,7 @@ public class ConnectService {
     private final NetStatusFactory netStatusFactory;
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     public TeamInDomainPingRes findTeamInConnectDomain(Long teamId, Long connectId) {
         return findTeam(teamId).getConnects().stream()
                 .filter(connect -> connect.isSameId(connectId))
@@ -39,7 +39,7 @@ public class ConnectService {
                 .orElse(new TeamInDomainPingRes());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public TeamInMemberPingRes findTeamInConnectMemberList(Long teamId, Long connectId) {
         return findTeam(teamId).getMembers().stream()
                 .filter(User::hasPc)
@@ -47,6 +47,23 @@ public class ConnectService {
                 .findFirst()
                 .map(member -> new TeamInMemberPingRes(member, connectStatus(member.getConnect())))
                 .orElse(new TeamInMemberPingRes());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamInDomainRes> findTeamInDomain(Long teamId) {
+        return findTeam(teamId).getConnects()
+                .stream()
+                .filter(connect -> connect.getConnectType() != null)
+                .map(TeamInDomainRes::new)
+                .collect(toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeamInMemberRes> findTeamInMember(Long teamId) {
+        return findTeam(teamId).getMembers().stream()
+                .filter(member -> member.getPc() != null)
+                .map(TeamInMemberRes::new)
+                .collect(toList());
     }
 
     @Transactional
@@ -65,23 +82,6 @@ public class ConnectService {
     public void createIp(TeamCreateIpReq req) {
         findTeam(req.getTeamId())
                 .updateConnect(Connect.icmp(req.getName(), req.getIp()));
-    }
-
-    @Transactional
-    public List<TeamInDomainRes> findTeamInDomain(Long teamId) {
-        return findTeam(teamId).getConnects()
-                .stream()
-                .filter(connect -> connect.getConnectType() != null)
-                .map(TeamInDomainRes::new)
-                .collect(toList());
-    }
-
-    @Transactional
-    public List<TeamInMemberRes> findTeamInMember(Long teamId) {
-        return findTeam(teamId).getMembers().stream()
-                .filter(member -> member.getPc() != null)
-                .map(TeamInMemberRes::new)
-                .collect(toList());
     }
 
     public Team findTeam(Long teamId) {

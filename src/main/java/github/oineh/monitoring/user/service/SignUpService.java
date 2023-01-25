@@ -4,8 +4,6 @@ import github.oineh.monitoring.auth.domain.Auth;
 import github.oineh.monitoring.auth.domain.AuthRepository;
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
-import github.oineh.monitoring.groups.domain.GroupsRepository;
-import github.oineh.monitoring.groups.group.dept.team.domain.TeamRepository;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
 import github.oineh.monitoring.user.web.req.SignUpReq;
@@ -21,9 +19,6 @@ public class SignUpService {
 
     private final UserRepository userRepository;
     private final AuthRepository authRepository;
-    private final GroupsRepository groupsRepository;
-    private final TeamRepository teamRepository;
-
 
     @Transactional
     public void signUp(SignUpReq req) {
@@ -31,8 +26,7 @@ public class SignUpService {
         validateAlreadyEmailRegistered(req.getEmail());
 
         User user = userRepository.save(req.toUser());
-        Auth auth = authRepository.save(Auth.ofUser(user));
-        System.out.println(auth.getUser() + "," + auth.getGrades().toString());
+        authRepository.save(Auth.ofUser(user));
     }
 
     private void validateAlreadyEmailRegistered(String email) {

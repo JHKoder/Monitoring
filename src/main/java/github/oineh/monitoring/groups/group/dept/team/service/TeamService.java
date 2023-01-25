@@ -25,19 +25,19 @@ public class TeamService {
     @Transactional
     public void createTeam(TeamCreateReq req, String userId) {
         findGroups(req.getGroupsId()).getDepts().stream()
-            .filter(dep -> dep.getId().equals(req.getDeptId()))
-            .findFirst()
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_GROUPS_DEPT))
-            .updateTeam(teamRepository.save(new Team(findUser(userId), req.getName())));
+                .filter(dep -> dep.isId(req.getDeptId()))
+                .findFirst()
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_GROUPS_DEPT))
+                .updateTeam(teamRepository.save(new Team(findUser(userId), req.getName())));
     }
 
     private User findUser(String loginId) {
         return userRepository.findByLoginId(loginId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
     }
 
     private Groups findGroups(Long groupId) {
         return groupsRepository.findById(groupId)
-            .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_GROUPS));
     }
 }

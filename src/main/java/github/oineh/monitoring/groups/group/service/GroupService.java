@@ -20,14 +20,14 @@ public class GroupService {
 
 
     @Transactional(readOnly = true)
-    public GroupListRes findGroupIn(Long groupId, String userId) {
+    public GroupListRes findAllDepartmentsAndTeamMembers(Long groupId, String userId) {
         return groupsRepository.findById(groupId)
-                .filter(groups -> checkGroupsInMember(groups, findUser(userId)))
+                .filter(groups -> validationGroupsInMember(groups, findUser(userId)))
                 .map(group -> GroupListRes.of(group.getId(), group.getDepts()))
                 .orElse(new GroupListRes());
     }
 
-    private boolean checkGroupsInMember(Groups group, User user) {
+    private boolean validationGroupsInMember(Groups group, User user) {
         if (!group.checkMember(user)) {
             throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
         }

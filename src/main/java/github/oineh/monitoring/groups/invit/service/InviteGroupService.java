@@ -28,18 +28,18 @@ public class InviteGroupService {
 
 
     @Transactional
-    public void targetUserInvite(GroupInviteSendReq req, String userId) {
+    public void makeInvite(GroupInviteSendReq req, String userId) {
         User sendUser = findUser(userId);
         User targetUser = findTargetUserEmail(req.getEmail());
         Groups groups = findGroups(req.getGroupsId());
 
         validateGroupInMember(sendUser, groups);
-        checkInvited(targetUser, groups);
+        validateInvited(targetUser, groups);
 
         invitedGroupsRepository.save(new InvitedGroups(targetUser, sendUser, groups));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<InviteGroupsUserRes> findInvite(String userId) {
         List<InvitedGroups> invitedGroups = invitedGroupsRepository.findByTargetUser(findUser(userId))
                 .orElse(List.of());
@@ -62,31 +62,10 @@ public class InviteGroupService {
     @Transactional
     public void cancelInvite(GroupInviteReq req, String userId) {
         InvitedGroups invited = findInvitedGroups(req.getInviteId());
-        checkInvitedTarget(findUser(userId), invited);
+
+        validateInvitedTarget(findUser(userId), invited);
+
         invitedGroupsRepository.delete(invited);
-    }
-
-    private void checkInvitedTarget(User targetUser, InvitedGroups invited) {
-        if (!invited.targetUserEquals(targetUser)) {
-            throw new ApiException(ErrorCode.NO_GROUP_INVITES);
-        }
-    }
-
-    private void checkInvited(User targetUser, Groups groups) {
-        if (invitedGroupsRepository.findByTargetUserAndGroups(targetUser, groups).isPresent()) {
-            throw new ApiException(ErrorCode.OVERLAP_INVITED_GROUPS);
-        }
-    }
-
-    private User findTargetUserEmail(String email) {
-        return userRepository.findByInformationEmail(email)
-                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TARGET_USER));
-    }
-
-    private void validateGroupInMember(User user, Groups groups) {
-        if (!groups.checkMember(user)) {
-            throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
-        }
     }
 
     private InvitedGroups findInvitedGroups(Long inviteId) {
@@ -102,5 +81,28 @@ public class InviteGroupService {
     private User findUser(String userId) {
         return userRepository.findByLoginId(userId)
                 .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_USER));
+    }
+
+    private User findTargetUserEmail(String email) {
+        return userRepository.findByInformationEmail(email)
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND_TARGET_USER));
+    }
+
+    private void validateInvitedTarget(User targetUser, InvitedGroups invited) {
+        if (!invited.targetUserEquals(targetUser)) {
+            throw new ApiException(ErrorCode.NO_GROUP_INVITES);
+        }
+    }
+
+    private void validateInvited(User targetUser, Groups groups) {
+        if (invitedGroupsRepository.findByTargetUserAndGroups(targetUser, groups).isPresent()) {
+            throw new ApiException(ErrorCode.OVERLAP_INVITED_GROUPS);
+        }
+    }
+
+    private void validateGroupInMember(User user, Groups groups) {
+        if (!groups.checkMember(user)) {
+            throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
+        }
     }
 }
