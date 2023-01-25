@@ -80,9 +80,8 @@ public class SecurityConfig {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), loginService))
                 .authorizeRequests(authroize -> authroize
-                        .antMatchers("/", "/singup", "/login").permitAll()
-                        .antMatchers("/api/user/singup").permitAll()
-                        .antMatchers("/common.js").permitAll()
+                        .antMatchers("/", "/signup", "/login").permitAll()
+                        .antMatchers("/api/user/signup").permitAll()
                         .anyRequest().hasAnyAuthority(Grade.USER.getAuthority())
                 ).build();
     }
