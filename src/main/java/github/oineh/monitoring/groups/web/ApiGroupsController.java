@@ -2,11 +2,13 @@ package github.oineh.monitoring.groups.web;
 
 import github.oineh.monitoring.groups.group.service.GroupService;
 import github.oineh.monitoring.groups.service.GroupsService;
-import github.oineh.monitoring.groups.web.req.GroupsCreateReq;
 import github.oineh.monitoring.groups.web.res.GrouopsRes;
 import github.oineh.monitoring.groups.web.res.GroupListRes;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
@@ -28,10 +30,5 @@ public class ApiGroupsController {
     @GetMapping
     public List<GrouopsRes> findGroupsList(Principal principal) {
         return groupsService.findList(principal.getName());
-    }
-
-    @PostMapping
-    public void createGroups(@RequestBody GroupsCreateReq req, Principal principal) {
-        groupsService.createGroup(principal.getName(), req.getName());
     }
 }

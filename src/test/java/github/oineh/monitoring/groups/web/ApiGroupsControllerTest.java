@@ -1,14 +1,12 @@
 package github.oineh.monitoring.groups.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import github.oineh.monitoring.common.IntegrationTest;
-import github.oineh.monitoring.groups.domain.Groups;
-import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.dept.domain.Dept;
 import github.oineh.monitoring.dept.domain.DeptRepository;
+import github.oineh.monitoring.groups.domain.Groups;
+import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.team.domain.Team;
 import github.oineh.monitoring.team.domain.TeamRepository;
-import github.oineh.monitoring.groups.web.req.GroupsCreateReq;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.User.Information;
 import github.oineh.monitoring.user.domain.UserRepository;
@@ -16,15 +14,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 그룹")
+@DisplayName("api 그룹들 ")
 public class ApiGroupsControllerTest extends IntegrationTest {
 
     String url = "/api/groups";
@@ -96,20 +92,5 @@ public class ApiGroupsControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$[1].name").value(groups1.getName()))
                 .andExpect(jsonPath("$[2].groupsId").value(groups2.getId()))
                 .andExpect(jsonPath("$[2].name").value(groups2.getName()));
-    }
-
-    @Test
-    @DisplayName("그룹 생성 하기")
-    void createGroups() throws Exception {
-        //given
-        GroupsCreateReq req = new GroupsCreateReq("groupName");
-
-        //when
-        ResultActions action = mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(req)));
-
-        //then
-        action.andExpect(status().isOk());
     }
 }
