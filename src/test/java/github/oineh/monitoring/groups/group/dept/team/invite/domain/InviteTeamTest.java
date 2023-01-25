@@ -1,7 +1,7 @@
 package github.oineh.monitoring.groups.group.dept.team.invite.domain;
 
-import github.oineh.monitoring.groups.group.dept.team.domain.Team;
-import github.oineh.monitoring.groups.group.dept.team.invit.domain.InvitedTeam;
+import github.oineh.monitoring.team.domain.Team;
+import github.oineh.monitoring.team.invit.domain.InvitedTeam;
 import github.oineh.monitoring.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

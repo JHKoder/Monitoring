@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import github.oineh.monitoring.common.IntegrationTest;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
-import github.oineh.monitoring.groups.group.dept.web.req.DeptAddReq;
+import github.oineh.monitoring.dept.web.req.DeptAddReq;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.User.Information;
 import github.oineh.monitoring.user.domain.UserRepository;
