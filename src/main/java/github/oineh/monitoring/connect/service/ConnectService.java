@@ -9,9 +9,6 @@ import github.oineh.monitoring.connect.web.res.TeamInMemberPingRes;
 import github.oineh.monitoring.connect.web.res.TeamInMemberRes;
 import github.oineh.monitoring.team.domain.Team;
 import github.oineh.monitoring.team.domain.TeamRepository;
-import github.oineh.monitoring.team.web.req.TeamCreateIpReq;
-import github.oineh.monitoring.team.web.req.TeamCreatePortReq;
-import github.oineh.monitoring.team.web.req.TeamCreateUrlReq;
 import github.oineh.monitoring.user.domain.User;
 import io.github.tcp.network.NetStatus;
 import lombok.RequiredArgsConstructor;
@@ -64,24 +61,6 @@ public class ConnectService {
                 .filter(member -> member.getPc() != null)
                 .map(TeamInMemberRes::new)
                 .collect(toList());
-    }
-
-    @Transactional
-    public void createUrl(TeamCreateUrlReq req) {
-        findTeam(req.getTeamId())
-                .updateConnect(Connect.tcp(req.getName(), req.filterUrl()));
-    }
-
-    @Transactional
-    public void createIpPort(TeamCreatePortReq req) {
-        findTeam(req.getTeamId())
-                .updateConnect(Connect.tcp(req.getName(), req.getIp(), req.getPort()));
-    }
-
-    @Transactional
-    public void createIp(TeamCreateIpReq req) {
-        findTeam(req.getTeamId())
-                .updateConnect(Connect.icmp(req.getName(), req.getIp()));
     }
 
     public Team findTeam(Long teamId) {
