@@ -13,8 +13,8 @@ import java.time.Instant;
 public class JWTUtil {
 
     public static final String BEARER = "Bearers";
-    public static final String BEARER_REFRESH = "Monitoring";
     private static final Algorithm ALGORITHM = Algorithm.HMAC256("x509");
+
 
     public String generate(String userId, TokenType tokenType) {
         return makeAuthToken(userId, tokenType);
@@ -38,5 +38,4 @@ public class JWTUtil {
                     .build();
         }
     }
-
 }
