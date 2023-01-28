@@ -35,18 +35,18 @@
 | Method | URL    | 설명     |
 |----|---|--------|
 | POST | /api/user/signup | 회원가입   |
+
+| Method | URL        | 설명    |
+|----|------------|-------|
 | POST | /api/pc | 내pc 등록 |
+| POST | /api/group | 그룹 생성 |
+| POST | /api/dept  | 부서 생성 |
+| POST | /api/team  | 팀 생성  |
 
 | Method | URL     | 설명               |
 |----|---------|------------------|
 | GET | /api/groups/{groupId} | 그룹내 모든 부서와 팀 보기  |
 | GET | /api/groups |회원이 속한 그룹 리스트들 보기 |
-
-| Method | URL        | 설명    |
-|----|------------|-------|
-| POST | /api/group | 그룹 생성 |
-| POST | /api/dept  | 부서 생성 |
-| POST | /api/team  | 팀 생성  |
 
 | Method | URL     | 설명            |
 |----|---------|---------------|
@@ -74,3 +74,4 @@
 | GET |/api/address/teams/{teamId}/connects/{connectId} |  주소 연결 상태를 가져올 수 있습니다. |
 | GET |/api/member/teams/{teamId} |  유저 리스트를 가져올 수 있습니다. |
 | GET | /api/member/teams/{teamId}/connects/{connectId} | 유저 연결 상태를 가져올 수 있습니다.  |
+
