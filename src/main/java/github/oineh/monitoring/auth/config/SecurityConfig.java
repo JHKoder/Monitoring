@@ -83,8 +83,7 @@ public class SecurityConfig {
                         .antMatchers("/", "/signup", "/login").permitAll()
                         .antMatchers("/api/user/signup").permitAll()
                         .anyRequest().hasAnyAuthority(Grade.USER.getAuthority())
-                ).build();
+                )
+                .build();
     }
-
-
 }
