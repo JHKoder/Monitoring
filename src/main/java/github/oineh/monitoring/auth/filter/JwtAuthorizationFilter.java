@@ -4,6 +4,7 @@ import github.oineh.monitoring.auth.config.JWTUtil;
 import github.oineh.monitoring.auth.token.UserLogin;
 import github.oineh.monitoring.auth.token.VerifyResult;
 import github.oineh.monitoring.user.service.LoginService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 
 import static github.oineh.monitoring.auth.config.JWTUtil.BEARER;
 
+@Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final LoginService loginService;
@@ -32,34 +34,44 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        Cookie[] requestCookies = request.getCookies();
-        if (requestCookies == null) {
+        Cookie cookie = parseCookie(request.getCookies());
+        if (validCookie(cookie)) {
             chain.doFilter(request, response);
             return;
         }
 
-        Cookie cookie = Arrays.stream(requestCookies)
+        VerifyResult result = JWTUtil.verify(parseToken(cookie));
+
+        if (result.isResult()) {
+            UserLogin user = (UserLogin) loginService.loadUserByUsername(result.getUserId());
+            setSecurityContextAuth(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
+        } else {
+            redirectToLogout(response);
+        }
+        
+        chain.doFilter(request, response);
+    }
+
+    private void redirectToLogout(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/logout");
+    }
+
+    private void setSecurityContextAuth(UsernamePasswordAuthenticationToken token) {
+        SecurityContextHolder.getContext().setAuthentication(token);
+    }
+
+    private String parseToken(Cookie cookie) {
+        return cookie.getValue().substring(BEARER.length());
+    }
+
+    private Cookie parseCookie(Cookie[] cookies) {
+        return Arrays.stream(cookies)
                 .filter(bear -> bear.getName().equals(BEARER))
                 .findFirst()
                 .orElse(null);
+    }
 
-        if (cookie == null) {
-            chain.doFilter(request, response);
-            return;
-        }
-        String token = cookie.getValue().substring(BEARER.length());
-        VerifyResult result = JWTUtil.verify(token);
-
-        if (!result.isResult()) {
-            chain.doFilter(request, response);
-            response.sendRedirect("/logout");
-        }
-        if (result.isResult()) {
-            UserLogin user = (UserLogin) loginService.loadUserByUsername(result.getUserId());
-            System.out.println(user.getAuthorities().toString());
-            SecurityContextHolder.getContext()
-                    .setAuthentication(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-            chain.doFilter(request, response);
-        }
+    private boolean validCookie(Cookie cookie) {
+        return cookie == null;
     }
 }
