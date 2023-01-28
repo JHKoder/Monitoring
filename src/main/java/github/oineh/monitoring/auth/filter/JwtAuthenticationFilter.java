@@ -24,23 +24,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
 
-    @SneakyThrows
+
     @Override
+    @SneakyThrows
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
+        validateMethodPost(request);
 
-        if (!request.getMethod().equals("POST")) {
-            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
-        }
-        String username = obtainUsername(request);
-        username = (username != null) ? username.trim() : "";
-        String password = obtainPassword(request);
-        password = (password != null) ? password : "";
+        String username = parseUsername(request);
+        String password = parsePassword(request);
 
-        UsernamePasswordAuthenticationToken token = UsernamePasswordAuthenticationToken.unauthenticated(username,
-                password);
-
-        return authenticationManager.authenticate(token);
+        return authenticationManager.authenticate(parseToken(username, password));
     }
 
     @Override
@@ -50,5 +44,29 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.addCookie(new Cookie(JWTUtil.BEARER,
                 JWTUtil.BEARER + jwtUtil.generate(userToken.getUsername(), TokenType.ACCESS)));
         response.sendRedirect("/");
+    }
+
+    private void validateMethodPost(HttpServletRequest request) {
+        if (!request.getMethod().equals("POST")) {
+            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+        }
+    }
+
+    private UsernamePasswordAuthenticationToken parseToken(String username, String password) {
+        return UsernamePasswordAuthenticationToken.unauthenticated(username, password);
+    }
+
+    private String parsePassword(HttpServletRequest request) {
+        String passWord = obtainPassword(request);
+        return validParse(passWord);
+    }
+
+    private String parseUsername(HttpServletRequest request) {
+        String userName = obtainUsername(request);
+        return validParse(userName);
+    }
+
+    private String validParse(String parse) {
+        return parse != null ? parse : "";
     }
 }
