@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/room")
+@RequestMapping
 public class TeamController {
 
     @GetMapping("/groups/{groupId}/teams/{teamId}")

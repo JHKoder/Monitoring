@@ -93,7 +93,7 @@
         dept.list.forEach(function (team) {
             let teamId = team.teamId;
             let teamName = team.name;
-            let href = `/room/groups/${groupId}/teams/${teamId}`;
+            let href = `/groups/${groupId}/teams/${teamId}`;
             out += `
             <div style='background-color: rgb(167 181 243); box-shadow: 1px 3px 2px;border:groove;' onclick='location.href="${href}"'>
                 <label> 팀명 : ${teamName} </label><br>
