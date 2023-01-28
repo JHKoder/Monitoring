@@ -1,19 +1,23 @@
 # 서버 목적
 
-##### 그룹네 팀원별로 연결상태 확인 하는 모니터링
+##### 그룹 부서 팀원별로 연결상태 확인 하는 모니터링
 
 ![개발인원](https://img.shields.io/badge/개발인원-1명-critical)<br>
-![개발기간](https://img.shields.io/badge/개발기간-4주-lightgrey)<br>
+![개발기간](https://img.shields.io/badge/개발기간-4주~ing-lightgrey)<br>
+
+![test](https://img.shields.io/badge/Integration_&_Entity_TEST-secuees-secuees?logo=Symantec)
+![Deploy](https://img.shields.io/badge/Server_Release_build-Automatic-important?logo=stackEdit)
+
 ---
 [![URL](https://img.shields.io/badge/Open_URL-oineh.monitoring.today-informational)](http://www.oineh-monitoring.today/)<br>
 ![SpringBoot](https://img.shields.io/badge/SpringBoot-2.7-blue)</br>
-![JAVA](https://img.shields.io/badge/java-11-green)
+![JAVA](https://img.shields.io/badge/java-11-green?logo=OpenJDK)
 ![H2](https://img.shields.io/badge/h2-blue)
 ![JPA](https://img.shields.io/badge/JPA-red)
 ![SECURITY](https://img.shields.io/badge/Security-yellow)
 [![libTcp](https://img.shields.io/badge/lib-git.oiNeh.tcp_0.1.6-red)](https://github.com/oiNeh/tcp)<br>
 ![IntelliJ](https://img.shields.io/badge/IDE-intelliJ-blueviolet)
-![Server](https://img.shields.io/badge/server-VM_VirtualBox-9cf)
+![Server](https://img.shields.io/badge/server-VM_VirtualBox-9cf?logo=HomeAssistant)
 ![OS](https://img.shields.io/badge/OS-Ubuntu-red)
 ---
 
@@ -75,3 +79,18 @@
 | GET |/api/member/teams/{teamId} |  유저 리스트를 가져올 수 있습니다. |
 | GET | /api/member/teams/{teamId}/connects/{connectId} | 유저 연결 상태를 가져올 수 있습니다.  |
 
+> web 구조
+>
+> > #### 메인 페이지 `URL` : `/`
+>
+> > #### 로그인 페이지 `URL` : `/login`
+>
+> > #### 회원가입 페이지 `URL` : `/signup`
+>
+> > #### 마이 페이지 `URL` : `/mypage`
+>
+> > #### 소속된 그룹 페이지 `URL` : `/groups`
+>
+> > #### 그룹 페이지 `URL` : `/groups/{group}`
+>
+> > #### 팀 페이지 `URL` : `/groups/{group}/teams/{teams}`
