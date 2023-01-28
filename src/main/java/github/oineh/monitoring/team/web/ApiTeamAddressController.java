@@ -1,10 +1,10 @@
 package github.oineh.monitoring.team.web;
 
 
-import github.oineh.monitoring.connect.service.ConnectService;
+import github.oineh.monitoring.team.service.AddressService;
+import github.oineh.monitoring.team.web.req.TeamCreateIpReq;
 import github.oineh.monitoring.team.web.req.TeamCreatePortReq;
 import github.oineh.monitoring.team.web.req.TeamCreateUrlReq;
-import github.oineh.monitoring.team.web.req.TeamCreateIpReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,21 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ApiTeamAddressController {
 
-    private final ConnectService connectService;
+    private final AddressService addressService;
 
 
     @PostMapping("/url")
     public void createUrl(@RequestBody TeamCreateUrlReq req) {
-        connectService.createUrl(req);
+        addressService.createUrl(req);
     }
 
     @PostMapping("/ip-port")
     public void createPort(@RequestBody TeamCreatePortReq req) {
-        connectService.createIpPort(req);
+        addressService.createIpPort(req);
     }
 
     @PostMapping("/ip")
     public void createIp(@RequestBody TeamCreateIpReq req) {
-        connectService.createIp(req);
+        addressService.createIp(req);
     }
 }
