@@ -34,7 +34,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        Cookie cookie = parseCookie(request.getCookies());
+        Cookie[] cookies = request.getCookies();
+        Cookie cookie = parseCookie(cookies);
+
         if (validCookie(cookie)) {
             chain.doFilter(request, response);
             return;
@@ -42,13 +44,14 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         VerifyResult result = JWTUtil.verify(parseToken(cookie));
 
-        if (result.isResult()) {
+        if (result.tokenExistence()) {
             UserLogin user = (UserLogin) loginService.loadUserByUsername(result.getUserId());
             setSecurityContextAuth(new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-        } else {
+        }
+        if (result.tokenNone()) {
             redirectToLogout(response);
         }
-        
+
         chain.doFilter(request, response);
     }
 
@@ -65,6 +68,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private Cookie parseCookie(Cookie[] cookies) {
+
+        if (cookies == null) {
+            return null;
+        }
+
         return Arrays.stream(cookies)
                 .filter(bear -> bear.getName().equals(BEARER))
                 .findFirst()

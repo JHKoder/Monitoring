@@ -13,4 +13,12 @@ public class VerifyResult {
 
     private String userId;
     private boolean result;
+
+    public boolean tokenExistence() {
+        return result;
+    }
+
+    public boolean tokenNone() {
+        return !result;
+    }
 }
