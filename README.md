@@ -1,6 +1,6 @@
-# 서버 목적
+# 소개
 
-##### 그룹 부서 팀원별로 연결상태 확인 하는 모니터링
+#### 팀 단위로 망 연결이 잘 되어 있는지 모니터링 할수 있는 서비스 입니다.
 
 ![개발인원](https://img.shields.io/badge/개발인원-1명-critical)<br>
 ![개발기간](https://img.shields.io/badge/개발기간-4주~ing-lightgrey)<br>
@@ -36,16 +36,16 @@
 
 # API 구조
 
-| Method | URL    | 설명     |
-|----|---|--------|
-| POST | /api/user/signup | 회원가입   |
-
 | Method | URL        | 설명    |
 |----|------------|-------|
 | POST | /api/pc | 내pc 등록 |
 | POST | /api/group | 그룹 생성 |
 | POST | /api/dept  | 부서 생성 |
 | POST | /api/team  | 팀 생성  |
+
+| Method | URL    | 설명     |
+|----|---|--------|
+| POST | /api/user/signup | 회원가입   |
 
 | Method | URL     | 설명               |
 |----|---------|------------------|
@@ -79,9 +79,11 @@
 | GET |/api/member/teams/{teamId} |  유저 리스트를 가져올 수 있습니다. |
 | GET | /api/member/teams/{teamId}/connects/{connectId} | 유저 연결 상태를 가져올 수 있습니다.  |
 
-# web 구조
+<br>
 
 ---
+
+# 요구 사항
 
 #### 메인 페이지 `URL` : `/`
 
@@ -102,7 +104,7 @@
 #### 마이 페이지 `URL` : `/mypage`
 
 - PC를 등록 할 수 있습니다.
-    - PC를 등록 해야 팀에서 상태를 확인 할 수 있습니다.
+    - PC를 등록 해야 팀 페이지에서 상태를 확인 할 수 있습니다.
     - 접속한 PC로 IP를 저장 합니다.
     - '*'내부망접근이 아니라면 잘못된 상태를 줄 수 있습니다.
 - 그룹 & 팀 초대 리스트를 볼 수 있습니다.
@@ -125,14 +127,57 @@
 #### 팀 페이지 `URL` : `/groups/{group}/teams/{teams}`
 
 - 실시간으로 모니터링을 볼수 있습니다.
-    - 등록된 주소 URL,IP,IP:PORT 연결 상태를 확인할 수 있습니다.
-    - PC를 등록한 맴버에 한에서만 연결 상태를 확인할 수 있습니다.
-    - 10초 단위로 확인을 합니다.
-- 모니터링할 주소 URL, IP, IP:PORT 을 추가합니다.
+- 등록된 주소 URL,IP,IP:PORT 연결 상태를 확인할 수 있습니다.
     - IP 는 ICMP 방식으로 조회 합니다.
     - URL 는 HTTP/HTTPS GET 방식 으로 조회 합니다.
     - IP:PORT 는 Socket 방식으로 조회 합니다.
         - 각각 다른 방식으로 조회하는 이유는 여러 방화벽으로 조회하지 못할<br>
           상황을 대비해서 이런 방식으로 구현 했습니다.
+- PC를 등록한 맴버에 한에서만 연결 상태를 확인할 수 있습니다.
+    - 팀원 은 ICMP 방식으로 조회 합니다.
+- 모니터링할 주소 URL, IP, IP:PORT 을 추가합니다.
+    - IP의 범위는 0~ 255 사이 값 입니다.
 - 이메일로 팀원을 초대 합니다.
-    - 이미 초대된 유저는 실패 메시지라고 뜸니다 
+    - 이미 초대된 유저는 실패 메시지라고 뜸니다
+
+---
+
+# 디자인
+
+도메인 계층별로 패키징 분리 했습니다.
+
+#### Sample
+
+```text
+user/domain
+    /service
+    /web 
+    
+groups/domain
+      /service
+      /web 
+      
+team/domain
+    /service
+    /web 
+...
+```
+
+---
+
+# 테스트
+
+#### JUnit 으로 테스트 작성
+
+- Entity 테스트
+- 통합 테스트 (api&service)
+
+---
+
+# 배포
+
+shell 스크립트로 서버에 jar 파일 전송후 빌드까지 하는 자동화 프로세스 입니다.
+
+```shell
+./server_build
+```
