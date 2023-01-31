@@ -6,7 +6,7 @@ import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
-import github.oineh.monitoring.user.web.req.SignUpReq;
+import github.oineh.monitoring.user.web.rest.req.AddSignUpRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class SignUpService {
     private final AuthRepository authRepository;
 
     @Transactional
-    public void signUp(SignUpReq req) {
+    public void signUp(AddSignUpRequest req) {
         validateAlreadyLoginIdExisted(req.getLoginId());
         validateAlreadyEmailRegistered(req.getEmail());
 

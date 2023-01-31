@@ -42,13 +42,8 @@ public class UserLogin implements UserDetails {
         return (UserLogin) principal;
     }
 
-    public enum Type {
-        login,
-        refresh
-    }
-
     public static UserDetails of(User user, Auth auth) {
-        return new UserLogin(user.getLoginId(), user.getPw(), auth.getGrades());
+        return new UserLogin(user.getLoginId(), user.getPassword(), auth.getGrades());
     }
 
     @Override

@@ -4,7 +4,8 @@ import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
-import github.oineh.monitoring.groups.web.res.GrouopsRes;
+import github.oineh.monitoring.groups.web.rest.res.GroupInformationResponse;
+import github.oineh.monitoring.groups.web.rest.res.GroupResponse;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +23,36 @@ public class GroupsService {
 
 
     @Transactional(readOnly = true)
-    public List<GrouopsRes> findList(String userId) {
-        List<Groups> groupsList = groupsRepository.findByMemberUsers(findUser(userId))
-                .orElse(null);
-        return new GrouopsRes().ofList(groupsList);
+    public List<GroupResponse> findList(String userId) {
+        return GroupResponse.ofList(
+                groupsRepository.findByMemberUsers(findUser(userId))
+                        .orElse(List.of())
+        );
     }
 
     @Transactional
     public void createGroup(String userId, String name) {
-        groupsRepository.save(new Groups(findUser(userId), name));
+        User user = findUser(userId);
+        groupsRepository.save(new Groups(user, name));
     }
 
     public void validateGroupInMember(Long groupId, String email) {
         validateUserInGroup(findGroups(groupId), findUserEmail(email));
+    }
+
+    @Transactional(readOnly = true)
+    public GroupInformationResponse findGroup(Long groupId, String userId) {
+        return groupsRepository.findById(groupId)
+                .filter(groups -> validateGroupsInMember(groups, findUser(userId)))
+                .map(group -> GroupInformationResponse.of(group.getId(), group.getDepts()))
+                .orElse(new GroupInformationResponse());
+    }
+
+    private boolean validateGroupsInMember(Groups group, User user) {
+        if (!group.containsUser(user)) {
+            throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
+        }
+        return true;
     }
 
     private User findUser(String userId) {
@@ -53,7 +71,7 @@ public class GroupsService {
     }
 
     private void validateUserInGroup(Groups group, User user) {
-        if (!group.checkMember(user)) {
+        if (!group.containsUser(user)) {
             throw new ApiException(ErrorCode.YOUR_NOT_GROUP);
         }
     }

@@ -26,7 +26,7 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String loginId;
-    private String pw;
+    private String password;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Pc pc;
     @OneToMany(fetch = FetchType.LAZY)
@@ -35,9 +35,9 @@ public class User extends BaseEntity {
     private Information information;
 
 
-    public User(String loginId, String pw, Information information) {
+    public User(String loginId, String password, Information information) {
         this.loginId = loginId;
-        this.pw = pw;
+        this.password = password;
         this.information = information;
     }
 

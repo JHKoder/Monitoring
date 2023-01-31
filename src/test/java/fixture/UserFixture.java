@@ -17,16 +17,4 @@ public class UserFixture {
         return new User(id, pw, information);
 
     }
-
-    public static User getUserEmpty() {
-        String id = "loginId";
-        String pw = "password";
-        String email = "kang@naver.com";
-        String name = "강정훈";
-        String nickName = null;
-
-        Information information = new Information(email, name, nickName);
-
-        return new User(id, pw, information);
-    }
 }

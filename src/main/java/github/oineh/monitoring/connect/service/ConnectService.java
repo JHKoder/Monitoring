@@ -3,10 +3,10 @@ package github.oineh.monitoring.connect.service;
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.connect.domain.Connect;
-import github.oineh.monitoring.connect.web.res.TeamInDomainPingRes;
-import github.oineh.monitoring.connect.web.res.TeamInDomainRes;
-import github.oineh.monitoring.connect.web.res.TeamInMemberPingRes;
-import github.oineh.monitoring.connect.web.res.TeamInMemberRes;
+import github.oineh.monitoring.connect.web.res.AddressPingResponse;
+import github.oineh.monitoring.connect.web.res.AddressResponse;
+import github.oineh.monitoring.connect.web.res.MemberPingResponse;
+import github.oineh.monitoring.connect.web.res.MemberResponse;
 import github.oineh.monitoring.team.domain.Team;
 import github.oineh.monitoring.team.domain.TeamRepository;
 import github.oineh.monitoring.user.domain.User;
@@ -28,38 +28,38 @@ public class ConnectService {
 
 
     @Transactional(readOnly = true)
-    public TeamInDomainPingRes findTeamInConnectDomain(Long teamId, Long connectId) {
+    public AddressPingResponse findAddressPing(Long teamId, Long connectId) {
         return findTeam(teamId).getConnects().stream()
                 .filter(connect -> connect.isSameId(connectId))
                 .findFirst()
-                .map(connect -> new TeamInDomainPingRes(connectId, connect.getName(), connectStatus(connect)))
-                .orElse(new TeamInDomainPingRes());
+                .map(connect -> new AddressPingResponse(connectId, connect.getName(), connectStatus(connect)))
+                .orElse(new AddressPingResponse());
     }
 
     @Transactional(readOnly = true)
-    public TeamInMemberPingRes findTeamInConnectMemberList(Long teamId, Long connectId) {
+    public MemberPingResponse findMemberPing(Long teamId, Long connectId) {
         return findTeam(teamId).getMembers().stream()
                 .filter(User::hasPc)
                 .filter(member -> member.isSameConnectId(connectId))
                 .findFirst()
-                .map(member -> new TeamInMemberPingRes(member, connectStatus(member.getConnect())))
-                .orElse(new TeamInMemberPingRes());
+                .map(member -> new MemberPingResponse(member, connectStatus(member.getConnect())))
+                .orElse(new MemberPingResponse());
     }
 
     @Transactional(readOnly = true)
-    public List<TeamInDomainRes> findTeamInDomain(Long teamId) {
+    public List<AddressResponse> findAddress(Long teamId) {
         return findTeam(teamId).getConnects()
                 .stream()
                 .filter(connect -> connect.getConnectType() != null)
-                .map(TeamInDomainRes::new)
+                .map(AddressResponse::new)
                 .collect(toList());
     }
 
     @Transactional(readOnly = true)
-    public List<TeamInMemberRes> findTeamInMember(Long teamId) {
+    public List<MemberResponse> findMember(Long teamId) {
         return findTeam(teamId).getMembers().stream()
                 .filter(member -> member.getPc() != null)
-                .map(TeamInMemberRes::new)
+                .map(MemberResponse::new)
                 .collect(toList());
     }
 
