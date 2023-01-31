@@ -169,8 +169,14 @@ team/domain
 
 #### JUnit 으로 테스트 작성
 
-- Entity 테스트
 - 통합 테스트 (api&service)
+
+
+![](api_model.png)
+
+- Entity 테스트
+
+![](entity_model.png)
 
 ---
 
