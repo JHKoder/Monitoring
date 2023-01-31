@@ -18,7 +18,6 @@ public class TeamAddressController {
 
     private final AddressService addressService;
 
-
     @PostMapping("/url")
     public void createUrl(@RequestBody AddressCreateUrlRequest req) {
         addressService.createUrl(req);
@@ -33,5 +32,4 @@ public class TeamAddressController {
     public void createIp(@RequestBody AddressCreateIpRequest req) {
         addressService.createIp(req);
     }
-
 }

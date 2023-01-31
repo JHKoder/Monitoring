@@ -31,5 +31,4 @@ public class GroupsController {
     public GroupInformationResponse groupInRoom(@PathVariable("groupId") Long groupId, Principal principal) {
         return groupsService.findGroup(groupId, principal.getName());
     }
-
 }

@@ -31,7 +31,6 @@ public class DepartmentControllerTest extends IntegrationTest {
     @Autowired
     private GroupsRepository groupsRepository;
 
-
     @BeforeEach
     void setup() {
         Information information = new Information("test_email_@test.com", "test_name", "test_Nickname");

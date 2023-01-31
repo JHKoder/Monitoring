@@ -33,7 +33,6 @@ public class GroupsControllerTest extends IntegrationTest {
     User targetUser;
     Groups groups;
 
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -42,7 +41,6 @@ public class GroupsControllerTest extends IntegrationTest {
     private DepartmentRepository departmentRepository;
     @Autowired
     private TeamRepository teamRepository;
-
 
     @BeforeEach
     void setup() {

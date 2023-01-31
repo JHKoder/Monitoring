@@ -20,7 +20,6 @@ public class InviteTeamController {
     private final GroupsService groupsService;
     private final InviteTeamService inviteTeamService;
 
-
     @GetMapping
     public List<InviteTeamUserRes> findInvite(Principal principal) {
         return inviteTeamService.findInvite(principal.getName());

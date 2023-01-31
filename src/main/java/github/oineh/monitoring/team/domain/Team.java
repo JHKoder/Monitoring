@@ -28,7 +28,6 @@ public class Team extends BaseEntity {
     private List<Connect> connects = new ArrayList<>();
     private String name;
 
-
     public Team(User createUser, String name) {
         this.members.add(createUser);
         this.createUser = createUser;

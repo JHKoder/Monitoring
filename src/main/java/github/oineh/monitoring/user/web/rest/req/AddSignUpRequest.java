@@ -16,7 +16,6 @@ public class AddSignUpRequest {
     private String loginId;
     private String password;
 
-
     public User toUser() {
         return new User(loginId, password, toInformation());
     }

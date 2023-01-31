@@ -25,7 +25,6 @@ public class Connect extends BaseEntity {
     @Enumerated
     private ConnectType connectType;
 
-
     public Connect(String name, String ip, String url, int port, ConnectType connectType) {
         this.name = name;
         this.ip = ip;

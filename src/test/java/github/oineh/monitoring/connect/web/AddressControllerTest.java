@@ -50,7 +50,6 @@ public class AddressControllerTest extends IntegrationTest {
     @Autowired
     ConnectRepository connectRepository;
 
-
     @BeforeEach
     void setup() {
         User.Information information = new User.Information("test_email_@test.com", "test_name", "test_Nickname");
@@ -66,7 +65,6 @@ public class AddressControllerTest extends IntegrationTest {
         dept.updateTeam(team);
         groups.updateDept(dept);
     }
-
 
     @Test
     @DisplayName("확인할 리스트 가져오기")
@@ -106,7 +104,6 @@ public class AddressControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.status").value(new AddressPingResponse().statusToStr(NetStatus.OK)))
                 .andExpect(jsonPath("$.connectId").value(connectUrl.getId()));
     }
-
 
     private NetStatus tcp() {
         return NetStatus.OK;

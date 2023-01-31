@@ -22,7 +22,6 @@ public class DepartmentService {
     private final UserRepository userRepository;
     private final GroupsRepository groupsRepository;
 
-
     @Transactional
     public void createDepartment(AddDepartmentRequest req, String userId) {
         Groups groups = groupsRepository.findById(req.getGroupsId())

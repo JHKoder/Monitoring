@@ -17,7 +17,6 @@ public class InviteGroupsController {
 
     private final InviteGroupService inviteGroupService;
 
-
     @GetMapping
     public List<InviteGroupsUserRes> findGroupsInvite(Principal principal) {
         return inviteGroupService.findInvite(principal.getName());

@@ -13,7 +13,6 @@ public class InviteTeamUserRes {
     private String teamName;
     private String sendName;
 
-
     public InviteTeamUserRes(InvitedTeam invited) {
         this.inviteId = invited.getId();
         this.teamId = invited.getTeamId();

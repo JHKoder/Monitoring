@@ -19,7 +19,6 @@ public class MemberController {
 
     private final ConnectService connectService;
 
-
     @GetMapping("/{teamId}")
     public List<MemberResponse> findMembers(@PathVariable("teamId") Long teamId) {
         return connectService.findMember(teamId);

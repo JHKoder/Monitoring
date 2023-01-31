@@ -39,7 +39,6 @@ public class MemberControllerTest extends IntegrationTest {
 
     @Mock
     Monitoring mockMonitoringService;
-
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -50,7 +49,6 @@ public class MemberControllerTest extends IntegrationTest {
     DepartmentRepository departmentRepository;
     @Autowired
     ConnectRepository connectRepository;
-
 
     @BeforeEach
     void setup() {
@@ -77,7 +75,6 @@ public class MemberControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$[0].id").value(user.getPc().getId()));
     }
 
-
     @Test
     @DisplayName("상태 확인")
     void pingMember() throws Exception {
@@ -97,7 +94,6 @@ public class MemberControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$.id").value(user.getConnectId()))
                 .andExpect(jsonPath("$.name").value(user.getName()));
     }
-
 
     private NetStatus tcp() {
         return NetStatus.OK;

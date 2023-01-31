@@ -17,7 +17,6 @@ public class NetStatusFactory {
 
     private final Map<ConnectType, Function<Connect, NetStatus>> map;
 
-
     public NetStatusFactory(Monitoring monitoring) {
         this.map = Map.of(
                 ConnectType.ICMP, connect -> monitoring.IcmpStatus(Host.from(connect.getIp())),

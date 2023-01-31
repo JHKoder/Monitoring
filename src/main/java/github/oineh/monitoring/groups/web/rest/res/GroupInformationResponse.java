@@ -17,7 +17,6 @@ public class GroupInformationResponse {
     private List<GroupInDepartment> group = new ArrayList<>();
     private Long groupsId;
 
-
     private GroupInformationResponse(Long groupsId, List<GroupInDepartment> group) {
         this.groupsId = groupsId;
         this.group = group;

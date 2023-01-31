@@ -26,7 +26,6 @@ public class InvitedTeam extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private Team team;
 
-
     public InvitedTeam(User targetUser, User sendUser, Team team) {
         this.targetUser = targetUser;
         this.sendUser = sendUser;

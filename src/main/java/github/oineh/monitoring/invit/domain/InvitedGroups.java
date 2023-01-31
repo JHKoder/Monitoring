@@ -26,7 +26,6 @@ public class InvitedGroups extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private Groups groups;
 
-
     public InvitedGroups(User targetUser, User sendUser, Groups groups) {
         this.targetUser = targetUser;
         this.sendUser = sendUser;

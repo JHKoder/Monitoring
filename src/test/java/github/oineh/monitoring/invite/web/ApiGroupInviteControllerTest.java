@@ -37,7 +37,6 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
     @Autowired
     private InvitedGroupsRepository invitedGroupsRepository;
 
-
     @BeforeEach
     void setup() {
         User.Information information = new User.Information("test_email_@test.com", "test_name", "test_Nickname");
@@ -66,7 +65,6 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
         action.andExpect(status().isOk()).andExpect(jsonPath("$[0].groupsName").value(groups.getName()))
                 .andExpect(jsonPath("$[0].sendName").value(adminUser.getInformation().getName()));
     }
-
 
     @Test
     @DisplayName("하기")

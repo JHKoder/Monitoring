@@ -51,7 +51,6 @@ public class InviteTeamControllerTest extends IntegrationTest {
         groups = groupsRepository.save(new Groups(adminUser, "group_name"));
     }
 
-
     @Test
     @DisplayName("리스트 가져오기")
     void findTeamInviteList() throws Exception {
