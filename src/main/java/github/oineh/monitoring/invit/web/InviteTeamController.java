@@ -2,9 +2,9 @@ package github.oineh.monitoring.invit.web;
 
 import github.oineh.monitoring.groups.service.GroupsService;
 import github.oineh.monitoring.invit.service.InviteTeamService;
+import github.oineh.monitoring.invit.web.req.InviteTeamAcceptRequest;
 import github.oineh.monitoring.invit.web.req.InviteTeamCancelRequest;
 import github.oineh.monitoring.invit.web.req.InviteTeamRequest;
-import github.oineh.monitoring.invit.web.req.TeamInviteAcceptReq;
 import github.oineh.monitoring.invit.web.res.InviteTeamResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +32,7 @@ public class InviteTeamController {
     }
 
     @PatchMapping
-    public void acceptTeamInvite(@RequestBody TeamInviteAcceptReq req, Principal principal) {
+    public void acceptTeamInvite(@RequestBody InviteTeamAcceptRequest req, Principal principal) {
         inviteTeamService.acceptInvite(req, principal.getName());
     }
 

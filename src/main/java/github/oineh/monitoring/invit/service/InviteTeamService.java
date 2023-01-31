@@ -4,9 +4,9 @@ import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.invit.domain.InvitedGroupRepository;
 import github.oineh.monitoring.invit.domain.InvitedTeam;
+import github.oineh.monitoring.invit.web.req.InviteTeamAcceptRequest;
 import github.oineh.monitoring.invit.web.req.InviteTeamCancelRequest;
 import github.oineh.monitoring.invit.web.req.InviteTeamRequest;
-import github.oineh.monitoring.invit.web.req.TeamInviteAcceptReq;
 import github.oineh.monitoring.invit.web.res.InviteTeamResponse;
 import github.oineh.monitoring.team.domain.Team;
 import github.oineh.monitoring.team.domain.TeamRepository;
@@ -48,7 +48,7 @@ public class InviteTeamService {
     }
 
     @Transactional
-    public void acceptInvite(TeamInviteAcceptReq req, String userId) {
+    public void acceptInvite(InviteTeamAcceptRequest req, String userId) {
         User user = findSendUser(userId);
         Team team = findTeam(req.getTeamId());
 
