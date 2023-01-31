@@ -30,7 +30,9 @@ public class LoginService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findUser(username);
         Auth auth = findAuth(user);
+
         log.info("login : " + user.getEmail() + ", Auth Level -" + auth.getGrades().toString());
+
         return UserLogin.of(user, auth);
     }
 

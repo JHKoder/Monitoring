@@ -1,7 +1,7 @@
 package github.oineh.monitoring.team.domain;
 
 import fixture.UserFixture;
-import github.oineh.monitoring.dept.domain.Dept;
+import github.oineh.monitoring.department.domain.Department;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,14 +16,14 @@ public class TeamTest {
 
     User user;
     Groups groups;
-    Dept dept;
+    Department dept;
 
 
     @BeforeEach
     void setup() {
         user = UserFixture.getUser();
         groups = new Groups(user, "groupsName");
-        dept = new Dept(user, "부서");
+        dept = new Department(user, "부서");
     }
 
     @Test
