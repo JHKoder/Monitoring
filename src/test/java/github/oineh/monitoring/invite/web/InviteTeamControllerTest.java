@@ -6,7 +6,7 @@ import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.invit.domain.InvitedGroupRepository;
 import github.oineh.monitoring.invit.domain.InvitedTeam;
-import github.oineh.monitoring.invit.web.req.TeamInviteAcceptReq;
+import github.oineh.monitoring.invit.web.req.InviteTeamAcceptRequest;
 import github.oineh.monitoring.team.domain.Team;
 import github.oineh.monitoring.team.domain.TeamRepository;
 import github.oineh.monitoring.user.domain.User;
@@ -83,7 +83,7 @@ public class InviteTeamControllerTest extends IntegrationTest {
         Team team = teamRepository.save(new Team(adminUser, "team_name"));
         InvitedTeam invited = invitedGroupRepository.save(new InvitedTeam(user, adminUser, team));
 
-        TeamInviteAcceptReq req = new TeamInviteAcceptReq(invited.getId(), team.getId());
+        InviteTeamAcceptRequest req = new InviteTeamAcceptRequest(invited.getId(), team.getId());
 
         //when
         ResultActions action = mvc.perform(
@@ -100,7 +100,7 @@ public class InviteTeamControllerTest extends IntegrationTest {
         //given
         Team team = teamRepository.save(new Team(adminUser, "team_name"));
         InvitedTeam invited = invitedGroupRepository.save(new InvitedTeam(user, adminUser, team));
-        TeamInviteAcceptReq req = new TeamInviteAcceptReq(invited.getId(), team.getId());
+        InviteTeamAcceptRequest req = new InviteTeamAcceptRequest(invited.getId(), team.getId());
 
         //when
         ResultActions action = mvc.perform(
