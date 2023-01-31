@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("entity connect")
+@DisplayName("IP")
 public class ConnectTest {
 
     @Test
-    @DisplayName("PC Icmp 연결 타입 생성")
+    @DisplayName("연결 타입 생성")
     public void icmpCreate() {
         //given
         Pc pc = new Pc("name", Type.PC);
@@ -26,7 +26,7 @@ public class ConnectTest {
     }
 
     @Test
-    @DisplayName("PC tcp-port 연결 타입 생성")
+    @DisplayName("PORT 연결 타입 생성")
     public void tcpPortCreate() {
         //given
         Pc pc = new Pc("name", Type.PC);
@@ -39,7 +39,7 @@ public class ConnectTest {
     }
 
     @Test
-    @DisplayName("PC tcp-create 연결 타입 생성")
+    @DisplayName("HTTP & HTTPS(GET) 연결 타입 생성")
     public void tcpUrlCreate() {
         //given
         Pc pc = new Pc("name", Type.SERVER);
@@ -51,5 +51,4 @@ public class ConnectTest {
         //then
         assertThat(connect).isNotNull();
     }
-
 }

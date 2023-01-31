@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("entity PC")
+@DisplayName("컴퓨터")
 public class PcTest {
 
     @Test
-    @DisplayName("PC 타입 생성")
+    @DisplayName("PC 타입으로 만들기")
     public void create() {
         //given
         String name = "내컴퓨터";
@@ -22,7 +22,7 @@ public class PcTest {
     }
 
     @Test
-    @DisplayName("서버 타입 생성 ")
+    @DisplayName("서버 타입으로 만들기")
     public void create2() {
         //given
         String name = "내 서버";
@@ -33,5 +33,4 @@ public class PcTest {
         //then
         assertThat(pc).isNotNull();
     }
-
 }

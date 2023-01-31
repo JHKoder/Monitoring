@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("entity 권한")
+@DisplayName("권한")
 public class AuthTest {
 
     @Test
-    @DisplayName("권한 주기")
+    @DisplayName("부여")
     void create() {
         //given
         User user = UserFixture.getUser();
@@ -23,5 +23,4 @@ public class AuthTest {
         //then
         assertThat(auth).isNotNull();
     }
-
 }
