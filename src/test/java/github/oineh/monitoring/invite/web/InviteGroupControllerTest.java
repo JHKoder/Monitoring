@@ -6,8 +6,8 @@ import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.invit.domain.InvitedGroups;
 import github.oineh.monitoring.invit.domain.InvitedGroupsRepository;
-import github.oineh.monitoring.invit.web.req.GroupInviteReq;
-import github.oineh.monitoring.invit.web.req.GroupInviteSendReq;
+import github.oineh.monitoring.invit.web.req.InviteGroupRequest;
+import github.oineh.monitoring.invit.web.req.InviteGroupSendRequest;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("api 그룹 초대장")
-public class ApiGroupInviteControllerTest extends IntegrationTest {
+public class InviteGroupControllerTest extends IntegrationTest {
 
     static final String url = "/api/group/invite";
     User adminUser;
@@ -71,7 +71,7 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
     void invite() throws Exception {
         //given
         groups.updateMember(user);
-        GroupInviteSendReq req = new GroupInviteSendReq(groups.getId(), targetUser.getEmail());
+        InviteGroupSendRequest req = new InviteGroupSendRequest(groups.getId(), targetUser.getEmail());
 
         //when
         ResultActions action = mvc.perform(post(url)
@@ -87,7 +87,7 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
     void acceptGroupsInvite() throws Exception {
         //given
         InvitedGroups invited = invitedGroupsRepository.save(new InvitedGroups(user, adminUser, groups));
-        GroupInviteReq req = new GroupInviteReq(invited.getId(), groups.getId());
+        InviteGroupRequest req = new InviteGroupRequest(invited.getId(), groups.getId());
 
         //when
         ResultActions action = mvc.perform(
@@ -103,7 +103,7 @@ public class ApiGroupInviteControllerTest extends IntegrationTest {
     void cancelGroupsInvite() throws Exception {
         //given
         InvitedGroups invited = invitedGroupsRepository.save(new InvitedGroups(user, adminUser, groups));
-        GroupInviteReq req = new GroupInviteReq(invited.getId(), groups.getId());
+        InviteGroupRequest req = new InviteGroupRequest(invited.getId(), groups.getId());
 
         //when
         ResultActions action = mvc.perform(

@@ -3,7 +3,7 @@ package github.oineh.monitoring.pc.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import github.oineh.monitoring.common.IntegrationTest;
 import github.oineh.monitoring.pc.domain.Type;
-import github.oineh.monitoring.pc.web.req.AddPcRequest;
+import github.oineh.monitoring.pc.web.req.AddHostRequest;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ public class PcControllerTest extends IntegrationTest {
     @DisplayName("등록 하기")
     void createPc() throws Exception {
         //given
-        AddPcRequest req = new AddPcRequest("pc", Type.PC);
+        AddHostRequest req = new AddHostRequest("pc", Type.PC);
 
         //when
         ResultActions action = mvc.perform(post(url)

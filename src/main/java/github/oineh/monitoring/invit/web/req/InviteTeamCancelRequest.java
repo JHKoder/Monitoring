@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupInviteReq {
+public class InviteTeamCancelRequest {
 
-    private Long inviteId;
+    private Long teamId;
     private Long groupsId;
+    private String email;
 }

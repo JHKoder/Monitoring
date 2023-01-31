@@ -1,7 +1,7 @@
 package github.oineh.monitoring.groups.web.rest;
 
 import github.oineh.monitoring.groups.service.GroupsService;
-import github.oineh.monitoring.groups.web.rest.req.GroupsCreateReq;
+import github.oineh.monitoring.groups.web.rest.req.GroupsCreateRequest;
 import github.oineh.monitoring.groups.web.rest.res.GroupInformationResponse;
 import github.oineh.monitoring.groups.web.rest.res.GroupResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class GroupsController {
     private final GroupsService groupsService;
 
     @PostMapping
-    public void createGroups(@RequestBody GroupsCreateReq req, Principal principal) {
+    public void createGroups(@RequestBody GroupsCreateRequest req, Principal principal) {
         groupsService.createGroup(principal.getName(), req.getName());
     }
 

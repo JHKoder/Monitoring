@@ -3,13 +3,13 @@ package github.oineh.monitoring.invit.service;
 import github.oineh.monitoring.config.exception.ApiException;
 import github.oineh.monitoring.config.exception.ErrorCode;
 import github.oineh.monitoring.invit.domain.InvitedGroupRepository;
+import github.oineh.monitoring.invit.domain.InvitedTeam;
+import github.oineh.monitoring.invit.web.req.InviteTeamCancelRequest;
+import github.oineh.monitoring.invit.web.req.InviteTeamRequest;
 import github.oineh.monitoring.invit.web.req.TeamInviteAcceptReq;
-import github.oineh.monitoring.invit.web.req.TeamInviteCancelReq;
-import github.oineh.monitoring.invit.web.req.TeamInviteReq;
-import github.oineh.monitoring.invit.web.res.InviteTeamUserRes;
+import github.oineh.monitoring.invit.web.res.InviteTeamResponse;
 import github.oineh.monitoring.team.domain.Team;
 import github.oineh.monitoring.team.domain.TeamRepository;
-import github.oineh.monitoring.invit.domain.InvitedTeam;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +31,12 @@ public class InviteTeamService {
     private final InvitedGroupRepository invitedGroupRepository;
 
     @Transactional(readOnly = true)
-    public List<InviteTeamUserRes> findInvite(String userId) {
+    public List<InviteTeamResponse> findInvite(String userId) {
         return convertInvitationsToRes(findUserByInvite(findUser(userId)));
     }
 
     @Transactional
-    public void makeInvite(TeamInviteReq req, String userId) {
+    public void makeInvite(InviteTeamRequest req, String userId) {
         Team team = findTeam(req.getTeamId());
         User targetUser = findUserEmail(req.getEmail());
         User sendUser = findSendUser(userId);
@@ -59,7 +59,7 @@ public class InviteTeamService {
     }
 
     @Transactional
-    public void cancelInvite(TeamInviteCancelReq req, String userId) {
+    public void cancelInvite(InviteTeamCancelRequest req, String userId) {
         User user = findUser(userId);
         Team team = findTeam(req.getTeamId());
         InvitedTeam invited = findInvite(user, team);
@@ -116,7 +116,7 @@ public class InviteTeamService {
         }
     }
 
-    private List<InviteTeamUserRes> convertInvitationsToRes(List<InvitedTeam> invited) {
-        return invited.stream().map(InviteTeamUserRes::new).collect(Collectors.toList());
+    private List<InviteTeamResponse> convertInvitationsToRes(List<InvitedTeam> invited) {
+        return invited.stream().map(InviteTeamResponse::new).collect(Collectors.toList());
     }
 }

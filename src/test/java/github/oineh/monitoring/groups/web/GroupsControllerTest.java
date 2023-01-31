@@ -6,7 +6,7 @@ import github.oineh.monitoring.department.domain.Department;
 import github.oineh.monitoring.department.domain.DepartmentRepository;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
-import github.oineh.monitoring.groups.web.rest.req.GroupsCreateReq;
+import github.oineh.monitoring.groups.web.rest.req.GroupsCreateRequest;
 import github.oineh.monitoring.team.domain.Team;
 import github.oineh.monitoring.team.domain.TeamRepository;
 import github.oineh.monitoring.user.domain.User;
@@ -55,7 +55,7 @@ public class GroupsControllerTest extends IntegrationTest {
     @DisplayName("생성 하기")
     void createGroups() throws Exception {
         //given
-        GroupsCreateReq req = new GroupsCreateReq("groupName");
+        GroupsCreateRequest req = new GroupsCreateRequest("groupName");
 
         //when
         ResultActions action = mvc.perform(post(url)

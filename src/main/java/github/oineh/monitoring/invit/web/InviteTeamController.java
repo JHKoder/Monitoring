@@ -2,10 +2,10 @@ package github.oineh.monitoring.invit.web;
 
 import github.oineh.monitoring.groups.service.GroupsService;
 import github.oineh.monitoring.invit.service.InviteTeamService;
+import github.oineh.monitoring.invit.web.req.InviteTeamCancelRequest;
+import github.oineh.monitoring.invit.web.req.InviteTeamRequest;
 import github.oineh.monitoring.invit.web.req.TeamInviteAcceptReq;
-import github.oineh.monitoring.invit.web.req.TeamInviteCancelReq;
-import github.oineh.monitoring.invit.web.req.TeamInviteReq;
-import github.oineh.monitoring.invit.web.res.InviteTeamUserRes;
+import github.oineh.monitoring.invit.web.res.InviteTeamResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +21,12 @@ public class InviteTeamController {
     private final InviteTeamService inviteTeamService;
 
     @GetMapping
-    public List<InviteTeamUserRes> findInvite(Principal principal) {
+    public List<InviteTeamResponse> findInvite(Principal principal) {
         return inviteTeamService.findInvite(principal.getName());
     }
 
     @PostMapping
-    public void makeInvite(@RequestBody TeamInviteReq req, Principal principal) {
+    public void makeInvite(@RequestBody InviteTeamRequest req, Principal principal) {
         groupsService.validateGroupInMember(req.getGroupsId(), req.getEmail());
         inviteTeamService.makeInvite(req, principal.getName());
     }
@@ -37,7 +37,7 @@ public class InviteTeamController {
     }
 
     @DeleteMapping
-    public void cancelTeamInvite(@RequestBody TeamInviteCancelReq req, Principal principal) {
+    public void cancelTeamInvite(@RequestBody InviteTeamCancelRequest req, Principal principal) {
         inviteTeamService.cancelInvite(req, principal.getName());
     }
 }

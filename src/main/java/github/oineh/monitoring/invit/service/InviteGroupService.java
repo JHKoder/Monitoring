@@ -6,9 +6,9 @@ import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.invit.domain.InvitedGroups;
 import github.oineh.monitoring.invit.domain.InvitedGroupsRepository;
-import github.oineh.monitoring.invit.web.req.GroupInviteReq;
-import github.oineh.monitoring.invit.web.req.GroupInviteSendReq;
-import github.oineh.monitoring.invit.web.res.InviteGroupsUserRes;
+import github.oineh.monitoring.invit.web.req.InviteGroupRequest;
+import github.oineh.monitoring.invit.web.req.InviteGroupSendRequest;
+import github.oineh.monitoring.invit.web.res.InviteGroupResponse;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class InviteGroupService {
     private final InvitedGroupsRepository invitedGroupsRepository;
 
     @Transactional
-    public void makeInvite(GroupInviteSendReq req, String userId) {
+    public void makeInvite(InviteGroupSendRequest req, String userId) {
         User sendUser = findUser(userId);
         User targetUser = findTargetUserEmail(req.getEmail());
         Groups groups = findGroups(req.getGroupsId());
@@ -39,16 +39,16 @@ public class InviteGroupService {
     }
 
     @Transactional(readOnly = true)
-    public List<InviteGroupsUserRes> findInvite(String userId) {
+    public List<InviteGroupResponse> findInvite(String userId) {
         List<InvitedGroups> invitedGroups = invitedGroupsRepository.findByTargetUser(findUser(userId))
                 .orElse(List.of());
 
-        return invitedGroups.stream().map(InviteGroupsUserRes::new)
+        return invitedGroups.stream().map(InviteGroupResponse::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public void acceptInvite(GroupInviteReq req, String userId) {
+    public void acceptInvite(InviteGroupRequest req, String userId) {
         InvitedGroups invitedGroups = findInvitedGroups(req.getInviteId());
 
         groupsRepository.findById(invitedGroups.getGroupsId())
@@ -59,7 +59,7 @@ public class InviteGroupService {
     }
 
     @Transactional
-    public void cancelInvite(GroupInviteReq req, String userId) {
+    public void cancelInvite(InviteGroupRequest req, String userId) {
         InvitedGroups invited = findInvitedGroups(req.getInviteId());
 
         validateInvitedTarget(findUser(userId), invited);
