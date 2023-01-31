@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddPcRequest {
+public class AddHostRequest {
 
     private String pcName;
     private Type type;

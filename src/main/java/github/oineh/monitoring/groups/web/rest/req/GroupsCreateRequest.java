@@ -1,4 +1,4 @@
-package github.oineh.monitoring.invit.web.req;
+package github.oineh.monitoring.groups.web.rest.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupInviteSendReq {
+public class GroupsCreateRequest {
 
-    private Long groupsId;
-    private String email;
+    private String name;
 }

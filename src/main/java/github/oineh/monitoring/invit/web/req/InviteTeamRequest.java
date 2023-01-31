@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeamInviteReq {
+public class InviteTeamRequest {
 
     private Long teamId;
     private Long groupsId;

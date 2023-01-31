@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class InviteTeamUserRes {
+public class InviteTeamResponse {
 
     private Long inviteId;
     private Long teamId;
     private String teamName;
     private String sendName;
 
-    public InviteTeamUserRes(InvitedTeam invited) {
+    public InviteTeamResponse(InvitedTeam invited) {
         this.inviteId = invited.getId();
         this.teamId = invited.getTeamId();
         this.teamName = invited.getTeamName();
