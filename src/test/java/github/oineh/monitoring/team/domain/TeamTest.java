@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@DisplayName("entity 팀")
+@DisplayName("팀")
 public class TeamTest {
 
     User user;
@@ -27,6 +27,7 @@ public class TeamTest {
     }
 
     @Test
+    @DisplayName("만들기")
     void teamCreate() {
         //given
         Team team = new Team(user, "개발팀");

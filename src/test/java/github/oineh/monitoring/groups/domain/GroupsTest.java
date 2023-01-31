@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("entity 그룹")
+@DisplayName("그룹")
 public class GroupsTest {
 
     User user = UserFixture.getUser();
 
 
     @Test
-    @DisplayName("그룹 생성")
+    @DisplayName("만들기")
     public void create() {
         //given
         String name = "성남그룹";

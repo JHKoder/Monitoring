@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("entity 부서 ")
+@DisplayName("부서")
 public class DeptTest {
 
     User user;
@@ -25,6 +25,7 @@ public class DeptTest {
     }
 
     @Test
+    @DisplayName("만들기")
     void deptCreate() {
         //given
         Dept dept = new Dept(user, "부서");

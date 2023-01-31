@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import static github.oineh.monitoring.user.domain.User.Information;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@DisplayName("entity 그룹 초대 ")
+@DisplayName("그룹 초대장")
 public class InvitedGroupsTest {
 
     @Test
-    @DisplayName("그룹 초대 생성")
+    @DisplayName("만들기")
     public void invite() {
         //given
         Information sendUserInfo = new Information("send_email@email.com", "pw", "s");
