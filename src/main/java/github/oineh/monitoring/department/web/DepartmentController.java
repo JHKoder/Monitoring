@@ -17,7 +17,6 @@ public class DepartmentController {
 
     private final DepartmentService departmentService;
 
-
     @PostMapping
     public void createGroupDept(@RequestBody AddDepartmentRequest req, Principal principal) {
         departmentService.createDepartment(req, principal.getName());

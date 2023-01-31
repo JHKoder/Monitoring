@@ -15,7 +15,6 @@ public class UserController {
 
     private final SignUpService signUpService;
 
-
     @PostMapping("/signup")
     public void makeUser(@RequestBody AddSignUpRequest addSignUpRequest) {
         signUpService.signUp(addSignUpRequest);

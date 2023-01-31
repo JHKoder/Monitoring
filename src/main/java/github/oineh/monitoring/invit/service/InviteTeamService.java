@@ -30,7 +30,6 @@ public class InviteTeamService {
     private final TeamRepository teamRepository;
     private final InvitedGroupRepository invitedGroupRepository;
 
-
     @Transactional(readOnly = true)
     public List<InviteTeamUserRes> findInvite(String userId) {
         return convertInvitationsToRes(findUserByInvite(findUser(userId)));

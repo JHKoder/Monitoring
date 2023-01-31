@@ -12,7 +12,6 @@ public class GroupsTest {
 
     User user = UserFixture.getUser();
 
-
     @Test
     @DisplayName("만들기")
     public void create() {

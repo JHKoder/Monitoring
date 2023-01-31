@@ -26,7 +26,6 @@ public class ConnectService {
     private final TeamRepository teamRepository;
     private final NetStatusFactory netStatusFactory;
 
-
     @Transactional(readOnly = true)
     public AddressPingResponse findAddressPing(Long teamId, Long connectId) {
         return findTeam(teamId).getConnects().stream()

@@ -21,7 +21,6 @@ public class TeamService {
     private final UserRepository userRepository;
     private final GroupsRepository groupsRepository;
 
-
     @Transactional
     public void createTeam(TeamCreateReq req, String userId) {
         findGroups(req.getGroupsId()).getDepts().stream()

@@ -10,30 +10,30 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("부서")
-public class DeptTest {
+public class DepartmentTest {
 
     User user;
     Groups groups;
-    Department dept;
+    Department department;
 
 
     @BeforeEach
     void setup() {
         user = UserFixture.getUser();
         groups = new Groups(user, "groupsName");
-        dept = new Department(user, "부서");
+        department = new Department(user, "부서");
     }
 
     @Test
     @DisplayName("만들기")
     void deptCreate() {
         //given
-        Department dept = new Department(user, "부서");
+        Department department1 = new Department(user, "부서");
 
         //when
-        groups.updateDept(dept);
+        groups.updateDept(department1);
 
         //then
-        assertThat(groups.getDepts()).contains(dept);
+        assertThat(groups.getDepts()).contains(department1);
     }
 }

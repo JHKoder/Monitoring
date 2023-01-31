@@ -21,7 +21,6 @@ public class PcController {
     private final PcService pcService;
     private final CreateHostService createHostService;
 
-
     @PostMapping
     public void create(@RequestBody AddPcRequest req, HttpServletRequest request, Principal principal) {
         Host host = createHostService.createHost(request);

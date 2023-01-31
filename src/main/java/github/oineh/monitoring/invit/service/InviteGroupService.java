@@ -25,7 +25,6 @@ public class InviteGroupService {
     private final UserRepository userRepository;
     private final GroupsRepository groupsRepository;
     private final InvitedGroupsRepository invitedGroupsRepository;
-    
 
     @Transactional
     public void makeInvite(GroupInviteSendReq req, String userId) {

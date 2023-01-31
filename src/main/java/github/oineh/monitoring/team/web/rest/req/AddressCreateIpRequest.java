@@ -16,7 +16,6 @@ public class AddressCreateIpRequest {
     private int c;
     private int d;
 
-
     public String getIp() {
         valid();
         return a + "." + b + "." + c + "." + d;

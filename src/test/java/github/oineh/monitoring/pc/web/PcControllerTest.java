@@ -20,7 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("api PC")
 public class PcControllerTest extends IntegrationTest {
 
-
     final String url = "/api/pc";
     User user;
 

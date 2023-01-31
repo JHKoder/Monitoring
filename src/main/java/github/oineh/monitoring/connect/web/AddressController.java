@@ -18,7 +18,6 @@ public class AddressController {
 
     private final ConnectService connectService;
 
-
     @GetMapping("/{teamId}")
     public List<AddressResponse> findAddress(@PathVariable("teamId") Long teamId) {
         return connectService.findAddress(teamId);
@@ -28,6 +27,4 @@ public class AddressController {
     public AddressPingResponse connectionAddress(@PathVariable("teamId") Long teamId, @PathVariable Long connectId) {
         return connectService.findAddressPing(teamId, connectId);
     }
-
-
 }

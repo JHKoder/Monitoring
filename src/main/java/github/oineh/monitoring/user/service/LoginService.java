@@ -24,7 +24,6 @@ public class LoginService implements UserDetailsService {
     private final UserRepository userRepository;
     private final AuthRepository authRepository;
 
-
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

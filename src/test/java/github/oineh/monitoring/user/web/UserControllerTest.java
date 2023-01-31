@@ -25,7 +25,6 @@ class UserControllerTest extends IntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
-
     @BeforeEach
     void setup() {
         Information userInfo = new Information("test@test.com", "test_name", "test_Nickname");

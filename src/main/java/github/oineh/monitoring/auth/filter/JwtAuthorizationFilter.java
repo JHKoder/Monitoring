@@ -33,7 +33,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        log.info("");
         Cookie[] cookies = request.getCookies();
         Cookie cookie = parseCookie(cookies);
 
@@ -42,7 +41,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        log.info("");
         VerifyResult result = JWTUtil.verify(parseToken(cookie));
 
         if (result.tokenExistence()) {

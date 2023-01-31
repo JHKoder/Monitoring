@@ -12,7 +12,6 @@ public class AddressPingResponse {
     private String status;
     private Long connectId;
 
-
     public AddressPingResponse(Long connectId, String name, NetStatus status) {
         this.connectId = connectId;
         this.name = name;

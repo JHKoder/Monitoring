@@ -11,7 +11,6 @@ public class MemberResponse {
     private String name;
     private Long id;
 
-
     public MemberResponse(User user) {
         this.name = user.getName();
         this.id = user.getConnectId();

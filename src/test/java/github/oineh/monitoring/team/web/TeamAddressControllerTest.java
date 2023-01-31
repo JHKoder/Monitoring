@@ -44,7 +44,6 @@ class TeamAddressControllerTest extends IntegrationTest {
     @Autowired
     ConnectRepository connectRepository;
 
-
     @BeforeEach
     void setup() {
         Information userInfo = new Information("test@test.com", "test_name", "test_Nickname");
@@ -55,7 +54,6 @@ class TeamAddressControllerTest extends IntegrationTest {
         team = teamRepository.save(new Team(user, "team_name"));
         dept.updateTeam(team);
     }
-
 
     @Test
     @DisplayName("url 등록")

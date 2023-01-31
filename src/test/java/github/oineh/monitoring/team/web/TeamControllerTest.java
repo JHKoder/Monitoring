@@ -45,7 +45,6 @@ public class TeamControllerTest extends IntegrationTest {
     @Autowired
     ConnectRepository connectRepository;
 
-
     @BeforeEach
     void setup() {
         User.Information userInfo = new User.Information("test@test.com", "test_name", "test_Nickname");

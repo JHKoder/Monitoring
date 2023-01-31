@@ -33,5 +33,4 @@ public class Auth extends BaseEntity {
     public static Auth ofUser(User user) {
         return new Auth(user, Grade.USER);
     }
-
 }

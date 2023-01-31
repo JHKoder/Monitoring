@@ -11,7 +11,6 @@ public class AddressResponse {
     private String name;
     private Long id;
 
-
     public AddressResponse(Connect connect) {
         this.name = connect.getName();
         this.id = connect.getId();

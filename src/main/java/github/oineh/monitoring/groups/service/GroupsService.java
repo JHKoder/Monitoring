@@ -21,7 +21,6 @@ public class GroupsService {
     private final UserRepository userRepository;
     private final GroupsRepository groupsRepository;
 
-
     @Transactional(readOnly = true)
     public List<GroupResponse> findList(String userId) {
         return GroupResponse.ofList(
