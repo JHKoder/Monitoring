@@ -20,7 +20,6 @@ public class GroupsService {
     private final UserRepository userRepository;
     private final GroupsRepository groupsRepository;
 
-
     @Transactional(readOnly = true)
     public List<GrouopsRes> findList(String userId) {
         List<Groups> groupsList = groupsRepository.findByMemberUsers(findUser(userId))

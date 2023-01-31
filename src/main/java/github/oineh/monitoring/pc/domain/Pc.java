@@ -24,7 +24,6 @@ public class Pc extends BaseEntity {
     private String name;
     private Type pcType;
 
-
     public Pc(String name, Type pcType) {
         this.name = name;
         this.pcType = pcType;

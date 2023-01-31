@@ -18,7 +18,6 @@ public class TeamTest {
     Groups groups;
     Dept dept;
 
-
     @BeforeEach
     void setup() {
         user = UserFixture.getUser();

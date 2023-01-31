@@ -19,7 +19,6 @@ public class AddressService {
 
     private final TeamRepository teamRepository;
 
-
     @Transactional
     public void createUrl(TeamCreateUrlReq req) {
         findTeam(req.getTeamId())
