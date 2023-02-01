@@ -76,7 +76,7 @@ public class MemberControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("상태 확인")
+    @DisplayName("상태보기")
     void pingMember() throws Exception {
         //given
         Connect connect = connectRepository.save(Connect.icmp("내ip", "127.0.0.1"));

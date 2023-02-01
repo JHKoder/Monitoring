@@ -33,7 +33,7 @@ public class PcControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("등록 하기")
+    @DisplayName("등록")
     void createPc() throws Exception {
         //given
         AddHostRequest req = new AddHostRequest("pc", Type.PC);

@@ -32,7 +32,7 @@ class UserControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("회원가입 하기")
+    @DisplayName("회원가입")
     void singUp() throws Exception {
         //given
         Information info = user.getInformation();
