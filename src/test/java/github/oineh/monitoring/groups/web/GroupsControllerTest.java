@@ -52,7 +52,7 @@ public class GroupsControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("생성 하기")
+    @DisplayName("생성")
     void createGroups() throws Exception {
         //given
         GroupsCreateRequest req = new GroupsCreateRequest("groupName");
@@ -67,7 +67,7 @@ public class GroupsControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("의 모든 부서와 팀 보기")
+    @DisplayName("모든 부서와 팀 보기")
     void findGroup() throws Exception {
         //given
         Department dept = departmentRepository.save(new Department(user, "dept"));
@@ -92,7 +92,7 @@ public class GroupsControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("리스트 보기")
+    @DisplayName("리스트")
     void findList() throws Exception {
         //given
         Groups groups1 = groupsRepository.save(new Groups(user, "groups_1"));

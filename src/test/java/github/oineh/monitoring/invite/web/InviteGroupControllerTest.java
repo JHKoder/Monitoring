@@ -67,7 +67,7 @@ public class InviteGroupControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("하기")
+    @DisplayName("보내기")
     void invite() throws Exception {
         //given
         groups.updateMember(user);
@@ -83,7 +83,7 @@ public class InviteGroupControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("수락 하기")
+    @DisplayName("수락")
     void acceptGroupsInvite() throws Exception {
         //given
         InvitedGroups invited = invitedGroupsRepository.save(new InvitedGroups(user, adminUser, groups));
@@ -99,7 +99,7 @@ public class InviteGroupControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("거부 하기")
+    @DisplayName("거부")
     void cancelGroupsInvite() throws Exception {
         //given
         InvitedGroups invited = invitedGroupsRepository.save(new InvitedGroups(user, adminUser, groups));

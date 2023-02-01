@@ -2,14 +2,18 @@ package github.oineh.monitoring.invite.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import github.oineh.monitoring.common.IntegrationTest;
+import github.oineh.monitoring.department.domain.Department;
+import github.oineh.monitoring.department.domain.DepartmentRepository;
 import github.oineh.monitoring.groups.domain.Groups;
 import github.oineh.monitoring.groups.domain.GroupsRepository;
 import github.oineh.monitoring.invit.domain.InvitedGroupRepository;
 import github.oineh.monitoring.invit.domain.InvitedTeam;
 import github.oineh.monitoring.invit.web.req.InviteTeamAcceptRequest;
+import github.oineh.monitoring.invit.web.req.InviteTeamRequest;
 import github.oineh.monitoring.team.domain.Team;
 import github.oineh.monitoring.team.domain.TeamRepository;
 import github.oineh.monitoring.user.domain.User;
+import github.oineh.monitoring.user.domain.User.Information;
 import github.oineh.monitoring.user.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("api 팀 초대")
+@DisplayName("api 팀 초대장")
 public class InviteTeamControllerTest extends IntegrationTest {
 
     static final String url = "/api/team/invite";
@@ -39,13 +43,15 @@ public class InviteTeamControllerTest extends IntegrationTest {
     private InvitedGroupRepository invitedGroupRepository;
     @Autowired
     private TeamRepository teamRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     @BeforeEach
     void setup() {
-        User.Information information = new User.Information("test_email_@test.com", "test_name", "test_Nickname");
+        Information information = new Information("test_email_@test.com", "test_name", "test_Nickname");
         adminUser = userRepository.save(new User("test_admin_id", "password", information));
 
-        User.Information userInfo = new User.Information("test@test.com", "test_name", "test_Nickname");
+        Information userInfo = new Information("test@test.com", "test_name", "test_Nickname");
         user = userRepository.save(new User("test_user_id", "password", userInfo));
 
         groups = groupsRepository.save(new Groups(adminUser, "group_name"));
@@ -76,8 +82,30 @@ public class InviteTeamControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$[1].sendName").value(invited2.getSendUserName()));
     }
 
+
     @Test
-    @DisplayName("수락 하기")
+    @DisplayName("보내기")
+    void teamInvite() throws Exception {
+        //given
+        Department department = departmentRepository.save(new Department(user, "department"));
+        Team team = teamRepository.save(new Team(user, "team_name"));
+        department.updateTeam(team);
+        Information userInfo = new Information("test_target_user@test.com", "test_name", "test_Nickname");
+        User targetUser = userRepository.save(new User("test_target_user_id", "password", userInfo));
+        groups.updateMember(targetUser);
+        InviteTeamRequest inviteTeamRequest = new InviteTeamRequest(team.getId(), groups.getId(), targetUser.getEmail());
+
+        //when
+        ResultActions action = mvc.perform(
+                post(url).contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(inviteTeamRequest)));
+
+        //then
+        action.andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("수락")
     void acceptTeamInvite() throws Exception {
         //given
         Team team = teamRepository.save(new Team(adminUser, "team_name"));
@@ -95,7 +123,7 @@ public class InviteTeamControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("거부 하기")
+    @DisplayName("거부")
     void cancelTeamInvite() throws Exception {
         //given
         Team team = teamRepository.save(new Team(adminUser, "team_name"));

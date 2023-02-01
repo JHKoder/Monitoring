@@ -39,7 +39,7 @@ public class DepartmentControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("생성 하기")
+    @DisplayName("생성")
     void createDept() throws Exception {
         //given
         AddDepartmentRequest req = new AddDepartmentRequest("부서이름", groups.getId());

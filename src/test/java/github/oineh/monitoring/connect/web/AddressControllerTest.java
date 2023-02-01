@@ -85,7 +85,7 @@ public class AddressControllerTest extends IntegrationTest {
     }
 
     @Test
-    @DisplayName("상태 확인")
+    @DisplayName("상태보기")
     void pingDomain() throws Exception {
         //given
         Connect connectUrl = connectRepository.save(Connect.tcp("네이버", "https://naver.com"));
