@@ -59,6 +59,24 @@ class UserControllerTest extends IntegrationTest {
         action.andExpect(result -> result.getResolvedException().getMessage().equals(ErrorCode.EMAIL_ALREADY_PRESENT));
     }
 
+    @Test
+    @DisplayName("회원가입 아이디 중복 으로 실패")
+    void idOverlapSignUpFail() throws Exception {
+        //given
+        User user = createUser("test_user_ids", "email@email.com");
+        AddSignUpRequest req = new AddSignUpRequest(user.getEmail() + "m", user.getName(), user.getNickName(),
+                user.getLoginId(), user.getPassword());
+
+        //when
+        ResultActions action = mvc.perform(post(URL + "/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(req)));
+
+        //then
+        action.andExpect(status().is(ErrorCode.USERS_ALREADY_PRESENT.getStatus()));
+        action.andExpect(result -> result.getResolvedException().getMessage().equals(ErrorCode.USERS_ALREADY_PRESENT));
+    }
+
     private User createUser(String id, String email) {
         Information userInfo = new Information(email, "test_name", "test_Nickname");
         return userRepository.save(new User(id, "password", userInfo));
