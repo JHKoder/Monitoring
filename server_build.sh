@@ -1,10 +1,11 @@
 jarRoot="build/libs/"
 jarName="Monitoring-0.1.0-RELEASE.jar"
-serverIp="192.168.1.4"
+serverId="jeonghun.kang.dev"
+serverIp="34.168.204.241"
 serverRoot=":server"
 
 sh `pwd`/gradlew build
-ssh ${serverIp} <<EOF
+ssh -i gcp_rsa_key ${serverId}@${serverIp} <<EOF
 ${jarRoot}${jarName} ${serverIp}${serverRoot}
 fuser -k 8080/tcp
 java -jar server/${jarName}
