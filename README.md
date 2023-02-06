@@ -17,21 +17,26 @@
 ![SECURITY](https://img.shields.io/badge/Security-yellow)
 [![libTcp](https://img.shields.io/badge/lib-git.oiNeh.tcp_0.1.6-red)](https://github.com/oiNeh/tcp)<br>
 ![IntelliJ](https://img.shields.io/badge/IDE-intelliJ-blueviolet)
-![Server](https://img.shields.io/badge/server-VM_VirtualBox-9cf?logo=HomeAssistant)
+![Server](https://img.shields.io/badge/server-Google_Cloud_Platform_(VM)-9cf?logo=HomeAssistant)
 ![OS](https://img.shields.io/badge/OS-Ubuntu-red)
 ---
 
 # 개발 서버 전체 구조
 
-> > 공유기
-> > > #### 내 PC
-> > > > ### 가상머신 VM virtualBox(Ubuntu) <br>
-> > > > - 공유기에서 방화벽 80 포트 허용
-> > > > - 가상머신에서 22 포트 허용
+> Web
+>
+> > ```Google cloud Platform```
+> >  ### VM (Ubuntu) <br>
+> > - 포트 포워딩 80 - 8080 설정
+>
+> > ```도메인 구매 업체```
 > >
-> > > #### 개발용 노트북 맥북<br>
-> > > - 프로젝트 개발용 노트북
-> > > - 빌드시 배포 자동화
+> > DNS 레코드에서 GCP IP 추가
+>
+> > #### ```개발용 노트북 맥북```
+> > - 빌드,실행 자동화
+
+
 ***
 
 # API 구조
@@ -171,7 +176,6 @@ team/domain
 
 - 통합 테스트 (api&service)
 
-
 ![](api_model.png)
 
 - Entity 테스트
@@ -182,8 +186,16 @@ team/domain
 
 # 배포
 
-shell 스크립트로 서버에 jar 파일 전송후 빌드까지 하는 자동화 프로세스 입니다.
+shell 스크립트로 서버에 jar 파일 전송하는 스크립트 입니다.
 
 ```shell
 ./server_build
+```
+
+## 서버 실행
+
+빌드후 이전 서버 재실행하는 자동화 프로세스 입니다.
+
+```shell
+./server_run
 ```
