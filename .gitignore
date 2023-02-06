@@ -4,6 +4,8 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+gcp_rsa_key
+gcp_rsa_key.pub
 
 ### STS ###
 .apt_generated
