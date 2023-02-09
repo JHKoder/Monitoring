@@ -23,7 +23,6 @@ public class AddressCreateIpRequest {
 
     private void valid() {
         if (ipSize(a) || ipSize(b) || ipSize(c) || ipSize(d)) {
-            System.out.println(a + "." + b + "." + c + "." + d);
             throw new IllegalArgumentException("IP 0~255 범위를 벗아났습니다.");
         }
     }
