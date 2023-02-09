@@ -25,7 +25,6 @@ public class AddressCreatePortRequest {
 
     private void valid() {
         if (ipSize(aClass) || ipSize(bClass) || ipSize(cClass) || ipSize(dClass)) {
-            System.out.println(aClass + "." + bClass + "." + cClass + "." + dClass);
             throw new IllegalArgumentException("IP 0~255 범위를 벗아났습니다.");
         }
     }
