@@ -3,7 +3,7 @@
 #### 팀 단위로 망 연결이 잘 되어 있는지 모니터링 할수 있는 서비스 입니다.
 
 ![개발인원](https://img.shields.io/badge/개발인원-1명-critical)<br>
-![개발기간](https://img.shields.io/badge/개발기간-4주~ing-lightgrey)<br>
+![개발기간](https://img.shields.io/badge/개발기간-5주~ing-lightgrey)<br>
 
 ![test](https://img.shields.io/badge/Integration_&_Entity_TEST-secuees-secuees?logo=Symantec)
 ![Deploy](https://img.shields.io/badge/Server_Release_build-Automatic-important?logo=stackEdit)
