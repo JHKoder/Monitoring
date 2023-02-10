@@ -2,7 +2,6 @@ package github.oineh.monitoring.team.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import github.oineh.monitoring.common.IntegrationTest;
-import github.oineh.monitoring.connect.domain.ConnectRepository;
 import github.oineh.monitoring.department.domain.Department;
 import github.oineh.monitoring.department.domain.DepartmentRepository;
 import github.oineh.monitoring.groups.domain.Groups;
@@ -41,8 +40,6 @@ class TeamAddressControllerTest extends IntegrationTest {
     GroupsRepository groupsRepository;
     @Autowired
     DepartmentRepository departmentRepository;
-    @Autowired
-    ConnectRepository connectRepository;
 
     @BeforeEach
     void setup() {
