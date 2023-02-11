@@ -6,14 +6,12 @@ import github.oineh.monitoring.pc.domain.Type;
 import github.oineh.monitoring.pc.web.req.AddHostRequest;
 import github.oineh.monitoring.user.domain.User;
 import github.oineh.monitoring.user.domain.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static github.oineh.monitoring.user.domain.User.Information;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,21 +19,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PcControllerTest extends IntegrationTest {
 
     final String url = "/api/pc";
-    User user;
 
     @Autowired
     UserRepository userRepository;
 
-    @BeforeEach
-    void setup() {
-        Information userInfo = new Information("test@test.com", "test_name", "test_Nickname");
-        user = userRepository.save(new User("test_user_id", "password", userInfo));
-    }
 
     @Test
     @DisplayName("등록")
     void createPc() throws Exception {
         //given
+        createUser();
         AddHostRequest req = new AddHostRequest("pc", Type.PC);
 
         //when
@@ -45,5 +38,10 @@ public class PcControllerTest extends IntegrationTest {
 
         //then
         action.andExpect(status().isOk());
+    }
+
+    private void createUser() {
+        User.Information userInfo = new User.Information("test@test.com", "test_name", "test_Nickname");
+        userRepository.save(new User("test_user_id", "password", userInfo));
     }
 }
