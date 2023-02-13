@@ -9,6 +9,7 @@ import github.oineh.monitoring.invit.domain.InvitedGroupsRepository;
 import github.oineh.monitoring.invit.web.req.InviteGroupRequest;
 import github.oineh.monitoring.invit.web.req.InviteGroupSendRequest;
 import github.oineh.monitoring.user.domain.User;
+import github.oineh.monitoring.user.domain.User.Information;
 import github.oineh.monitoring.user.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,14 +40,9 @@ public class InviteGroupControllerTest extends IntegrationTest {
 
     @BeforeEach
     void setup() {
-        User.Information information = new User.Information("test_email_@test.com", "test_name", "test_Nickname");
-        adminUser = userRepository.save(new User("test_admin_id", "password", information));
-
-        User.Information userInfo = new User.Information("test@test.com", "test_name", "test_Nickname");
-        user = userRepository.save(new User("test_user_id", "password", userInfo));
-
-        User.Information targetInfo = new User.Information("test_target_email@test.com", "test_name", "test_Nickname");
-        targetUser = userRepository.save(new User("", "", targetInfo));
+        adminUser = createUser("test_admin_id", "test_email_@test.com");
+        user = createUser("test_user_id", "test@test.com");
+        targetUser = createUser("", "test_target_email@test.com");
 
         groups = groupsRepository.save(new Groups(adminUser, "group_name"));
     }
@@ -55,8 +51,7 @@ public class InviteGroupControllerTest extends IntegrationTest {
     @DisplayName("리스트 가져오기")
     void findGroupsInvite() throws Exception {
         //given
-        InvitedGroups invited = new InvitedGroups(user, adminUser, groups);
-        invitedGroupsRepository.save(invited);
+        invitedGroupsRepository.save(new InvitedGroups(user, adminUser, groups));
 
         //when
         ResultActions action = mvc.perform(get(url));
@@ -112,5 +107,10 @@ public class InviteGroupControllerTest extends IntegrationTest {
 
         //then
         action.andExpect(status().isOk());
+    }
+
+    private User createUser(String id, String email) {
+        Information userInfo = new Information(email, "test_name", "test_Nickname");
+        return userRepository.save(new User(id, "password", userInfo));
     }
 }
