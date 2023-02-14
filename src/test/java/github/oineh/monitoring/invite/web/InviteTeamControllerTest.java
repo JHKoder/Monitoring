@@ -48,12 +48,8 @@ public class InviteTeamControllerTest extends IntegrationTest {
 
     @BeforeEach
     void setup() {
-        Information information = new Information("test_email_@test.com", "test_name", "test_Nickname");
-        adminUser = userRepository.save(new User("test_admin_id", "password", information));
-
-        Information userInfo = new Information("test@test.com", "test_name", "test_Nickname");
-        user = userRepository.save(new User("test_user_id", "password", userInfo));
-
+        adminUser = createUser("test_email_@test.com", "test_admin_id");
+        user = createUser("test@test.com", "test_user_id");
         groups = groupsRepository.save(new Groups(adminUser, "group_name"));
     }
 
@@ -69,7 +65,6 @@ public class InviteTeamControllerTest extends IntegrationTest {
         //when
         ResultActions action = mvc.perform(get(url));
 
-        System.out.println(action.andReturn().getResponse().getContentAsString());
         //then
         action.andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].inviteId").value(invited1.getId()))
@@ -82,17 +77,21 @@ public class InviteTeamControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$[1].sendName").value(invited2.getSendUserName()));
     }
 
+    private Team createTeam(User user) {
+        Department department = departmentRepository.save(new Department(user, "department"));
+        Team team = teamRepository.save(new Team(user, "team_name"));
+        department.updateTeam(team);
+        return team;
+    }
 
     @Test
     @DisplayName("보내기")
     void teamInvite() throws Exception {
         //given
-        Department department = departmentRepository.save(new Department(user, "department"));
-        Team team = teamRepository.save(new Team(user, "team_name"));
-        department.updateTeam(team);
-        Information userInfo = new Information("test_target_user@test.com", "test_name", "test_Nickname");
-        User targetUser = userRepository.save(new User("test_target_user_id", "password", userInfo));
+        Team team = createTeam(user);
+        User targetUser = createUser("test_target_user@test.com", "test_target_user_id");
         groups.updateMember(targetUser);
+
         InviteTeamRequest inviteTeamRequest = new InviteTeamRequest(team.getId(), groups.getId(), targetUser.getEmail());
 
         //when
@@ -137,5 +136,10 @@ public class InviteTeamControllerTest extends IntegrationTest {
 
         //then
         action.andExpect(status().isOk());
+    }
+
+    private User createUser(String email, String id) {
+        Information information = new Information(email, "test_name", "test_Nickname");
+        return userRepository.save(new User(id, "password", information));
     }
 }
