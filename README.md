@@ -27,7 +27,7 @@
 >
 > > ```Google cloud Platform```
 > > - VM (Ubuntu)
-> > - 포트 포워딩 80 - 8080 설정
+> > - 포트 포워딩 80 -> 8080 설정
 > > - tomcat
 > >
 >
