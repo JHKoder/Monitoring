@@ -44,10 +44,8 @@ public class GroupsControllerTest extends IntegrationTest {
 
     @BeforeEach
     void setup() {
-        Information information = new Information("test_email_@test.com", "test_name", "test_Nickname");
-        user = userRepository.save(new User("test_user_id", "password", information));
-        Information targetInfo = new Information("test_email_target@test.com", "test_name", "test_Nickname");
-        targetUser = userRepository.save(new User("test_target_id", "password", targetInfo));
+        user = createUser("test_email_@test.com", "test_user_id");
+        targetUser = createUser("test_email_target@test.com", "test_target_id");
         groups = groupsRepository.save(new Groups(user, "group_name"));
     }
 
@@ -71,8 +69,8 @@ public class GroupsControllerTest extends IntegrationTest {
     void findGroup() throws Exception {
         //given
         Department dept = departmentRepository.save(new Department(user, "dept"));
-        Team team1 = teamRepository.save(new Team(user, "team_1"));
-        Team team2 = teamRepository.save(new Team(user, "team_2"));
+        Team team1 = createTeam(user, "team_1");
+        Team team2 = createTeam(user, "team_2");
         groups.updateDept(dept);
         dept.updateTeam(team1);
         dept.updateTeam(team2);
@@ -95,8 +93,8 @@ public class GroupsControllerTest extends IntegrationTest {
     @DisplayName("리스트")
     void findList() throws Exception {
         //given
-        Groups groups1 = groupsRepository.save(new Groups(user, "groups_1"));
-        Groups groups2 = groupsRepository.save(new Groups(user, "groups_2"));
+        Groups groups1 = createGroups(user, "groups_1");
+        Groups groups2 = createGroups(user, "groups_2");
 
         //when
         ResultActions action = mvc.perform(get(url));
@@ -109,5 +107,18 @@ public class GroupsControllerTest extends IntegrationTest {
                 .andExpect(jsonPath("$[1].name").value(groups1.getName()))
                 .andExpect(jsonPath("$[2].groupsId").value(groups2.getId()))
                 .andExpect(jsonPath("$[2].name").value(groups2.getName()));
+    }
+
+    private Team createTeam(User user, String name) {
+        return teamRepository.save(new Team(user, name));
+    }
+
+    private Groups createGroups(User user, String name) {
+        return groupsRepository.save(new Groups(user, name));
+    }
+
+    private User createUser(String email, String id) {
+        Information targetInfo = new Information(email, "test_name", "test_Nickname");
+        return userRepository.save(new User(id, "password", targetInfo));
     }
 }
