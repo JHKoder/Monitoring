@@ -107,9 +107,8 @@ public class InviteTeamControllerTest extends IntegrationTest {
     @DisplayName("수락")
     void acceptTeamInvite() throws Exception {
         //given
-        Team team = teamRepository.save(new Team(adminUser, "team_name"));
+        Team team = createTeam(adminUser);
         InvitedTeam invited = invitedGroupRepository.save(new InvitedTeam(user, adminUser, team));
-
         InviteTeamAcceptRequest req = new InviteTeamAcceptRequest(invited.getId(), team.getId());
 
         //when
@@ -125,7 +124,7 @@ public class InviteTeamControllerTest extends IntegrationTest {
     @DisplayName("거부")
     void cancelTeamInvite() throws Exception {
         //given
-        Team team = teamRepository.save(new Team(adminUser, "team_name"));
+        Team team = createTeam(adminUser);
         InvitedTeam invited = invitedGroupRepository.save(new InvitedTeam(user, adminUser, team));
         InviteTeamAcceptRequest req = new InviteTeamAcceptRequest(invited.getId(), team.getId());
 

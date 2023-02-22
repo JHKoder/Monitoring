@@ -52,14 +52,9 @@ public class AddressControllerTest extends IntegrationTest {
 
     @BeforeEach
     void setup() {
-        User.Information information = new User.Information("test_email_@test.com", "test_name", "test_Nickname");
-        adminUser = userRepository.save(new User("test_admin_id", "password", information));
-
-        User.Information userInfo = new User.Information("test@test.com", "test_name", "test_Nickname");
-        user = userRepository.save(new User("test_user_id", "password", userInfo));
-
+        adminUser = createUser("test_email_@test.com", "test_admin_id");
+        user = createUser("test@test.com", "test_user_id");
         groups = groupsRepository.save(new Groups(adminUser, "group_name").updateMember(user));
-
         dept = departmentRepository.save(new Department(user, "dept_name"));
         team = teamRepository.save(new Team(user, "team_name"));
         dept.updateTeam(team);
@@ -107,5 +102,10 @@ public class AddressControllerTest extends IntegrationTest {
 
     private NetStatus tcp() {
         return NetStatus.OK;
+    }
+
+    private User createUser(String email, String id) {
+        User.Information targetInfo = new User.Information(email, "test_name", "test_Nickname");
+        return userRepository.save(new User(id, "password", targetInfo));
     }
 }
