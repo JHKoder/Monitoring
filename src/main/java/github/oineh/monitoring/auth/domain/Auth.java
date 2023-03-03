@@ -19,10 +19,9 @@ public class Auth extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @OneToOne(fetch = FetchType.LAZY)
     private User user;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     private Set<Grade> grades = new HashSet<>();
 
     public Auth(User user, Grade grade) {

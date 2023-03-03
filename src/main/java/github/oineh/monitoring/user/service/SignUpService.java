@@ -26,6 +26,7 @@ public class SignUpService {
         validateAlreadyEmailRegistered(req.getEmail());
 
         User user = userRepository.save(req.toUser());
+
         authRepository.save(Auth.ofUser(user));
     }
 

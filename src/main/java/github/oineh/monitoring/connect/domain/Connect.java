@@ -48,4 +48,17 @@ public class Connect extends BaseEntity {
     public boolean isSameId(Long id) {
         return Objects.equals(this.id, id);
     }
+
+    public String getAddress() {
+        if (connectType.equals(ConnectType.ICMP)) {
+            return ip;
+        }
+        if (connectType.equals(ConnectType.TCP_URL)) {
+            return url;
+        }
+        if (connectType.equals(ConnectType.TCP_PORT)) {
+            return ip + port;
+        }
+        return "";
+    }
 }
