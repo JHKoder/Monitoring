@@ -31,7 +31,7 @@ public class ConnectService {
         return findTeam(teamId).getConnects().stream()
                 .filter(connect -> connect.isSameId(connectId))
                 .findFirst()
-                .map(connect -> new AddressPingResponse(connectId, connect.getName(), connectStatus(connect)))
+                .map(connect -> new AddressPingResponse(connectId, connect.getAddress(), connect.getName(), connectStatus(connect)))
                 .orElse(new AddressPingResponse());
     }
 

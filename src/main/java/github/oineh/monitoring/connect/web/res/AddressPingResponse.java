@@ -9,11 +9,13 @@ import lombok.NoArgsConstructor;
 public class AddressPingResponse {
 
     private String name;
+    private String address;
     private String status;
     private Long connectId;
 
-    public AddressPingResponse(Long connectId, String name, NetStatus status) {
+    public AddressPingResponse(Long connectId, String address, String name, NetStatus status) {
         this.connectId = connectId;
+        this.address = address;
         this.name = name;
         this.status = statusToStr(status);
     }

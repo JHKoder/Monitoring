@@ -95,11 +95,13 @@
             axios.get("/api/address/teams/" + teamId + "/connects/" + connectId)
                     .then((data) => {
                         console.log(data);
-                        let address = data.data.name;
+                        let address = data.data.address;
+                        let name = data.data.name;
                         let status = data.data.status;
                         let connectId = data.data.connectId;
+                        document.getElementById("domain_name_" + connectId).innerHTML = "이름 : [" + name + "]";
                         document.getElementById("domain_address_" + connectId).innerHTML = "주소 : [" + address + "]";
-                        document.getElementById("domain_status_" + connectId).innerHTML = "주소 : [" + status + "]";
+                        document.getElementById("domain_status_" + connectId).innerHTML = "상태 : [" + status + "]";
                     })
                     .catch(function (error) {
                         let message = error.response.data.message;
@@ -156,7 +158,8 @@
                         list.push(id);
                         out += `
                         <div style='border:solid 1px; width:200px;height: 60px;float: left;margin-right:10px;'>
-                            <label id ='domain_address_${id}'>주소 : [ ${name} ]</label><br>
+                            <label id ='domain_name_${id}'> 이름 : [ ${name} ]</label><br>
+                            <label id ='domain_address_${id}' style=' overflow: hidden;  text-overflow: ellipsis; white-space: nowrap;'> 주소 : [ ]</label><br>
                             <label id ='domain_status_${id}'> 연결 상태 : 대기중 </label>
                         </div>`;
                     })
