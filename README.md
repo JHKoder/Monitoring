@@ -5,13 +5,12 @@
 실시간으로 인터넷 연결 상태를 확인할 수 있는 서비스 입니다. 조직마다 필요한 외부 인터넷 및 주소 연결 상태를 효율적으로 관리할 수 있고 연결 문제나 장애가 발생할 때 즉시 파악하여 해결할 수 있는 기능을 제공 합니다.
 
 ![개발인원](https://img.shields.io/badge/개발인원-1명-critical)<br>
-![개발기간](https://img.shields.io/badge/개발기간-5주~ing-lightgrey)<br>
+![개발기간](https://img.shields.io/badge/개발기간-7주-lightgrey)<br>
 
 ![test](https://img.shields.io/badge/Integration_&_Entity_TEST-secuees-secuees?logo=Symantec)
 ![Deploy](https://img.shields.io/badge/Server_Release_build-Automatic-important?logo=stackEdit)
 
 ---
-[![URL](https://img.shields.io/badge/Open_URL-oineh.monitoring.today-informational)](http://www.oineh-monitoring.today/)<br>
 ![SpringBoot](https://img.shields.io/badge/SpringBoot-2.7-blue)</br>
 ![JAVA](https://img.shields.io/badge/java-11-green?logo=OpenJDK)
 ![H2](https://img.shields.io/badge/h2-blue)
