@@ -1,0 +1,4 @@
+- name: Verify Node.js and npm Installation
+  run: |
+    node -v
+    npm -v
